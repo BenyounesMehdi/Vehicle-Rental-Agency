@@ -1,6 +1,6 @@
 <?php
 
-include_once './views/main.php' ;
+include_once './views/home.php' ;
 
 // if( isset($_GET['action']) ) {
 //     // var_dump($_GET) ;
