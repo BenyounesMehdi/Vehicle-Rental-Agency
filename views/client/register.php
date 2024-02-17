@@ -22,18 +22,32 @@
         theme() ;
     </script>
 
+    <style>
+        /* For screens smaller than 640px (e.g., mobile screens) */
+        #mainContent {
+            width: 57%;
+        }
+        /* For mobile screens and above */
+        @media (max-width: 1020px) {
+            #mainContent {
+                width: 100%;
+            }
+        }
+
+    </style>
+
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 ">
 
     <div class="container mx-auto flex items-center py-4  h-screen">
-        <section class="  dark:bg-gray-900 w-full rounded flex flex-col px-4 py-2 justify-center items-center m-1">
+        <section class="  dark:bg-gray-900 w-full rounded flex flex-col px-4 sm:px-16 justify-center items-center sm:m-4">
             <!-- <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white ">
                     <img class="w-14 h-14 mr-2" src="https://i.pinimg.com/564x/0b/00/ec/0b00eceba1bdca24c92f21f8065930cb.jpg" alt="Agency Logo">
                     KARI    
                 </a>
             </div> -->
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
+            <div id="mainContent" class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-7">
                         <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                             Create an Account

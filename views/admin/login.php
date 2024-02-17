@@ -22,6 +22,19 @@
         theme() ;
     </script>
 
+    <style>
+            /* For screens smaller than 640px (e.g., mobile screens) */
+            #mainContent {
+                width: 57%;
+            }
+            /* For mobile screens and above */
+            @media (max-width: 1024px) {
+                #mainContent {
+                    width: 100%;
+                }
+            }
+    </style>
+
 </head>
 <body class="bg-gray-100 dark:bg-gray-900">
 
@@ -33,7 +46,7 @@
                     KARI    
                 </a>
             </div> -->
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div id="mainContent" class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                             Sign In
@@ -44,13 +57,13 @@
                         <form class="space-y-4 md:space-y-6" action="#">
                             <div>
                                 <label for="email" class="block mb-2 text-meduim font-bold text-gray-900 dark:text-white">Email</label>
-                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
                             </div>
                             <div class="relative">
                                 <label for="password" class="block mb-2 text-meduim font-bold text-gray-900 dark:text-white">Password</label>
                                 <div class="relative">
-                                    <input type="password" name="clientPassword" oninput="showEyePassword()" id="pass" class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
-                                    <i id="eye" onclick="toggle()"  class="fas fa-eye absolute right-5 top-4 cursor-pointer hidden dark:text-white"></i>
+                                    <input type="password" name="clientPassword" oninput="showEyePassword()" id="pass" class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                    <i id="eye" onclick="toggle()"  class="fas fa-eye absolute right-5 top-3 cursor-pointer hidden dark:text-white"></i>
                                 </div>
                             </div>
                             
