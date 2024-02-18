@@ -24,7 +24,7 @@
     <style>
         /* For screens smaller than 640px (e.g., mobile screens) */
         #mainContent {
-            width: 57%;
+            width: 55%;
         }
         /* For mobile screens and above */
         @media (max-width: 1024px) {
@@ -50,23 +50,59 @@
                         <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                             Sign In
                         </h1>
-                        <div id="errorField" class="p-2 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                            <p id="errorText" class="text-[#721c24] font-semibold text-center">This is an Error Message</p>
-                        </div>
-                        <form class="space-y-4 md:space-y-6 " action="#">
+
+                        <?php
+                            if( isset($_POST['signIn']) ) {
+                                $clientEmail = $_POST['clientEmail'] ;
+                                $clientPassword = $_POST['clientPassword'] ;
+
+                                if( !empty($clientEmail) && !empty($clientPassword) ) {
+                                   require_once '../../models/database.php' ;
+                                   
+                                    // Check if the Client exits in the database    
+                                   $query = 'SELECT * FROM client WHERE email=? AND password=?';
+                                   $stmt = $pdo->prepare($query);
+                                   $stmt->execute([$clientEmail, $clientPassword]);
+                                   
+                                   if( $stmt->rowCount() >= 1 ) {
+                                        // Create a Session for the a Admin
+                                        session_start() ;
+                                        $_SESSION['client'] = $stmt->fetch() ;
+
+                                        // Redirect The Admin
+                                         header( 'location: ../../index.php' ) ;
+                                   }
+                                   else { ?> 
+                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Email Or Password Is Incorrect</p>
+                                        </div>
+                                    <?php
+                                   }
+                                }
+                                 else { ?> 
+                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Please, Fill All The Inputs</p>
+                                        </div>
+                                    <?php
+                                    
+                                }
+                            }
+                        ?>
+
+                        <form class="space-y-4 md:space-y-6 " action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                             <div>
                                 <label for="email" class="block mb-2 text-meduim font-bold text-gray-900 dark:text-white">Email</label>
-                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  py-1.5 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  py-1.5 w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" >
                             </div>
                             <div class="relative">
                                 <label for="password" class="block mb-2 text-meduim font-bold text-gray-900 dark:text-white">Password</label>
                                 <div class="relative">
-                                    <input type="password" name="clientPassword" id="pass"  oninput="showEyePassword()"  class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                    <input type="password" name="clientPassword" id="pass"  oninput="showEyePassword()"  class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                     <i id="eye" onclick="toggle()"  class="fas fa-eye absolute right-5 top-3 cursor-pointer hidden dark:text-white"></i>
                                 </div>
                             </div>
                             
-                            <button type="submit" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign In</button>
+                            <button type="submit" name="signIn" class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign In</button>
                             <div class="flex justify-center items-center text-xl">
                                 <p class="font-light text-gray-500 dark:text-gray-400">
                                     Create an Account? <a href="./register.php" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Register</a>

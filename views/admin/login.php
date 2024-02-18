@@ -27,7 +27,7 @@
     <style>
             /* For screens smaller than 640px (e.g., mobile screens) */
             #mainContent {
-                width: 57%;
+                width: 55%;
             }
             /* For mobile screens and above */
             @media (max-width: 1024px) {
