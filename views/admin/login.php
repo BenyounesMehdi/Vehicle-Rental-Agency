@@ -66,21 +66,21 @@
                                    $query = 'SELECT * FROM admin WHERE email=? AND password=?';
                                    $stmt = $pdo->prepare($query);
                                    $stmt->execute([$adminEmail, $adminPassword]);
-                                   
-                                   if( $stmt->rowCount() >= 1 ) {
-                                        // Create a Session for the a Admin
-                                        session_start() ;
-                                        $_SESSION['admin'] = $stmt->fetch() ;
 
-                                        // Redirect The Admin
-                                         header( 'location: dashboard.php' ) ;
-                                   }
-                                   else { ?> 
-                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Email Or Password Is Incorrect</p>
-                                        </div>
-                                    <?php
-                                   }
+                                    if( $stmt->rowCount() >= 1 ) {
+                                            // Create a Session for the a Admin
+                                            session_start() ;
+                                            $_SESSION['admin'] = $stmt->fetch() ;
+
+                                            // Redirect The Admin
+                                            header( 'location: dashboard.php' ) ;
+                                    }
+                                    else { ?> 
+                                            <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                                <p id="errorText" class="text-[#721c24] font-semibold text-center">Email Or Password Is Incorrect</p>
+                                            </div>
+                                        <?php
+                                    }
                                 }
                                  else { ?> 
                                         <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
