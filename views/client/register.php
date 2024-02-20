@@ -1,3 +1,5 @@
+    
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +35,9 @@
                 width: 100%;
             }
         }
+        .border-red-500 {
+            border-color: #EF4444; /* Use the desired shade of red */
+        }
 
     </style>
 
@@ -41,51 +46,121 @@
 
     <div class="container mx-auto flex items-center py-4  h-screen">
         <section class="  dark:bg-gray-900 w-full rounded flex flex-col px-4 sm:px-16 justify-center items-center sm:m-4">
-            <!-- <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white ">
-                    <img class="w-14 h-14 mr-2" src="https://i.pinimg.com/564x/0b/00/ec/0b00eceba1bdca24c92f21f8065930cb.jpg" alt="Agency Logo">
-                    KARI    
-                </a>
-            </div> -->
+            
             <div id="mainContent" class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 ">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-7">
                         <h1 class="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white text-center">
                             Create an Account
                         </h1>
-                        <div id="errorField" class="p-2 mb-3 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                            <p id="errorText" class="text-[#721c24] font-semibold text-center">This is an Error Message</p>
-                        </div>
-                        <form class="flex flex-col gap-1" action="#">
+
+                        <?php
+                            if( isset($_POST['register']) ) {
+                                $clientFirstName = $_POST['clientFirstName'] ;
+                                $clientLastName = $_POST['clientLastName'] ;
+                                $clientPhoneNumber = $_POST['clientPhoneNumber'] ;
+                                $clientEmail = $_POST['clientEmail'] ;
+                                $clientPassword = $_POST['clientPassword'] ;
+
+                                // Check if the inputs are empty
+                                if( empty($clientFirstName) || empty($clientLastName) || empty($clientPhoneNumber) || empty($clientEmail) || empty($clientPassword) ) {
+                                    ?> 
+                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Please, Fill All The Inputs</p>
+                                        </div>
+                                    <?php
+                                }
+                                else { // Means all the inputs are filled
+                                    // Check if the email is valid
+                                    if( !filter_var($clientEmail, FILTER_VALIDATE_EMAIL) ) {
+                                        ?> 
+                                            <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                                <p id="errorText" class="text-[#721c24] font-semibold text-center">This Email Is Not A Valid Email</p>
+                                            </div>
+                                        <?php
+                                    }
+                                    else {
+                                        // Check if the email is already in the database or not
+                                        require_once '../../models/database.php' ;
+                                    
+                                        // Check if the Client exits in the database    
+                                        $query = 'SELECT * FROM client WHERE email=?';
+                                        $stmt = $pdo->prepare($query);
+                                        $stmt->execute([$clientEmail]);
+
+                                        if( $stmt->rowCount() >= 1 ) {
+                                            ?> 
+                                                <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                                    <p id="errorText" class="text-[#721c24] font-semibold text-center">This Email Is Already Exit</p>
+                                                </div>
+                                            <?php
+                                        }
+                                        else { // Means this client is new
+                                            // Time to insert all user infos in our database
+                                            $query = 'INSERT INTO client (firstName, lastName, phoneNumber, email, pass) VALUES (?, ?, ?, ?, ?)' ;
+                                            $stmt = $pdo->prepare($query) ;
+                                            $result = $stmt->execute([$clientFirstName, $clientLastName, $clientPhoneNumber, $clientEmail, $clientPassword]) ;
+                                            
+                                            if ($result) {
+                                                // Create a Session for the Client
+                                                $query = 'SELECT * FROM client WHERE email=?';
+                                                $stmt = $pdo->prepare($query);
+                                                $stmt->execute([$clientEmail]);
+                                   
+                                                if( $stmt->rowCount() >= 1 ) {
+                                                    // Create a Session for the Client
+                                                    session_start() ;
+                                                    $_SESSION['client'] = $stmt->fetch() ;
+
+                                                    // Redirect The Admin
+                                                    header( 'location: ../../index.php' ) ;
+                                                } 
+                                            }
+                                            else {
+                                                ?> 
+                                                    <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
+                                                        <p id="errorText" class="text-[#721c24] font-semibold text-center">Error Occurred</p>
+                                                    </div>
+                                                <?php
+                                            }
+                                    }
+                                }
+                            }
+                        }
+                        ?>
+
+
+                        <form class="flex flex-col gap-1" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                             <div>
                                 <label for="firstName" class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">First Name</label>
-                                <input type="text" name="clientFirstName" id="firstName" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <input type="text" name="clientFirstName" id="firstName" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                             </div>
                             <div>
                                 <label for="lastName" class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">Last Name</label>
-                                <input type="text" name="clientLastName" id="lastName" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                <input type="text" name="clientLastName" id="lastName" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                             </div>
-                            <label for="phoneNumber" class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">Phone Number</label>
+                            <label for="phoneNumber"  class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">Phone Number</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 start-0 top-0 flex items-center ps-3.5 pointer-events-none">
                                      <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 19 18">
                                      <path d="M18 13.446a3.02 3.02 0 0 0-.946-1.985l-1.4-1.4a3.054 3.054 0 0 0-4.218 0l-.7.7a.983.983 0 0 1-1.39 0l-2.1-2.1a.983.983 0 0 1 0-1.389l.7-.7a2.98 2.98 0 0 0 0-4.217l-1.4-1.4a2.824 2.824 0 0 0-4.218 0c-3.619 3.619-3 8.229 1.752 12.979C6.785 16.639 9.45 18 11.912 18a7.175 7.175 0 0 0 5.139-2.325A2.9 2.9 0 0 0 18 13.446Z"/>
                                     </svg>
                                 </div>
-                                <input type="text" id="phoneNumber" aria-describedby="helper-text-explanation" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-1  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" pattern="[0-9]{10}" required />
+                                <input type="text" id="phoneNumber" oninput="phoneValidator()" name="clientPhoneNumber" aria-describedby="helper-text-explanation" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 text-md rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-1  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                             </div>
+                            <div id="phoneError" class="text-red-500 text-sm mt-1 hidden">Please enter a valid phone number.</div>
                             <div>
                                 <label for="email" class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">Email</label>
-                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                                <input type="email" name="clientEmail" id="email" class="font-semibold bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" >
                             </div>
                             <div class="relative">
                                 <label for="password" class="block mb-1 text-meduim font-bold text-gray-900 dark:text-white">Password</label>
                                 <div class="relative">
-                                    <input type="password" name="clientPassword" oninput="showEyePassword()" id="pass" class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                                    <input type="password" name="clientPassword" oninput="showEyePassword()" id="pass" class="font-semibold bg-gray-50 border  border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                     <i id="eye" onclick="toggle()"  class="fas fa-eye absolute right-5 top-2.5 cursor-pointer hidden dark:text-white"></i>
                                 </div>
                             </div>
                             
-                            <button type="submit" class="w-full mt-1 mb-1 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-xl px-5 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Register</button>
+                            <button type="submit" id="submitButton" name="register" class="w-full mt-1 mb-1 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-semibold rounded-lg text-xl px-5 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Register</button>
                             <div class="flex justify-center items-center text-xl">
                                 <p class="font-light text-gray-500 dark:text-gray-400 sm:text-md text-md">
                                     Have an Account? <a href="./login.php" class="font-medium text-blue-600 hover:underline dark:text-blue-500">Sign In</a>
@@ -148,6 +223,32 @@
             });
         }
         themeToggle() ;
+
+
+        function phoneValidator() {
+            const phoneNumberInput = document.getElementById('phoneNumber');
+            const phoneNumber = phoneNumberInput.value;
+            const phoneError = document.getElementById('phoneError');
+            const submitButton = document.getElementById('submitButton');
+
+            // Regular expression to match only numbers
+            const numbersRegex = /^[0-9]+$/;
+
+            if (!phoneNumber.match(numbersRegex) || phoneNumber.length === 0 || phoneNumber.length !== 10 || phoneNumber.length > 10 || !(phoneNumber.startsWith('06') || phoneNumber.startsWith('07') || phoneNumber.startsWith('05'))) {
+                phoneError.textContent = 'Please enter a valid phone number.';
+                phoneError.classList.remove('hidden');
+                submitButton.style.visibility = "hidden"; // Hide the submit button
+            } else {
+                phoneError.classList.add('hidden');
+                submitButton.style.visibility = "visible"; // Show the submit button
+            }
+        }
+
+
+
+    
+
+
     </script>
     
 </body>
