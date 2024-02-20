@@ -68,7 +68,7 @@
                                    $stmt->execute([$adminEmail, $adminPassword]);
 
                                     if( $stmt->rowCount() >= 1 ) {
-                                            // Create a Session for the a Admin
+                                            // Create a Session for the Admin
                                             session_start() ;
                                             $_SESSION['admin'] = $stmt->fetch() ;
 

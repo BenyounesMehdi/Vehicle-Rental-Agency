@@ -60,12 +60,12 @@
                                    require_once '../../models/database.php' ;
                                    
                                     // Check if the Client exits in the database    
-                                   $query = 'SELECT * FROM client WHERE email=? AND password=?';
+                                   $query = 'SELECT * FROM client WHERE email=? AND pass=?';
                                    $stmt = $pdo->prepare($query);
                                    $stmt->execute([$clientEmail, $clientPassword]);
                                    
                                    if( $stmt->rowCount() >= 1 ) {
-                                        // Create a Session for the a Admin
+                                        // Create a Session for the Client
                                         session_start() ;
                                         $_SESSION['client'] = $stmt->fetch() ;
 
