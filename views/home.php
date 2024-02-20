@@ -42,7 +42,7 @@
 
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <?php 
-                if( !isset($_SESSION['client']) && !isset($_SESSION['admin'])  ) { // if neither the Admin not the Client or logged in
+                if( !isset($_SESSION['client']) && !isset($_SESSION['admin'])  ) { // if neither the Admin nor the Client are logged in
                     ?>
                         <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Sign In<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -70,7 +70,7 @@
                         </button>
                     <?php
                 }
-                else if( isset($_SESSION['client'])  ) { // if the Client if already Logged in
+                else if( isset($_SESSION['client'])  ) { // if the Client is already Logged in
 
                     ?>
                         <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="relative top-1 md:top-0 flex text-sm rounded-full md:me-0 " type="button">
