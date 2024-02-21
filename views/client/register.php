@@ -8,22 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
     
-    <script>
-        function theme() {
-         // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-            if (
-                localStorage.getItem("color-theme") === "dark" ||
-                (!("color-theme" in localStorage) &&
-                    window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        }   
-        theme() ;
-    </script>
-
     <style>
         /* For screens smaller than 640px (e.g., mobile screens) */
         #mainContent {
@@ -53,81 +37,8 @@
                             Create an Account
                         </h1>
 
-                        <?php
-                            if( isset($_POST['register']) ) {
-                                $clientFirstName = $_POST['clientFirstName'] ;
-                                $clientLastName = $_POST['clientLastName'] ;
-                                $clientPhoneNumber = $_POST['clientPhoneNumber'] ;
-                                $clientEmail = $_POST['clientEmail'] ;
-                                $clientPassword = $_POST['clientPassword'] ;
-
-                                // Check if the inputs are empty
-                                if( empty($clientFirstName) || empty($clientLastName) || empty($clientPhoneNumber) || empty($clientEmail) || empty($clientPassword) ) {
-                                    ?> 
-                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Please, Fill All The Inputs</p>
-                                        </div>
-                                    <?php
-                                }
-                                else { // Means all the inputs are filled
-                                    // Check if the email is valid
-                                    if( !filter_var($clientEmail, FILTER_VALIDATE_EMAIL) ) {
-                                        ?> 
-                                            <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                                <p id="errorText" class="text-[#721c24] font-semibold text-center">This Email Is Not A Valid Email</p>
-                                            </div>
-                                        <?php
-                                    }
-                                    else {
-                                        // Check if the email is already in the database or not
-                                        require_once '../../models/database.php' ;
-                                    
-                                        // Check if the Client exits in the database    
-                                        $query = 'SELECT * FROM client WHERE email=?';
-                                        $stmt = $pdo->prepare($query);
-                                        $stmt->execute([$clientEmail]);
-
-                                        if( $stmt->rowCount() >= 1 ) {
-                                            ?> 
-                                                <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                                    <p id="errorText" class="text-[#721c24] font-semibold text-center">This Email Is Already Exit</p>
-                                                </div>
-                                            <?php
-                                        }
-                                        else { // Means this client is new
-                                            // Time to insert all user infos in our database
-                                            $query = 'INSERT INTO client (firstName, lastName, phoneNumber, email, pass) VALUES (?, ?, ?, ?, ?)' ;
-                                            $stmt = $pdo->prepare($query) ;
-                                            $result = $stmt->execute([$clientFirstName, $clientLastName, $clientPhoneNumber, $clientEmail, $clientPassword]) ;
-                                            
-                                            if ($result) {
-                                                // Create a Session for the Client
-                                                $query = 'SELECT * FROM client WHERE email=?';
-                                                $stmt = $pdo->prepare($query);
-                                                $stmt->execute([$clientEmail]);
-                                   
-                                                if( $stmt->rowCount() >= 1 ) {
-                                                    // Create a Session for the Client
-                                                    session_start() ;
-                                                    $_SESSION['client'] = $stmt->fetch() ;
-
-                                                    // Redirect The Admin
-                                                    header( 'location: ../../index.php' ) ;
-                                                } 
-                                            }
-                                            else {
-                                                ?> 
-                                                    <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                                        <p id="errorText" class="text-[#721c24] font-semibold text-center">Error Occurred</p>
-                                                    </div>
-                                                <?php
-                                            }
-                                    }
-                                }
-                            }
-                        }
-                        ?>
-
+                       
+                        <?php include '../../models/backend/client/register.php' ?>
 
                         <form class="flex flex-col gap-1" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                             <div>
@@ -174,20 +85,45 @@
         </section>
     </div>
 
-    
     <script src="../JS/main.js"></script>
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script>
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function theme() {
+           
+            var themePreference = getCookie("color-theme");
+            if (themePreference === "dark" || (!themePreference && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                document.documentElement.classList.add("dark");
+                
+            } else {
+                document.documentElement.classList.remove("dark");
+                
+            }
+        }
+
         function themeToggle() {
             var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
             var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
+            
 
             // Change the icons inside the button based on previous settings
-            if (
-                localStorage.getItem("color-theme") === "dark" ||
-                (!("color-theme" in localStorage) &&
-                    window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
+            var themePreference = getCookie("color-theme");
+            if (themePreference === "dark" || (!themePreference && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
                 themeToggleLightIcon.classList.remove("hidden");
             } else {
                 themeToggleDarkIcon.classList.remove("hidden");
@@ -200,30 +136,22 @@
                 themeToggleDarkIcon.classList.toggle("hidden");
                 themeToggleLightIcon.classList.toggle("hidden");
 
-                // if set via local storage previously
-                if (localStorage.getItem("color-theme")) {
-                    if (localStorage.getItem("color-theme") === "light") {
-                        document.documentElement.classList.add("dark");
-                        localStorage.setItem("color-theme", "dark");
-                    } else {
-                        document.documentElement.classList.remove("dark");
-                        localStorage.setItem("color-theme", "light");
-                    }
-                }
-                // if NOT set via local storage previously
-                else {
-                    if (document.documentElement.classList.contains("dark")) {
-                        document.documentElement.classList.remove("dark");
-                        localStorage.setItem("color-theme", "light");
-                    } else {
-                        document.documentElement.classList.add("dark");
-                        localStorage.setItem("color-theme", "dark");
-                    }
+                // Toggle theme preference
+                var themePreference = getCookie("color-theme");
+                if (themePreference === "dark") {
+                    document.documentElement.classList.remove("dark");
+                    setCookie("color-theme", "light", 365); // Set cookie for 1 year
+                    
+                } else {
+                    document.documentElement.classList.add("dark");
+                    setCookie("color-theme", "dark", 365); // Set cookie for 1 year
+                    
                 }
             });
         }
-        themeToggle() ;
 
+        theme();
+        themeToggle();
 
         function phoneValidator() {
             const phoneNumberInput = document.getElementById('phoneNumber');
@@ -243,12 +171,6 @@
                 submitButton.style.visibility = "visible"; // Show the submit button
             }
         }
-
-
-
-    
-
-
     </script>
     
 </body>

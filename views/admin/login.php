@@ -8,22 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
     
-    <script>
-        function theme() {
-         // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-            if (
-                localStorage.getItem("color-theme") === "dark" ||
-                (!("color-theme" in localStorage) &&
-                    window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
-                document.documentElement.classList.add("dark");
-            } else {
-                document.documentElement.classList.remove("dark");
-            }
-        }   
-        theme() ;
-    </script>
-
     <style>
             /* For screens smaller than 640px (e.g., mobile screens) */
             #mainContent {
@@ -54,43 +38,7 @@
                             Sign In
                         </h1>
 
-                        <?php
-                            if( isset($_POST['signIn']) ) {
-                                $adminEmail = $_POST['adminEmail'] ;
-                                $adminPassword = $_POST['adminPassword'] ;
-
-                                if( !empty($adminEmail) && !empty($adminPassword) ) {
-                                   require_once '../../models/database.php' ;
-                                   
-                                    // Check if the Admin exits in the database    
-                                   $query = 'SELECT * FROM admin WHERE email=? AND password=?';
-                                   $stmt = $pdo->prepare($query);
-                                   $stmt->execute([$adminEmail, $adminPassword]);
-
-                                    if( $stmt->rowCount() >= 1 ) {
-                                            // Create a Session for the Admin
-                                            session_start() ;
-                                            $_SESSION['admin'] = $stmt->fetch() ;
-
-                                            // Redirect The Admin
-                                            header( 'location: dashboard.php' ) ;
-                                    }
-                                    else { ?> 
-                                            <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                                <p id="errorText" class="text-[#721c24] font-semibold text-center">Email Or Password Is Incorrect</p>
-                                            </div>
-                                        <?php
-                                    }
-                                }
-                                 else { ?> 
-                                        <div id="errorField" class="p-3 mb-4 text-md text-red-800 rounded-lg bg-red-100 dark:bg-red-100 dark:text-red-600" role="alert">
-                                            <p id="errorText" class="text-[#721c24] font-semibold text-center">Please, Fill All The Inputs</p>
-                                        </div>
-                                    <?php
-                                    
-                                }
-                            }
-                        ?>
+                        <?php include '../../models/backend/admin/login.php' ?>
                         
                         <form class="space-y-4 md:space-y-6" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                             <div>
@@ -112,20 +60,45 @@
         </section>
     </div>
 
-    
     <script src="../JS/main.js"></script>
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script>
+        function getCookie(name) {
+            var value = "; " + document.cookie;
+            var parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+        }
+
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/";
+        }
+
+        function theme() {
+           
+            var themePreference = getCookie("color-theme");
+            if (themePreference === "dark" || (!themePreference && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+                document.documentElement.classList.add("dark");
+                
+            } else {
+                document.documentElement.classList.remove("dark");
+                
+            }
+        }
+
         function themeToggle() {
             var themeToggleDarkIcon = document.getElementById("theme-toggle-dark-icon");
             var themeToggleLightIcon = document.getElementById("theme-toggle-light-icon");
+            
 
             // Change the icons inside the button based on previous settings
-            if (
-                localStorage.getItem("color-theme") === "dark" ||
-                (!("color-theme" in localStorage) &&
-                    window.matchMedia("(prefers-color-scheme: dark)").matches)
-            ) {
+            var themePreference = getCookie("color-theme");
+            if (themePreference === "dark" || (!themePreference && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
                 themeToggleLightIcon.classList.remove("hidden");
             } else {
                 themeToggleDarkIcon.classList.remove("hidden");
@@ -138,29 +111,22 @@
                 themeToggleDarkIcon.classList.toggle("hidden");
                 themeToggleLightIcon.classList.toggle("hidden");
 
-                // if set via local storage previously
-                if (localStorage.getItem("color-theme")) {
-                    if (localStorage.getItem("color-theme") === "light") {
-                        document.documentElement.classList.add("dark");
-                        localStorage.setItem("color-theme", "dark");
-                    } else {
-                        document.documentElement.classList.remove("dark");
-                        localStorage.setItem("color-theme", "light");
-                    }
-                }
-                // if NOT set via local storage previously
-                else {
-                    if (document.documentElement.classList.contains("dark")) {
-                        document.documentElement.classList.remove("dark");
-                        localStorage.setItem("color-theme", "light");
-                    } else {
-                        document.documentElement.classList.add("dark");
-                        localStorage.setItem("color-theme", "dark");
-                    }
+                // Toggle theme preference
+                var themePreference = getCookie("color-theme");
+                if (themePreference === "dark") {
+                    document.documentElement.classList.remove("dark");
+                    setCookie("color-theme", "light", 365); // Set cookie for 1 year
+                    
+                } else {
+                    document.documentElement.classList.add("dark");
+                    setCookie("color-theme", "dark", 365); // Set cookie for 1 year
+                    
                 }
             });
         }
-        themeToggle() ;
+
+        theme();
+        themeToggle();
     </script>
     
 </body>
