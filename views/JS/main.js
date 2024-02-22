@@ -4,14 +4,15 @@ const pass = document.getElementById("pass");
 const eye = document.getElementById("eye");
 
 function showEyePassword() {
-    const passValue = pass.value;
+    const passValue = document.getElementById("pass").value;
 
     if (passValue.length > 0) {
         eye.classList.remove("hidden");
-        eye.classList.add("text-black");
-    } else {
-        eye.classList.remove("text-black");
-        eye.classList.add("text-[#ccc]");
+        // eye.classList.add("text-black");
+    } 
+    else {
+        eye.classList.add("hidden") ;
+        // eye.classList.add("text-[#ccc]");
     }
 }
 
