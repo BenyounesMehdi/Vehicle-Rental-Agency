@@ -60,6 +60,7 @@
             xhttp.open("GET", url, true);
             xhttp.send();
         }
+        
 
         // function getCookie(name) {
         //     var value = "; " + document.cookie;
