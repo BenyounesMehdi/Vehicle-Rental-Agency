@@ -43,13 +43,26 @@
                             }
 
                             // Update the brand information in the database
-                            $query = 'UPDATE brand SET name=?, image=? WHERE brandID=?';
-                            $stmt = $pdo->prepare($query);
-                            $updated = $stmt->execute([$brandName, $fileName, $brandID]);
+                            // $query = 'UPDATE brand SET name=?, image=? WHERE brandID=?';
+                            // $stmt = $pdo->prepare($query);
+                            // $updated = $stmt->execute([$brandName, $fileName, $brandID]);
+
+                            // Update the brand information in the database
+                                if (!empty($brandImage)) {
+                                    // A new image is uploaded, replace the existing image
+                                    $query = 'UPDATE brand SET name=?, image=? WHERE brandID=?';
+                                    $stmt = $pdo->prepare($query);
+                                    $updated = $stmt->execute([$brandName, $fileName, $brandID]);
+                                } else {
+                                    // No new image uploaded, retain the existing image
+                                    $query = 'UPDATE brand SET name=? WHERE brandID=?';
+                                    $stmt = $pdo->prepare($query);
+                                    $updated = $stmt->execute([$brandName, $brandID]);
+                                }
 
                             if ($updated) {
                                 // Redirect the user to the previous page
-                                header('location: ../admin/dashboard.php');
+                                header('location: ../admin/brandsSide.php');
                                 exit; // Ensure that no further code is executed after the redirection
                             } else {
                                 $title = "Error Occurred";
@@ -83,7 +96,7 @@
                     <button id="editBrandBtn" type="submit" name="editBrand" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
                         Edit brand
                     </button>
-                    <a href="../admin/dashboard.php">
+                    <a href="../admin/brandsSide.php">
                         <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 ">Cancel</button>
                     </a>
                 </div>

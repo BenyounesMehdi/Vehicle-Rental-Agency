@@ -14,41 +14,53 @@
                 <div class="flex flex-col gap-4 sm:gap-4 sm:mb-3">
 
                     <?php
-                        if( isset($_POST['addBrand']) ) {
-                            $brandName = $_POST['brandName'] ;
-                            $brandImage = $_FILES['brandImage']['name'];
-                            
-                            if( empty($brandName) ) { // if the inputs are empty
-                                $title ="Please, Fill The Brand Name" ;
-                                include_once("../components/errorField.php");
-                            }
-                            else {
-                                require_once '../../models/database.php' ;
-                                if( empty($brandImage) ) {
-                                    $fileName = "" ;
-                                    $query = 'INSERT INTO brand (name) VALUES (?)' ;
-                                    $stmt = $pdo->prepare($query) ;
-                                    $inserted = $stmt->execute([$brandName]) ;
-                                }
-                                else {
-                                    $fileName = uniqid().$brandImage ;
-                                    // Move the file from [tmp_name] into assests/brandsImages
-                                     move_uploaded_file($_FILES['brandImage']['tmp_name'], '../../assets/brandsImages/'. $fileName) ;
-                                     $query = 'INSERT INTO brand (name, image) VALUES (?, ?)' ;
-                                     $stmt = $pdo->prepare($query) ;
-                                     $inserted = $stmt->execute([$brandName, $fileName]) ;
-                                }
 
-                                 if( $inserted ) {
-                                    // Redirect the user to the previous page
-                                    header('location: ../admin/dashboard.php') ;
-                                    exit; // Ensure that no further code is executed after the redirection
-                                }
-                                 else {
-                                    $title= "Error Occurred" ;
+                        if (isset($_POST['addBrand'])) {
+                            $brandName = $_POST['brandName'];
+                            $brandImage = $_FILES['brandImage']['name'];
+                        
+                            if (empty($brandName)) {
+                                $title = "Please, Fill The Brand Name";
+                                include_once("../components/errorField.php");
+                            } else {
+                                require_once '../../models/database.php';
+                        
+                                // Check if the brand name already exists in the database
+                                $query = 'SELECT * FROM brand WHERE name = ?';
+                                $stmt = $pdo->prepare($query);
+                                $stmt->execute([$brandName]);
+                                $existingBrand = $stmt->fetch();
+                        
+                                if ($existingBrand) {
+                                    // Brand name already exists, display an error message
+                                    $title = "The Brand Is Already Exists";
                                     include_once("../components/errorField.php");
-                                 }
-                             }
+                                } else {
+                                    // Brand name does not exist, proceed with adding the brand
+                                    if (empty($brandImage)) {
+                                        $fileName = "";
+                                        $query = 'INSERT INTO brand (name) VALUES (?)';
+                                        $stmt = $pdo->prepare($query);
+                                        $inserted = $stmt->execute([$brandName]);
+                                    } else {
+                                        $fileName = uniqid() . $brandImage;
+                                        // Move the file from [tmp_name] into assets/brandsImages
+                                        move_uploaded_file($_FILES['brandImage']['tmp_name'], '../../assets/brandsImages/' . $fileName);
+                                        $query = 'INSERT INTO brand (name, image) VALUES (?, ?)';
+                                        $stmt = $pdo->prepare($query);
+                                        $inserted = $stmt->execute([$brandName, $fileName]);
+                                    }
+                        
+                                    if ($inserted) {
+                                        // Redirect the user to the previous page
+                                        header('location: ../admin/brandsSide.php');
+                                        exit; // Ensure that no further code is executed after the redirection
+                                    } else {
+                                        $title = "Error Occurred";
+                                        include_once("../components/errorField.php");
+                                    }
+                                }
+                            }
                         }
                     ?>
 
@@ -66,7 +78,7 @@
                     <button type="submit" name="addBrand" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
                         Add brand
                     </button>
-                    <a href="../admin/dashboard.php">
+                    <a href="../admin/brandsSide.php">
                         <button type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 ">Cancel</button>
                     </a>
                 </div>
