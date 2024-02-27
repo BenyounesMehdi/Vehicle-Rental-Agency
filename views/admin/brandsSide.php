@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
+    
 </head>
 <body>
     
@@ -28,27 +29,36 @@
             
         </div>
 
-    
-
-    <?php
-        // echo "<pre>";
-        // var_dump($_SESSION);
-        // echo "</pre>";
-    // ?>
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="../JS/themeToggle.js"></script>
+    <script src="../JS/brandsSearch.js"></script>
     <script>
         
         function showSearchButtonToggole () {
             const searchInputValue = document.getElementById("default-search").value ;
             const searchButton = document.getElementById("searchButton") ;
+            const brandsTable = document.getElementById("brandsTable") ;
+            const brandsList = document.getElementById("brandsTable") ;
+            
             if( searchInputValue.length > 0 ) {
-                searchButton.classList.remove("hidden") ;
+                // searchButton.classList.remove("hidden") ;
+
+                brandsList.classList.remove("hidden") ;
+                brandsTable.classList.add("hidden") ;
             }
             else {
-                searchButton.classList.add("hidden") ;
+                // searchButton.classList.add("hidden") ;
+
+                brandsList.classList.add("hidden") ;
+                // brandsTable.classList.remove("hidden") ;
             }
         }
+
+        function closeModel() {
+                const cancelButton = document.getElementById("cancelButton") ;
+                const popupModal = document.getElementById("popup-modal") ;
+                popupModal.classList.add("hidden") ;
+            }
 
     </script>
 </body>

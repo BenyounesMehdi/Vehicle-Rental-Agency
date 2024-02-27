@@ -17,7 +17,7 @@
                 $_SESSION['admin'] = $stmt->fetch() ;
 
                 // Redirect The Admin
-                header( 'location: dashboard.php' ) ;
+                header( 'location: dashboardSide.php' ) ;
         }
         else { 
             $title = "Email Or Password Is Incorrect" ; 
