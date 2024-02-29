@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="dashboardSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg focus:bg-red-500 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
+                    <a href="dashboardSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg focus:bg-red-500 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this);">
                     <div class="flex justify-center items-center">
                         <svg class="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
                             <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
@@ -36,58 +36,58 @@
                         </svg>
                         <span class="ms-3 whitespace-nowrap">Dashboard</span>
                     </div>
-                    <i class="fa-solid fa-arrow-right"></i>
+                    <i id="dashboardArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="reservationsSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
+                    <a href="reservationsSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this);">
                     <div class="flex justify-center items-center">
                         <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 10h16m-8-3V4M7 7V4m10 3V4M5 20h14c.6 0 1-.4 1-1V7c0-.6-.4-1-1-1H5a1 1 0 0 0-1 1v12c0 .6.4 1 1 1Zm3-7h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Zm-8 4h0v0h0v0Zm4 0h0v0h0v0Zm4 0h0v0h0v0Z"/>
                         </svg>
                         <span class="ms-3 whitespace-nowrap">Reservations</span>
                     </div>
-                    <i class="fa-solid fa-arrow-right hidden"></i>
+                    <i id="reservationsArrow" class="hidden fa-solid fa-arrow-right"></i>
                     </a>
                 </li>
                 <li>
-                    <a href="clientSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
+                    <a href="clientSide.php" class="flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this);">
                     <div class="flex justify-center items-center">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
                             <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
                         </svg>
                         <span class="ms-3 whitespace-nowrap">Clients</span>
                     </div>
-                    <i class="fa-solid fa-arrow-right hidden"></i>
+                    <i id="clientsArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
                 <li class="flex">
-                    <a href="vehiclesSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
+                    <a href="vehiclesSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this);">
                     <div class="flex justify-center items-center">
                         <i class="fa-sharp fa-solid fa-car text-gray-500 text-xl"></i>
                         <span class="ms-3 whitespace-nowrap">Vehicles</span>
                     </div>
-                    <i class="fa-solid fa-arrow-right hidden"></i>
+                    <i id="vehiclesArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
                 <li class="flex">
-                    <a href="vehiclesTypeSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
+                    <a href="vehiclesTypeSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this);">
                     <div class="flex justify-center items-center">
                         <i class="fa-solid fa-layer-group text-gray-500 text-xl"></i>
                         <span class="ms-3 whitespace-nowrap">Vehicles Type</span>
                     </div>
-                    <i class="fa-solid fa-arrow-right hidden"></i>
+                    <i id="vehiclesTypeArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
                 <li class="flex">
-                    <a href="brandsSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="loadContent(this.href); return false;">
-                    <div class="flex justify-center items-center">
-                        <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M12 2a3 3 0 0 0-2.1.9l-.9.9a1 1 0 0 1-.7.3H7a3 3 0 0 0-3 3v1.2c0 .3 0 .5-.2.7l-1 .9a3 3 0 0 0 0 4.2l1 .9c.2.2.3.4.3.7V17a3 3 0 0 0 3 3h1.2c.3 0 .5 0 .7.2l.9 1a3 3 0 0 0 4.2 0l.9-1c.2-.2.4-.3.7-.3H17a3 3 0 0 0 3-3v-1.2c0-.3 0-.5.2-.7l1-.9a3 3 0 0 0 0-4.2l-1-.9a1 1 0 0 1-.3-.7V7a3 3 0 0 0-3-3h-1.2a1 1 0 0 1-.7-.2l-.9-1A3 3 0 0 0 12 2Zm3.7 7.7a1 1 0 1 0-1.4-1.4L10 12.6l-1.3-1.3a1 1 0 0 0-1.4 1.4l2 2c.4.4 1 .4 1.4 0l5-5Z" clip-rule="evenodd"/>
-                        </svg>
-                        <span class="ms-3 whitespace-nowrap">Brands</span>
-                    </div>
-                    <i class="fa-solid fa-arrow-right hidden"></i>
+                    <a href="brandsSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this); ">
+                        <div class="flex justify-center items-center">
+                            <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M12 2a3 3 0 0 0-2.1.9l-.9.9a1 1 0 0 1-.7.3H7a3 3 0 0 0-3 3v1.2c0 .3 0 .5-.2.7l-1 .9a3 3 0 0 0 0 4.2l1 .9c.2.2.3.4.3.7V17a3 3 0 0 0 3 3h1.2c.3 0 .5 0 .7.2l.9 1a3 3 0 0 0 4.2 0l.9-1c.2-.2.4-.3.7-.3H17a3 3 0 0 0 3-3v-1.2c0-.3 0-.5.2-.7l1-.9a3 3 0 0 0 0-4.2l-1-.9a1 1 0 0 1-.3-.7V7a3 3 0 0 0-3-3h-1.2a1 1 0 0 1-.7-.2l-.9-1A3 3 0 0 0 12 2Zm3.7 7.7a1 1 0 1 0-1.4-1.4L10 12.6l-1.3-1.3a1 1 0 0 0-1.4 1.4l2 2c.4.4 1 .4 1.4 0l5-5Z" clip-rule="evenodd"/>
+                            </svg>
+                            <span class="ms-3 whitespace-nowrap">Brands</span>
+                        </div>
+                        <i id="brandsArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
                 <li>
