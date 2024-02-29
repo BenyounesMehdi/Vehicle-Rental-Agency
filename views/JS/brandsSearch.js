@@ -38,4 +38,4 @@ function attachDeleteButtonListeners() {
             modal.classList.remove("hidden");
         });
     });
-}
+}   
