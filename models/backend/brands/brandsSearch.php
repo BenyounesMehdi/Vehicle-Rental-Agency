@@ -46,7 +46,7 @@
 
     if ($stmt->rowCount() > 0) { // There are results
         ?>
-        <div class="relative overflow-x-auto shadow-lg mt-3 ">
+        <div class="relative overflow-x-auto overflow-y-auto shadow-lg mt-3 " style="max-height : 350px;">
             <table class="w-full text-sm text-left rtl:text-right text-gray-50 dark:text-gray-400 rounded">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
                     <tr>
