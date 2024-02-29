@@ -9,6 +9,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
+
+    <style>
+        /* Default position */
+            #popup-modal {
+                position: fixed;
+                top: 0%;   
+                left: 40%;
+                /* transform: translate(-50%, -50%); */
+            }
+
+            @media (max-width: 768px) {
+                /* Position for screen sizes between sm and md */
+                #popup-modal {
+                    top: 0%;
+                    left: 30%;
+                }
+            }
+
+            @media (max-width: 576px) {
+                /* Position for screen sizes smaller than sm */
+                #popup-modal {
+                    top: 0%;
+                    left: 5%;
+                    /*width: 90%; */    
+                }
+            }
+        </style>
     
 </head>
 <body>
@@ -33,6 +60,18 @@
     <script src="../JS/themeToggle.js"></script>
     <script src="../JS/brandsSearch.js"></script>
     <script>
+            function storeID (id) {
+            // document.getElementById("brandID").value = id ;
+                // console.log("brandID : "+ id) ;
+                // Construct the URL with the ID
+                var deleteUrl = "../../models/backend/brands/deleteBrand.php?id=" + id;
+                
+                // Get the anchor tag by ID
+                var deleteLink = document.getElementById("deleteLink");
+                
+                // Set the href attribute of the anchor tag
+                deleteLink.href = deleteUrl;
+            }
         
         function showSearchButtonToggole () {
             const searchInputValue = document.getElementById("default-search").value ;
