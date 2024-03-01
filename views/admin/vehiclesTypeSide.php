@@ -62,10 +62,8 @@
     <script src="../JS/brandsSearch.js"></script>
     <script>
             function storeID (id) {
-            // document.getElementById("brandID").value = id ;
-                // console.log("brandID : "+ id) ;
-                // Construct the URL with the ID
-                var deleteUrl = "../../models/backend/brands/deleteBrand.php?id=" + id;
+
+                var deleteUrl = "../../models/backend/vehiclesType/deleteVehicleType.php?id=" + id;
                 
                 // Get the anchor tag by ID
                 var deleteLink = document.getElementById("deleteLink");
