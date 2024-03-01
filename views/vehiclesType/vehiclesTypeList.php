@@ -2,25 +2,25 @@
 require_once '../../models/database.php';
 
 // Get the search query from the URL
-$searchQuery = isset($_GET['brandsSearch']) ? $_GET['brandsSearch'] : '';
+$searchQuery = isset($_GET['vehiclesTypeSearch']) ? $_GET['vehiclesTypeSearch'] : '';
 
 // Initialize variable to count search results
 $searchResultCount = 0;
 
 if (!empty($searchQuery)) {
-    $query = 'SELECT * FROM vehicleType WHERE LOWER(name) LIKE ?';
+    $query = 'SELECT * FROM vehiclesType WHERE LOWER(name) LIKE ?';
     $stmt = $pdo->prepare($query);
     $stmt->execute(["%$searchQuery%"]);
-    $brands = $stmt->fetchAll();
+    $vehiclesType = $stmt->fetchAll();
     
     // Get the count of search results
-    $searchResultCount = count($brands);
+    $searchResultCount = count($vehiclesType);
 } else {
     // If no search query, fetch all brands
-    $query = 'SELECT * FROM brand';
+    $query = 'SELECT * FROM vehiclesType';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
-    $brands = $stmt->fetchAll();
+    $vehiclesType = $stmt->fetchAll();
 }   
 ?>
     
@@ -36,7 +36,7 @@ if (!empty($searchQuery)) {
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" oninput="showSearchButtonToggole()" name="brandsSearch" id="default-search" class="block font-semibold w-full p-3 ps-10 text-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
+                <input type="search" oninput="showSearchButtonToggole()" name="vehiclesTypeSearch" id="default-search" class="block font-semibold w-full p-3 ps-10 text-medium text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
                 <button id="searchButton" type="submit" class="hidden text-white absolute end-2 bottom-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
             </div>
         </form>
