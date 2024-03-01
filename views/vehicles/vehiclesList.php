@@ -2,25 +2,25 @@
 require_once '../../models/database.php';
 
 // Get the search query from the URL
-$searchQuery = isset($_GET['brandsSearch']) ? $_GET['brandsSearch'] : '';
+$searchQuery = isset($_GET['vehiclesSearch']) ? $_GET['vehiclesSearch'] : '';
 
 // Initialize variable to count search results
 $searchResultCount = 0;
 
 if (!empty($searchQuery)) {
-    $query = 'SELECT * FROM brand WHERE LOWER(name) LIKE ?';
+    $query = 'SELECT * FROM vehicle WHERE LOWER(name) LIKE ?';
     $stmt = $pdo->prepare($query);
     $stmt->execute(["%$searchQuery%"]);
-    $brands = $stmt->fetchAll();
+    $vehicles = $stmt->fetchAll();
     
     // Get the count of search results
     $searchResultCount = count($brands);
 } else {
     // If no search query, fetch all brands
-    $query = 'SELECT * FROM brand';
+    $query = 'SELECT * FROM vehicle';
     $stmt = $pdo->prepare($query);
     $stmt->execute();
-    $brands = $stmt->fetchAll();
+    $vehicles = $stmt->fetchAll();
 }   
 ?>
     
@@ -101,14 +101,14 @@ if (!empty($searchQuery)) {
                                 <td class=" px-6 py-2 font-bold text-gray-900 dark:text-white">
                                     <?php echo $vehicle->vehicleID; ?>
                                 </td>
-                                <td class="h-full py-3 flex justify-center items-center">
+                                <td class="py-4 flex justify-center items-center">
                                     <?php 
                                         if( $vehicle->image === "" ) {
                                             ?> <?php
                                         }
                                         else {
                                             ?>
-                                            <img src="../../assets/brandsImages/<?php echo $brand->image; ?>" class="w-10 rounded-full md:w-10 max-w-full max-h-full">
+                                            <img src="../../assets/vehiclesImages/<?php echo $vehicle->image; ?>" class="w-10 rounded-full md:w-10 max-w-full max-h-full">
                                             <?php
                                         }
                                     ?>
