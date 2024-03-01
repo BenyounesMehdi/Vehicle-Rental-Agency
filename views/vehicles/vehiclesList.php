@@ -51,7 +51,11 @@ if (!empty($searchQuery)) {
          
     <?php 
     // require_once '../../models/database.php' ;
-        $query = 'SELECT * FROM vehicle';
+        // $query = 'SELECT * FROM vehicle';
+        $query = "SELECT v.*, b.name as brandName, vt.name as vehicleTypeName
+                    FROM vehicle v
+                    JOIN brand b ON v.brandID = b.brandID
+                    JOIN vehiclesType vt ON v.vehicleTypeID = vt.vehiclesTypeID" ;
         $stmt = $pdo->prepare($query);
         $stmt->execute(); // Execute the query
         $vehicles = $stmt->fetchAll(); // Fetch all rows from the result set 
@@ -101,14 +105,14 @@ if (!empty($searchQuery)) {
                                 <td class=" px-6 py-2 font-bold text-gray-900 dark:text-white">
                                     <?php echo $vehicle->vehicleID; ?>
                                 </td>
-                                <td class="py-4 flex justify-center items-center">
+                                <td class="py-8  flex justify-center items-center">
                                     <?php 
                                         if( $vehicle->image === "" ) {
                                             ?> <?php
                                         }
                                         else {
                                             ?>
-                                            <img src="../../assets/vehiclesImages/<?php echo $vehicle->image; ?>" class="w-10 rounded-full md:w-10 max-w-full max-h-full">
+                                            <img src="../../assets/vehiclesImages/<?php echo $vehicle->image; ?>" class="w-20  md:w-10 max-w-full max-h-full">
                                             <?php
                                         }
                                     ?>
@@ -117,10 +121,10 @@ if (!empty($searchQuery)) {
                                     <?php echo $vehicle->name; ?>
                                 </td>
                                 <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                    <?php echo $vehicle->brandID; ?>
+                                    <?php echo $vehicle->brandName; ?>
                                 </td>
                                 <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                    <?php echo $vehicle->vehicleTypeID; ?>
+                                    <?php echo $vehicle->vehicleTypeName; ?>
                                 </td>
                                 <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                     <?php echo $vehicle->modelYear; ?>
@@ -135,7 +139,7 @@ if (!empty($searchQuery)) {
                                     <?php echo $vehicle->creationDate; ?>
                                 </td>
                                 <td class="px-6 py-2">
-                                    <a href="../brands/editBrand.php?id=<?php echo $vehicle->vehicleID ?>">
+                                    <a href="../vehicles/editVehicle.php?id=<?php echo $vehicle->vehicleID ?>">
                                         <button type="button" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 ">Edit</button>    
                                     </a>
                                     <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
