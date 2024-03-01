@@ -24,14 +24,14 @@
                             } else {
                                 require_once '../../models/database.php';
                         
-                                // Check if the brand name already exists in the database
+                                // Check if the vehicle type name already exists in the database
                                 $query = 'SELECT * FROM vehiclestype WHERE name = ?';
                                 $stmt = $pdo->prepare($query);
                                 $stmt->execute([$vehicleTypeName]);
                                 $existingVehicleType = $stmt->fetch();
                         
                                 if ($existingVehicleType) {
-                                    // Brand name already exists, display an error message
+                                    // vehicle type name already exists, display an error message
                                     $title = "The Vehicle Type Is Already Exists";
                                     include_once("../components/errorField.php");
                                 } else {
