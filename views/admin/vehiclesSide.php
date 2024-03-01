@@ -83,18 +83,22 @@
                 deleteLink.href = deleteUrl;
             }
         
-        function showSearchButtonToggole () {
-            const searchInputValue = document.getElementById("default-search").value ;
-            const searchButton = document.getElementById("searchButton") ;
-            if( searchInputValue.length > 0 ) {
-                searchButton.classList.remove("hidden") ;
+            function showSearchButtonToggole () {
+                const searchInputValue = document.getElementById("default-search").value ;
+                const searchButton = document.getElementById("searchButton") ;
+                if( searchInputValue.length > 0 ) {
+                    searchButton.classList.remove("hidden") ;
+                }
+                else {
+                    searchButton.classList.add("hidden") ;
+                }
             }
-            else {
-                searchButton.classList.add("hidden") ;
-            }
-        }
 
-        
+            function closeModel() {
+                const cancelButton = document.getElementById("cancelButton") ;
+                const popupModal = document.getElementById("popup-modal") ;
+                popupModal.classList.add("hidden") ;
+            }
 
     </script>
 </body>
