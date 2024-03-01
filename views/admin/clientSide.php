@@ -26,7 +26,13 @@
         ?>
         
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 h-screen" id="content-container">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700">Total Number : <?php echo countRableRows($pdo, $tableName) ?></button>
+            <div class="flex justify-between items-center mb-2 mr-3">
+                <div class="w-fit p-2  text-blue-700 bg-blue-100 border border-blue-300 rounded-lg dark:bg-gray-800 dark:border-blue-800 dark:text-blue-400" role="alert">
+                    <div class="w-fit flex items-center justify-between">
+                        <h3 class="font-medium">Total Number : <?php echo countRableRows($pdo, $tableName) ?></h3>
+                    </div>
+                </div> 
+            </div>          
             <?php include '../clients/clientsList.php' ; ?>
             
         </div>
