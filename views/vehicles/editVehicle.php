@@ -13,7 +13,7 @@
     
 <section class="">
         <div class="w-full ">
-            <p class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">Edit a Vehicle</p>
+            <p class="text-2xl font-semibold text-gray-900 dark:text-white">Edit a Vehicle</p>
 
 
             <?php
@@ -22,7 +22,8 @@
                             $id = $_GET['id'];
                             require '../../models/database.php';
                             // $query = 'SELECT * FROM vehicle WHERE vehicleID=?';
-                            $query = "SELECT v.*, b.name as brandName, vt.name as vehicleTypeName
+                            $query = "SELECT v.*, b.name as brandName, b.brandID as brandID,
+                                             vt.name as vehicleTypeName, vt.vehiclesTypeID as vehicleTypeID
                             FROM vehicle v
                             JOIN brand b ON v.brandID = b.brandID
                             JOIN vehiclesType vt ON v.vehicleTypeID = vt.vehiclesTypeID
@@ -30,8 +31,7 @@
                             $stmt = $pdo->prepare($query);
                             $stmt->execute([$id]);
                             $vehicle = $stmt->fetch();
-                            // var_dump($brand);
-
+                            
                         if (isset($_POST['editVehicle'])) {
 
                             // var_dump($_POST) ;
@@ -43,32 +43,38 @@
                             $vehicleStatus = $_POST['vehicleStatus'];
                             $vehicleImage = $_FILES['vehicleImage']['name'];
                             $vehicleID = $_POST['id'] ;
-                        
-                                // Check if the Vehicle name already exists in the database
-                                $query = 'SELECT * FROM vehicle WHERE name = ?';
-                                $stmt = $pdo->prepare($query);
-                                $stmt->execute([$vehicleName]);
-                                $existingVehicle = $stmt->fetch();
-                        
-                                if ($existingVehicle) { ?>
-                                    <p> <?php $existingVehicle->name; ?> </p>
-                                    <?php
-                                    // Vehicle name already exists, display an error message
-                                    $title = "The Vehicle Is Already Exists";
-                                    include_once("../components/errorField.php");
-                                } else {
-                                    // Vehicle name does not exist, proceed with adding the brand
 
+                                    if (empty($vehicleImage)) {
+                                        $fileName = "";
+                                    } else {
                                         $fileName = uniqid() . $vehicleImage;
                                         // Move the file from [tmp_name] into assets/brandsImages
                                         move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
                                         
+                                    }
+
+                                    // Vehicle name does not exist, proceed with adding the brand
+
+                                    if( !empty($vehicleImage) ) {
+                                     // A new image is uploaded, replace the existing image
                                         $query = 'UPDATE vehicle SET 
                                             name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
                                             image=?, brandID=?, vehicleTypeID=? WHERE vehicleID=?';
                                         $stmt = $pdo->prepare($query);
                                         $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
                                             $vehicleStatus, $fileName, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    }
+                                    else {
+                                        // No new image uploaded, retain the existing image
+                                        $query = 'UPDATE vehicle SET 
+                                            name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
+                                             brandID=?, vehicleTypeID=? WHERE vehicleID=?';
+                                        $stmt = $pdo->prepare($query);
+                                        $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
+                                            $vehicleStatus, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    }
+
+                                       
 
                         
                                     if ($updated) {
@@ -79,7 +85,7 @@
                                         $title = "Error Occurred";
                                         include_once("../components/errorField.php");
                                     }
-                                }
+                                
                             
 
                         }
@@ -114,8 +120,8 @@
                                 
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Brand</label>
                                 <select name="vehicleBrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <?php ?>
-                                    <option value=" <?php echo $vehicle->bradnID; ?>"> <?php echo $vehicle->brandName ?> </option>
+                                    
+                                    <option value=" <?php echo $vehicle->brandID; ?>"> <?php echo $vehicle->brandName ?> </option>
                                     <?php
                                     foreach ($brands as $brand) {
                                         if( $brand->name === $vehicle->brandName ) {
@@ -142,7 +148,7 @@
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type</label>
                                 <select name="vehicleType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <?php ?>
-                                    <option value=" <?php echo $vehicle->vehiclesTypeID; ?>"> <?php echo $vehicle->vehicleTypeName ?> </option>
+                                    <option value=" <?php echo $vehicle->vehicleTypeID; ?>"> <?php echo $vehicle->vehicleTypeName ?> </option>
                                     <?php
                                     foreach ($vehiclesType as $vehicleType) {
                                         if( $vehicleType->name === $vehicle->vehicleTypeName ) {
