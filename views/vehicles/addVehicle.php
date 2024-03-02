@@ -16,7 +16,8 @@
             <p class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">Add a Vehicle</p>
 
             <?php
-
+                        
+            
                         if (isset($_POST['addVehicle'])) {
 
                             // var_dump($_POST) ;
@@ -27,6 +28,19 @@
                             $costPerDay = $_POST['costPerDay'];
                             $vehicleStatus = $_POST['vehicleStatus'];
                             $vehicleImage = $_FILES['vehicleImage']['name'];
+
+                            $query = 'SELECT * FROM admin';
+                            $stmt = $pdo->prepare($query);
+                            $stmt->execute();
+                            $admins = $stmt->fetchAll(); 
+                            
+                            foreach ($admins as $admin) {
+                                $adminID = $admin->adminID;
+                                // echo $adminID;
+                            }
+
+                            $date = date('Y-m-d');
+                            // echo "Date : " . $date ;
 
                         
                             if (empty($vehicleName) || empty($brandID) || empty($vehiclesTypeID ) || empty($modelYear) || empty($costPerDay) || empty($vehicleStatus) || empty($_FILES['vehicleImage']['name']))  {
@@ -45,16 +59,19 @@
                                     $title = "The Vehicle Is Already Exists";
                                     include_once("../components/errorField.php");
                                 } else {
+
+                                   
+
                                     // Vehicle name does not exist, proceed with adding the brand
 
                                         $fileName = uniqid() . $vehicleImage;
                                         // Move the file from [tmp_name] into assets/brandsImages
                                         move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
                                         $query = 'INSERT INTO vehicle
-                                                 (name, modelYear, costPerDay, vehicleStatus, image, brandID, vehicleTypeID)
-                                                  VALUES (?,?,?,?,?,?,?)';
+                                                 (name, modelYear, costPerDay, vehicleStatus, image, creationDate, brandID, vehicleTypeID, adminID)
+                                                  VALUES (?,?,?,?,?,?,?,?,?)';
                                         $stmt = $pdo->prepare($query);
-                                        $inserted = $stmt->execute([$vehicleName, $modelYear, $costPerDay, $vehicleStatus, $fileName, $brandID, $vehiclesTypeID]);
+                                        $inserted = $stmt->execute([$vehicleName, $modelYear, $costPerDay, $vehicleStatus, $fileName, $date, $brandID, $vehiclesTypeID, $adminID]);
                                   
                         
                                     if ($inserted) {
