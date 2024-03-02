@@ -29,11 +29,11 @@ searchField.onkeyup = () => {
 
 // Function to attach event listeners to delete buttons
 function attachDeleteButtonListeners() {
-    console.log("Attaching delete button listeners...");
+    // console.log("Attaching delete button listeners...");
     const deleteButtons = document.querySelectorAll("[data-modal-target='popup-modal']");
     deleteButtons.forEach((button) => {
         button.addEventListener("click", () => {
-            console.log("Delete button clicked:", button);
+            // console.log("Delete button clicked:", button);
             const modal = document.getElementById("popup-modal");
             modal.classList.remove("hidden");
         });
