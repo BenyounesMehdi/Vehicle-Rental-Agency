@@ -69,7 +69,7 @@
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="../JS/themeToggle.js"></script>
     <script src="../JS/brandsSearch.js"></script>
-    <script src="../JS/brandsSearch.js"></script>
+    <script src="../JS/arrowToggle.js"></script>
     <script>
             function storeID (id) {
             // document.getElementById("brandID").value = id ;

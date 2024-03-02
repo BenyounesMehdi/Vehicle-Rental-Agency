@@ -68,6 +68,7 @@
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="../JS/themeToggle.js"></script>
     <script src="../JS/arrowToggle.js"></script>
+    <script src="../JS/vehiclesSearch.js"></script>
     <script>
 
             function storeID (id) {
@@ -86,11 +87,20 @@
             function showSearchButtonToggole () {
                 const searchInputValue = document.getElementById("default-search").value ;
                 const searchButton = document.getElementById("searchButton") ;
+                const vehiclesTable = document.getElementById("vehiclesTable") ;
+                const vehiclesList = document.getElementById("vehiclesList") ;
+                
                 if( searchInputValue.length > 0 ) {
-                    searchButton.classList.remove("hidden") ;
+                    // searchButton.classList.remove("hidden") ;
+
+                    vehiclesList.classList.remove("hidden") ;
+                    vehiclesTable.classList.add("hidden") ;
                 }
                 else {
-                    searchButton.classList.add("hidden") ;
+                    // searchButton.classList.add("hidden") ;
+
+                    vehiclesList.classList.add("hidden") ;
+                    // brandsTable.classList.remove("hidden") ;
                 }
             }
 
