@@ -65,13 +65,10 @@ if (!empty($searchQuery)) {
             <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        ID
+                        Name
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Image
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Name
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Brand
@@ -102,10 +99,11 @@ if (!empty($searchQuery)) {
                         foreach ($vehicles as $vehicle) { ?> 
                                 
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class=" px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                    <?php echo $vehicle->vehicleID; ?>
+                                
+                                <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
+                                    <?php echo $vehicle->name; ?>
                                 </td>
-                                <td class="py-8  flex justify-center items-center">
+                                <td class="py-8 flex justify-center items-center">
                                     <?php 
                                         if( $vehicle->image === "" ) {
                                             ?> <?php
@@ -116,9 +114,6 @@ if (!empty($searchQuery)) {
                                             <?php
                                         }
                                     ?>
-                                </td>
-                                <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                    <?php echo $vehicle->name; ?>
                                 </td>
                                 <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                     <?php echo $vehicle->brandName; ?>
