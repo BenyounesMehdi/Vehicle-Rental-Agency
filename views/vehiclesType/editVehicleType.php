@@ -9,7 +9,7 @@
     
 <section class="">
         <div class="max-w-2xl">
-            <p class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">Edit a Brand</p>
+            <p class="mb-4 text-2xl font-semibold text-gray-900 dark:text-white">Edit a Vehicle Type</p>
             <form class=" ml-2" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                 <div class="flex flex-col gap-4 sm:gap-4 sm:mb-3">
 
