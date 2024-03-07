@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="./dist/style.css"> -->
     <link rel="stylesheet" href="./node_modules/flowbite/dist/flowbite.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="./components/CSS/carousel.css">
     <title>Vehicle Rental Agency</title>
     
 
@@ -28,7 +30,7 @@
 
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
-
+    <script src="./JS/carousel.js"></script>
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
     <script>
 
