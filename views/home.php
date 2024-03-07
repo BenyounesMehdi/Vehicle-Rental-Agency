@@ -10,19 +10,25 @@
     <!-- <link rel="stylesheet" href="./dist/style.css"> -->
     <link rel="stylesheet" href="./node_modules/flowbite/dist/flowbite.min.css">
     <title>Vehicle Rental Agency</title>
+    
 
 </head>
-<body>
+<body class="bg-white dark:bg-gray-900">
     
-    <div>
+    <div class="">
         <!-- NAVBAR -->
         <?php include 'components/navbar.php' ?>
         <!-- NAVBAR -->
-
+    </div>
+    <div class="mt-10">
+        <!-- CAROUSEL -->
+        <?php include 'components/vehiclesCarousel.php' ?>
+        <!-- CAROUSEL -->
     </div>
 
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
+
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
     <script>
 
