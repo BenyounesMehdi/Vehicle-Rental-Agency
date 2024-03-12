@@ -121,7 +121,7 @@
 
   ?>
 
-  <div class="container mx-auto mb-5 px-6">
+  <div class="container mx-auto mb-5 px-6 scroll-smooth">
       <?php 
           $vehiclesTypeQuery = "SELECT * FROM vehiclesType" ;
           $stmt = $pdo->prepare($vehiclesTypeQuery) ;
@@ -129,10 +129,11 @@
           $vehiclesType = $stmt->fetchAll() ;
 
           foreach ($vehiclesType as $vehicleType) {
-            
+
             ?>
-              <p class="text-2xl sm:text-4xl font-semibold dark:text-white text-left"> <?php echo $vehicleType->name; ?> </p>
-              <div class="wrapper container mx-auto px-4 py-8 relative">
+              <section id="<?php echo $vehicleType->name; ?>" >
+              <p  class="text-2xl sm:text-4xl font-semibold dark:text-white text-left"> <?php echo $vehicleType->name; ?> </p>
+              <div  class="wrapper container mx-auto px-4 py-8 relative">
                     
                     <i id="left" class="fa-solid fa-angle-left "></i>
 
@@ -175,6 +176,7 @@
                     </ul>
                     <i id="right" class="fa-solid fa-angle-right"></i>
               </div>
+              </section>
             <?php
           }
         ?>
