@@ -165,7 +165,7 @@
                                               }
                                           ?>
                                           <p class="font-semibold text-xl <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
-                                          <a href="" class="text-black dark:text-white hover:underline font-light text-sm mt-1">Show Details</a>
+                                          <a href="../../../VehicleRentalAgency/views/components/showVehicleDetails.php?id=<?php echo $vehicle->vehicleID ?>" class="text-black dark:text-white hover:underline font-light text-sm mt-1">Show Details</a>
                                     </li>
                                 
                               <?php
