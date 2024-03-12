@@ -10,7 +10,6 @@
     <!-- <link rel="stylesheet" href="./dist/style.css"> -->
     <link rel="stylesheet" href="./node_modules/flowbite/dist/flowbite.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <link rel="stylesheet" href="./components/CSS/carousel.css">
     <title>Vehicle Rental Agency</title>
     
 
