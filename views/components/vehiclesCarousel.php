@@ -156,17 +156,18 @@
                               ?>
                                   
                                     <li class="card bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                      <h2 class="text-black dark:text-white text-center"> <?php echo $vehicle->vehicleName; ?> </h2>
+                                      <p class="font-semibold text-green-500 text-center italic"> <?php echo $vehicle->costPerDay; ?> DA </p>
                                           <div class="img"><img src="./assets/vehiclesImages/<?php echo $vehicle->vehicleImage; ?>" draggable="false"></div>
-                                          <h2 class="text-black dark:text-white text-center "> <?php echo $vehicle->vehicleName; ?> </h2>
+                                          <p class="font-semibold text-xl <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
                                           <?php // The Reserve Now Button Should Not Appear When The User Is The Admin
                                               if( !isset($_SESSION['admin']) ) {
                                                 ?>
-                                                    <a href="" class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> Reserve Now </a>
+                                                    <a href="" class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 me-2 mt-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> Reserve Now </a>
                                                 <?php
                                               }
                                           ?>
-                                          <p class="font-semibold text-xl <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
-                                          <a href="../../../VehicleRentalAgency/views/components/showVehicleDetails.php?id=<?php echo $vehicle->vehicleID ?>" class="text-black dark:text-white hover:underline font-light text-sm mt-1">Show Details</a>
+                                          <a href="../../../VehicleRentalAgency/views/components/showVehicleDetails.php?id=<?php echo $vehicle->vehicleID ?>" class="text-black dark:text-white hover:underline font-light text-sm mt-0">Show Details</a>
                                     </li>
                                 
                               <?php
