@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth" style="scroll-behavior: smooth;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +26,7 @@
         <?php include 'components/vehiclesCarousel.php' ?>
         <!-- CAROUSEL -->
     </div>
+    
 
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->

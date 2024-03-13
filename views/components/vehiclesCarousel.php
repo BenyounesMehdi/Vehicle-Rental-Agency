@@ -121,7 +121,7 @@
 
   ?>
 
-  <div class="container mx-auto mb-5 px-6 scroll-smooth">
+  <div class="container mx-auto mb-5 px-6 ">
       <?php 
           $vehiclesTypeQuery = "SELECT * FROM vehiclesType" ;
           $stmt = $pdo->prepare($vehiclesTypeQuery) ;
@@ -131,7 +131,7 @@
           foreach ($vehiclesType as $vehicleType) {
 
             ?>
-              <section id="<?php echo $vehicleType->name; ?>" >
+              <section id="<?php echo $vehicleType->name; ?>">
               <p  class="text-2xl sm:text-4xl font-semibold dark:text-white text-left"> <?php echo $vehicleType->name; ?> </p>
               <div  class="wrapper container mx-auto px-4 py-8 relative">
                     
