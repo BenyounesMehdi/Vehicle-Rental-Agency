@@ -24,10 +24,12 @@
         // var_dump($client) ;
 
 
-
         // Get the vehicle data
-        $vehicle = getData($pdo, 'vehicle') ;
-        $query = "SELECT * FROM vehicle
+        // $vehicle = getData($pdo, 'vehicle') ;
+        $query = "SELECT v.* , b.name as brandName
+                  FROM vehicle v
+                  JOIN brand b 
+                  ON v.brandID = b.brandID 
                  WHERE vehicleID = $vehicleID" ;
         $stmt = $pdo->prepare($query) ;
         $stmt->execute() ;
@@ -37,6 +39,17 @@
     }
     
 ?>
+
+        <?php 
+        
+            if( isset($_POST['reserve']) ) {
+                $clientID = $POST['clientID'] ;
+                $vehicleID = $POST['vehicleID'] ;
+
+
+            }
+        
+        ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -49,103 +62,273 @@
 
     <section class="container mx-auto ">
          <p class="text-4xl font-meduim text-black dark:text-white mb-7">Create a New Reservation</p>
-         <div class="flex justify-center items-center">
-                <img src="../../assets/vehiclesImages/<?php echo $vehicle->image ?>" class="mb-2 w-72">
+         
+         <div class="flex flex-col sm:flex-row justify-center items-center p-2 mb-2 sm:mb-5">
+            <div class="flex justify-center items-center mr-8">
+                    <img src="../../assets/vehiclesImages/<?php echo $vehicle->image ?>" class="mb-2 w-72">
+            </div>
+            <div class="p-2 mt-2 ml-8">
+                    <p class="text-2xl text-black dark:text-white font-semibold mb-1">Name : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->name; ?></span> </p>
+                    <p class="text-2xl text-black dark:text-white font-semibold mb-1 ">Brand : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->brandName; ?></span> </p>
+                    <p class="text-2xl text-black dark:text-white font-semibold mb-1">Model Year : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->modelYear; ?></span> </p>
+                    <p class="text-2xl text-black dark:text-white font-semibold mb-1">Cost Per Day : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->costPerDay; ?> DA</span> </p>
+            </div>
          </div>
 
-           <!-- TABS -->
-            <div class="sm:hidden">
-                    <select id="tabs" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option>Client</option>
-                        <option>Vehicle</option>
-                        <option>Reserve</option>
-                    </select>
-                </div>
-                <ul class="hidden text-sm font-medium text-center text-gray-500 rounded-lg shadow sm:flex dark:divide-gray-700 dark:text-gray-400">
-    <li class="w-full focus-within:z-10">
-        <p class="tab-item inline-block w-full p-4 text-gray-900 bg-gray-100 border-r border-gray-200 dark:border-gray-700 rounded-s-lg focus:ring-4 focus:ring-blue-300 active focus:outline-none dark:bg-gray-700 dark:text-white" data-target="client">Profile</p>
-    </li>
-    <li class="w-full focus-within:z-10">
-        <p class="tab-item inline-block w-full p-4 bg-white border-r border-gray-200 dark:border-gray-700 hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:ring-blue-300 focus:outline-none dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-target="vehicle">Vehicle</p>
-    </li>
-    <li class="w-full focus-within:z-10">
-        <p class="tab-item inline-block w-full p-4 bg-white border-s-0 border-gray-200 dark:border-gray-700 rounded-e-lg hover:text-gray-700 hover:bg-gray-50 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-target="reserve">Reserve</p>
-    </li>
-</ul>
+       
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
 
-            <!-- CAROUSEL -->
-                <div id="controls-carousel" class="relative w-full bg-red-400 mt-2" data-carousel="static">
-                    <!-- Carousel wrapper -->
-                    <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <!-- Item 1 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <p>Client</p>
+            <div class="flex flex-col sm:flex-row w-full gap-3">
+                <div class="w-full">
+                    <label for="pickupDate" class="text-xl text-black dark:text-white font-semibold italic">Pick up Date</label>
+                    <div class="relative w-full mt-2">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                            </svg>
                         </div>
-                        <!-- Item 2 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                            <p>Vehicle</p>
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <p>Reserve</p>
-                        </div>
+                        <input name="pickupDate" id="pickupDate" datepicker type="text" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pick up date" readonly>
                     </div>
-
-                    <!-- Slider controls -->
-                    <!-- <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                            </svg>
-                            <span class="sr-only">Previous</span>
-                        </span>
-                    </button>
-                    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
-                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                            </svg>
-                            <span class="sr-only">Next</span>
-                        </span>
-                    </button> -->
-
+                    <p id="pickupDateMessage"  class="text-red-500 font-semibold dark:text-red-600">The chosen date is already past</p>
                 </div>
+
+                <div class="w-full">
+                    <label for="returnDate" class="text-xl text-black dark:text-white font-semibold italic">Return Date</label>
+                    <div class="relative w-full mt-2">
+                        <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                            </svg>
+                        </div>
+                        <input name="returnDate" id="returnDate" datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Return date" readonly>
+                    </div>
+                    <p id="returnDateMessage" class="hidden text-red-500 font-semibold dark:text-red-600">Choose a day in the future</p>
+                </div>
+
+                <div class="w-full flex flex-col gap-2 ">
+                    <p class="text-xl text-black dark:text-white font-semibold italic ">Total Days</p>
+                    <div type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 ">0</div>
+                </div>
+                <input type="hidden" name="duration" readonly >
+            </div>
+
+            
+            <div class="w-full flex flex-col justify-center items-center mt-1">
+                <label class="text-xl text-black dark:text-white font-semibold italic ">Total Cost</label>
+                <p class="text-3xl text-green-600 font-semibold italic">2500 DA</p>
+                <input type="hidden" name="totalCost" readonly class="font-semibold mt-1 outline-none border border-green-600 focus:border-green-600 bg-green-600 focus:ring-green-600 text-white italic rounded-lg block py-1.5 w-fit dark:bg-green-600 text-center text-xl " value="<?php echo $vehicle->costPerDay ?> DA">
+            </div>
+
+            <!-- HiDDEn INPUTS -->
+                <input type="hidden" name="clientID" value="<?php echo $_GET['id'] ?>">
+                <input type="hidden" name="vehicleID" value="<?php echo $_GET['vehicle'] ?>">
+            
+        </div>
+        <div class="w-full flex justify-center items-center mt-3 sm:px-3">
+                <button id="reserveButton" name="reserve" type="submit" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
+                    Reserve Now
+                </button>
+            
+        </div>
+        
+</form>
+         
 
     </section>
 
     <script src="../JS/themeToggle.js"></script>
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <script>
-     document.addEventListener("DOMContentLoaded", function() {
-        // Get all tab items
-        const tabItems = document.querySelectorAll('.tab-item');
 
-        // Get all carousel items
-        const carouselItems = document.querySelectorAll('[data-carousel-item]');
+    let pickupDateAuth = false;
+    let returnDateAuth = false;
 
-        // Add click event listener to each tab item
-        tabItems.forEach(function(tabItem) {
-            tabItem.addEventListener('click', function() {
-                // Hide all carousel items
-                carouselItems.forEach(function(carouselItem) {
-                    carouselItem.classList.add('hidden');
-                });
+    reserveButtonToggole() ;
 
-                // Get the target carousel item based on the data-target attribute of the clicked tab
-                const targetCarouselItemId = this.getAttribute('data-target');
-                const targetCarouselItem = document.querySelector(`[data-carousel-item="${targetCarouselItemId}"]`);
+    // Function to log the chosen date to the console
+    function logChosenDate() {
+        setTimeout(function() {
+            var pickupDate = document.getElementById("pickupDate").value;
+            
+            // Check if the input value is in a valid date format
+            if (pickupDate.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+                var dateParts = pickupDate.split("/"); // Split the date string into parts
+                var inputDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]); // Construct a Date object
+                console.log("Chosen date:", inputDate); // Log chosen date to console
+                
+                // Check if the chosen date is in the past
+                var currentDate = new Date();
 
-                // Show the target carousel item
-                targetCarouselItem.classList.remove('hidden');
+                var previousDate = new Date(currentDate);
+                previousDate.setDate(currentDate.getDate() - 1);
+                console.log("input date : ", inputDate) ;
 
-                // If the target carousel item is active, make it the current slide
-                if (targetCarouselItem.getAttribute('data-carousel-item') === 'active') {
-                    const carousel = document.querySelector('#controls-carousel');
-                    carousel.dataset.carousel = 'active';
+                if (inputDate >= previousDate) {
+                    document.getElementById("pickupDateMessage").style.display = "none"; 
+                    // document.getElementById("reserveButton").style.display = "block"; 
+                    pickupDateAuth = true ;
+                } 
+                else {
+                    // document.getElementById("reserveButton").style.display = "none"; 
+                    pickupDateAuth = false ;
+                    document.getElementById("pickupDateMessage").style.display = "block"; 
                 }
-            });
-        });
-    });
+            } else {
+                console.log("Invalid date format:", pickupDate); // Log invalid date format
+            }
+            reserveButtonToggole() ;
+        }, 50); // Adjust the delay as needed (in milliseconds)
+    }
+
+    // Function to check if the chosen date is in the past
+    function checkPickupDate() {
+        var inputDate = new Date(document.getElementById("pickupDate").value);
+        var currentDate = new Date();
+
+        // If inputDate is in the past
+        if (inputDate < currentDate) {
+            document.getElementById("pickupDateMessage").style.display = "block"; // Show message
+            pickupDateAuth = false ;
+        } else {
+            document.getElementById("pickupDateMessage").style.display = "none"; // Hide message
+            // document.getElementById("reserveButton").style.display = "block"; // Show message
+            pickupDateAuth = true ;
+        }
+        reserveButtonToggole() ;
+    }
+
+    // Add event listeners to input field
+    document.getElementById("pickupDate").addEventListener("focus", logChosenDate); // Listen for focus event
+    document.getElementById("pickupDate").addEventListener("input", checkPickupDate);
+
+    // Call checkPickupDate() initially to check the date when the page loads
+    checkPickupDate();
+
+
+
+
+
+
+    // Function to log the chosen date to the console
+    function logChosenReturnDate() {
+        setTimeout(function() {
+            var returnDate = document.getElementById("returnDate").value;
+            
+            // Check if the input value is in a valid date format
+            if (returnDate.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+                var dateParts = returnDate.split("/"); // Split the date string into parts
+                var inputDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]); // Construct a Date object
+                console.log("Chosen date:", inputDate); // Log chosen date to console
+                
+                // Check if the chosen date is in the past
+                var currentDate = new Date();
+
+                if (inputDate >= currentDate) {
+                    document.getElementById("returnDateMessage").style.display = "none"; 
+                    // document.getElementById("reserveButton").style.display = "block"; 
+                    returnDateAuth = true ;
+                } 
+                else {
+                    // document.getElementById("reserveButton").style.display = "none"; 
+                    returnDateAuth = false ;
+                    document.getElementById("returnDateMessage").style.display = "block"; 
+                }
+            } else {
+                console.log("Invalid date format:", returnDate); // Log invalid date format
+            }
+            reserveButtonToggole() ;
+        }, 50); // Adjust the delay as needed (in milliseconds)
+    }
+
+    // Function to check if the chosen date is in the past
+    function checkReturnDate() {
+        var inputDate = new Date(document.getElementById("returnDate").value);
+        var currentDate = new Date();
+
+        // If inputDate is in the past
+        if (inputDate < currentDate) {
+            document.getElementById("returnDateMessage").style.display = "block"; // Show message
+            returnDateAuth = false ;
+        } else {
+            document.getElementById("returnDateMessage").style.display = "none"; // Hide message
+            // document.getElementById("reserveButton").style.display = "block"; // Show message
+            returnDateAuth = true ;
+        }
+        reserveButtonToggole() ;
+    }
+
+    // Add event listeners to input field
+    document.getElementById("returnDate").addEventListener("focus", logChosenReturnDate); // Listen for focus event
+    document.getElementById("returnDate").addEventListener("input", checkReturnDate);
+
+    // Call checkPickupDate() initially to check the date when the page loads
+    checkReturnDate();
+
+
+    setInterval(() => {
+        // reserveButtonToggole() ;
+    }, 0);
+
+    function reserveButtonToggole() {
+        const reserveButton = document.getElementById("reserveButton") ;
+
+        if( pickupDateAuth && returnDateAuth ) {
+            console.log("pickupDate : ", pickupDateAuth) ;
+            console.log("returnDate : ", returnDateAuth) ;
+            reserveButton.classList.remove("hidden") ;
+        }
+        else {
+            console.log("pickupDate : ", pickupDateAuth) ;
+            console.log("returnDate : ", returnDateAuth) ;
+            reserveButton.classList.add("hidden") ;
+        }
+    }
+    reserveButtonToggole() ;
+
+
+
+
+    
+
+    // Function to log the chosen return date to the console and check if it's in the past
+    // function logChosenReturnDate() {
+    //     setTimeout(function() {
+    //         var returnDateInput = document.getElementById("returnDate").value;
+            
+    //         // Check if the input value is in a valid date format
+    //         if (returnDateInput.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+    //             var returnDateParts = returnDateInput.split("/"); // Split the return date string into parts
+    //             var returnInputDate = new Date(returnDateParts[2], returnDateParts[0] - 1, returnDateParts[1]); // Construct a Date object
+    //             console.log("Chosen return date:", returnInputDate); // Log chosen return date to console
+                
+    //             // Check if the chosen return date is in the past
+    //             var currentDate = new Date();
+    //             if (returnInputDate < currentDate) {
+    //                 document.getElementById("returnDateMessage").style.display = "block";
+    //                 document.getElementById("reserveButton").style.display = "none";  
+    //             } else {
+    //                 document.getElementById("returnDateMessage").style.display = "none";
+    //                 document.getElementById("reserveButton").style.display = "block";  
+    //             }
+    //         } else {
+    //             console.log("Invalid return date format:", returnDateInput); // Log invalid return date format
+    //         }
+    //     }, 50); // Adjust the delay as needed (in milliseconds)
+    // }
+
+    // // Add event listener to return date input field
+    // document.getElementById("returnDate").addEventListener("focus", logChosenReturnDate); // Listen for focus event
+
+    // // Call logChosenReturnDate() initially to check the return date when the page loads
+    // logChosenReturnDate();
+
 </script>
+</script>
+
+    </script>
+
 </body>
 </html>
