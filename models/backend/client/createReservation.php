@@ -10,15 +10,6 @@
         $clientID = $_POST['clientID'] ;
         $vehicleID = $_POST['vehicleID'] ;
 
-        echo "pickupDate : ". $pickupDate . "<br>";
-        echo "returnDate : ".$returnDate . "<br>";
-        echo "duration : ". $duration . "<br>";
-        echo "totalCost : ".$totalCost . "<br>";
-        echo "reservationDate : ".$reservationDate . "<br>";
-        echo "isPayed : ". $isPayed . "<br>";
-        echo "clientID : ".$clientID . "<br>";
-        echo "vehicleID : ".$vehicleID . "<br>";
-
         require_once '../../database.php' ;
         
         $query = 'INSERT INTO reservation
