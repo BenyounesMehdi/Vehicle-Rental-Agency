@@ -45,10 +45,7 @@
             if( isset($_POST['reserve']) ) {
                 $clientID = $POST['clientID'] ;
                 $vehicleID = $POST['vehicleID'] ;
-
-
             }
-        
         ?>
 
 <!DOCTYPE html>
@@ -76,7 +73,7 @@
          </div>
 
        
-        <form action="../client/showReservationDetails.php" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
+        <form action="../../models/backend/client/createReservation.php" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
 
             <div class="flex flex-col sm:flex-row w-full gap-3">
                 <div class="w-full">
