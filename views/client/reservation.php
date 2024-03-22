@@ -76,7 +76,7 @@
          </div>
 
        
-        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
+        <form action="../client/showReservationDetails.php" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
 
             <div class="flex flex-col sm:flex-row w-full gap-3">
                 <div class="w-full">
@@ -109,14 +109,15 @@
                     <p class="text-xl text-black dark:text-white font-semibold italic ">Total Days</p>
                     <div id="totalDays" type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 ">0</div>
                 </div>
-                <input type="hidden" name="duration" readonly >
+                <input id="duration" type="hidden" name="duration" readonly >
             </div>
 
             
             <div class="w-full flex flex-col justify-center items-center mt-1">
                 <label class="text-xl text-black dark:text-white font-semibold italic ">Total Cost</label>
-                <p id="totalCost" class="text-3xl text-green-600 font-semibold italic">2500 DA</p>
-                <input type="hidden" name="totalCost" readonly class="font-semibold mt-1 outline-none border border-green-600 focus:border-green-600 bg-green-600 focus:ring-green-600 text-white italic rounded-lg block py-1.5 w-fit dark:bg-green-600 text-center text-xl " value="<?php echo $vehicle->costPerDay ?> DA">
+                <p id="totalCost" class="text-3xl text-green-600 font-semibold italic">0 DA</p>
+                <input id="costPerDay" type="hidden" value="<?php echo $vehicle->costPerDay ?>">
+                <input id="cost" type="hidden" name="totalCost" readonly >
             </div>
 
             <!-- HiDDEn INPUTS -->
@@ -125,9 +126,9 @@
             
         </div>
         <div class="w-full flex justify-center items-center mt-3 sm:px-3">
-                <button id="reserveButton" name="reserve" type="submit" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
-                    Reserve Now
-                </button>
+                    <button id="reserveButton" name="reserve" type="submit" class="hidden w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
+                        Reserve Now
+                    </button>
             
         </div>
         
