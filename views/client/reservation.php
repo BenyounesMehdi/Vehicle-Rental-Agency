@@ -89,7 +89,7 @@
                         </div>
                         <input name="pickupDate" id="pickupDate" datepicker type="text" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Pick up date" readonly>
                     </div>
-                    <p id="pickupDateMessage"  class="text-red-500 font-semibold dark:text-red-600">The chosen date is already past</p>
+                    <p id="pickupDateMessage"  class="hidden text-red-500 font-semibold dark:text-red-600">The chosen date is already past</p>
                 </div>
 
                 <div class="w-full">
@@ -107,7 +107,7 @@
 
                 <div class="w-full flex flex-col gap-2 ">
                     <p class="text-xl text-black dark:text-white font-semibold italic ">Total Days</p>
-                    <div type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 ">0</div>
+                    <div id="totalDays" type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 ">0</div>
                 </div>
                 <input type="hidden" name="duration" readonly >
             </div>
@@ -115,7 +115,7 @@
             
             <div class="w-full flex flex-col justify-center items-center mt-1">
                 <label class="text-xl text-black dark:text-white font-semibold italic ">Total Cost</label>
-                <p class="text-3xl text-green-600 font-semibold italic">2500 DA</p>
+                <p id="totalCost" class="text-3xl text-green-600 font-semibold italic">2500 DA</p>
                 <input type="hidden" name="totalCost" readonly class="font-semibold mt-1 outline-none border border-green-600 focus:border-green-600 bg-green-600 focus:ring-green-600 text-white italic rounded-lg block py-1.5 w-fit dark:bg-green-600 text-center text-xl " value="<?php echo $vehicle->costPerDay ?> DA">
             </div>
 
@@ -140,195 +140,7 @@
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-    <script>
-
-    let pickupDateAuth = false;
-    let returnDateAuth = false;
-
-    reserveButtonToggole() ;
-
-    // Function to log the chosen date to the console
-    function logChosenDate() {
-        setTimeout(function() {
-            var pickupDate = document.getElementById("pickupDate").value;
-            
-            // Check if the input value is in a valid date format
-            if (pickupDate.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-                var dateParts = pickupDate.split("/"); // Split the date string into parts
-                var inputDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]); // Construct a Date object
-                console.log("Chosen date:", inputDate); // Log chosen date to console
-                
-                // Check if the chosen date is in the past
-                var currentDate = new Date();
-
-                var previousDate = new Date(currentDate);
-                previousDate.setDate(currentDate.getDate() - 1);
-                console.log("input date : ", inputDate) ;
-
-                if (inputDate >= previousDate) {
-                    document.getElementById("pickupDateMessage").style.display = "none"; 
-                    // document.getElementById("reserveButton").style.display = "block"; 
-                    pickupDateAuth = true ;
-                } 
-                else {
-                    // document.getElementById("reserveButton").style.display = "none"; 
-                    pickupDateAuth = false ;
-                    document.getElementById("pickupDateMessage").style.display = "block"; 
-                }
-            } else {
-                console.log("Invalid date format:", pickupDate); // Log invalid date format
-            }
-            reserveButtonToggole() ;
-        }, 50); // Adjust the delay as needed (in milliseconds)
-    }
-
-    // Function to check if the chosen date is in the past
-    function checkPickupDate() {
-        var inputDate = new Date(document.getElementById("pickupDate").value);
-        var currentDate = new Date();
-
-        // If inputDate is in the past
-        if (inputDate < currentDate) {
-            document.getElementById("pickupDateMessage").style.display = "block"; // Show message
-            pickupDateAuth = false ;
-        } else {
-            document.getElementById("pickupDateMessage").style.display = "none"; // Hide message
-            // document.getElementById("reserveButton").style.display = "block"; // Show message
-            pickupDateAuth = true ;
-        }
-        reserveButtonToggole() ;
-    }
-
-    // Add event listeners to input field
-    document.getElementById("pickupDate").addEventListener("focus", logChosenDate); // Listen for focus event
-    document.getElementById("pickupDate").addEventListener("input", checkPickupDate);
-
-    // Call checkPickupDate() initially to check the date when the page loads
-    checkPickupDate();
-
-
-
-
-
-
-    // Function to log the chosen date to the console
-    function logChosenReturnDate() {
-        setTimeout(function() {
-            var returnDate = document.getElementById("returnDate").value;
-            
-            // Check if the input value is in a valid date format
-            if (returnDate.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-                var dateParts = returnDate.split("/"); // Split the date string into parts
-                var inputDate = new Date(dateParts[2], dateParts[0] - 1, dateParts[1]); // Construct a Date object
-                console.log("Chosen date:", inputDate); // Log chosen date to console
-                
-                // Check if the chosen date is in the past
-                var currentDate = new Date();
-
-                if (inputDate >= currentDate) {
-                    document.getElementById("returnDateMessage").style.display = "none"; 
-                    // document.getElementById("reserveButton").style.display = "block"; 
-                    returnDateAuth = true ;
-                } 
-                else {
-                    // document.getElementById("reserveButton").style.display = "none"; 
-                    returnDateAuth = false ;
-                    document.getElementById("returnDateMessage").style.display = "block"; 
-                }
-            } else {
-                console.log("Invalid date format:", returnDate); // Log invalid date format
-            }
-            reserveButtonToggole() ;
-        }, 50); // Adjust the delay as needed (in milliseconds)
-    }
-
-    // Function to check if the chosen date is in the past
-    function checkReturnDate() {
-        var inputDate = new Date(document.getElementById("returnDate").value);
-        var currentDate = new Date();
-
-        // If inputDate is in the past
-        if (inputDate < currentDate) {
-            document.getElementById("returnDateMessage").style.display = "block"; // Show message
-            returnDateAuth = false ;
-        } else {
-            document.getElementById("returnDateMessage").style.display = "none"; // Hide message
-            // document.getElementById("reserveButton").style.display = "block"; // Show message
-            returnDateAuth = true ;
-        }
-        reserveButtonToggole() ;
-    }
-
-    // Add event listeners to input field
-    document.getElementById("returnDate").addEventListener("focus", logChosenReturnDate); // Listen for focus event
-    document.getElementById("returnDate").addEventListener("input", checkReturnDate);
-
-    // Call checkPickupDate() initially to check the date when the page loads
-    checkReturnDate();
-
-
-    setInterval(() => {
-        // reserveButtonToggole() ;
-    }, 0);
-
-    function reserveButtonToggole() {
-        const reserveButton = document.getElementById("reserveButton") ;
-
-        if( pickupDateAuth && returnDateAuth ) {
-            console.log("pickupDate : ", pickupDateAuth) ;
-            console.log("returnDate : ", returnDateAuth) ;
-            reserveButton.classList.remove("hidden") ;
-        }
-        else {
-            console.log("pickupDate : ", pickupDateAuth) ;
-            console.log("returnDate : ", returnDateAuth) ;
-            reserveButton.classList.add("hidden") ;
-        }
-    }
-    reserveButtonToggole() ;
-
-
-
-
+    <script src="../JS/reservation.js"></script>
     
-
-    // Function to log the chosen return date to the console and check if it's in the past
-    // function logChosenReturnDate() {
-    //     setTimeout(function() {
-    //         var returnDateInput = document.getElementById("returnDate").value;
-            
-    //         // Check if the input value is in a valid date format
-    //         if (returnDateInput.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
-    //             var returnDateParts = returnDateInput.split("/"); // Split the return date string into parts
-    //             var returnInputDate = new Date(returnDateParts[2], returnDateParts[0] - 1, returnDateParts[1]); // Construct a Date object
-    //             console.log("Chosen return date:", returnInputDate); // Log chosen return date to console
-                
-    //             // Check if the chosen return date is in the past
-    //             var currentDate = new Date();
-    //             if (returnInputDate < currentDate) {
-    //                 document.getElementById("returnDateMessage").style.display = "block";
-    //                 document.getElementById("reserveButton").style.display = "none";  
-    //             } else {
-    //                 document.getElementById("returnDateMessage").style.display = "none";
-    //                 document.getElementById("reserveButton").style.display = "block";  
-    //             }
-    //         } else {
-    //             console.log("Invalid return date format:", returnDateInput); // Log invalid return date format
-    //         }
-    //     }, 50); // Adjust the delay as needed (in milliseconds)
-    // }
-
-    // // Add event listener to return date input field
-    // document.getElementById("returnDate").addEventListener("focus", logChosenReturnDate); // Listen for focus event
-
-    // // Call logChosenReturnDate() initially to check the return date when the page loads
-    // logChosenReturnDate();
-
-</script>
-</script>
-
-    </script>
-
 </body>
 </html>
