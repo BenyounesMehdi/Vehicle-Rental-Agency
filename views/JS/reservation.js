@@ -96,6 +96,7 @@ function updateTotalDays() {
         var totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Calculate difference in days
         // console.log(totalDays) ;
         document.getElementById("totalDays").innerHTML = totalDays;
+        document.getElementById("duration").value = totalDays ;
     } else {
         document.getElementById("totalDays").innerHTML = "0";
         reserveButton.classList.add("hidden");
@@ -107,9 +108,10 @@ function updateTotalDays() {
 // Function to update total cost
 function updateTotalCost() {
     var totalDays = parseInt(document.getElementById("totalDays").innerText);
-    var costPerDay = parseInt(document.getElementsByName("totalCost")[0].value);
+    var costPerDay = parseInt(document.getElementById("costPerDay").value);
     var totalCost = totalDays * costPerDay;
-    document.getElementById("totalCost").innerText = totalCost + " DA";
+    document.getElementById("totalCost").innerHTML = totalCost + " DA";
+    document.getElementById("cost").value = totalCost ;
 }
 
 // Call updateTotalCost() initially
