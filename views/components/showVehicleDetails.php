@@ -1,5 +1,5 @@
 <?php
-
+    session_start() ;
     include_once '../../models/database.php' ;
     $id = $_GET['id'] ;
 
@@ -34,13 +34,19 @@
                 <p class="text-2xl text-black dark:text-white font-semibold mb-1">Cost Per Day : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->costPerDay; ?> DA</span> </p>
                 <p class="text-2xl text-black dark:text-white font-semibold mb-1">Status : <span class="text-xl font-medium italic <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>" <?php echo $vehicle->vehicleStatus ; ?> "><?php echo $vehicle->vehicleStatus; ?></span> </p>
             </div>
-            <div class="w-full flex justify-center items-center mt-6 sm:px-3">
-                <a href="" class="w-full">
-                    <button class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
-                        Reserve Now
-                    </button>
-                </a>
-            </div>
+            <?php 
+                if( $vehicle->vehicleStatus == "Available" ) {
+                    ?>
+                        <div class="w-full flex justify-center items-center mt-6 sm:px-3">
+                            <a href="../client/reservation.php?id=<?php echo $_SESSION['client']->clientID; ?>&vehicle=<?php echo $vehicle->vehicleID; ?>" class="w-full">
+                                <button class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
+                                    Reserve Now
+                                </button>
+                            </a>
+                        </div>
+                    <?php
+                }
+            ?>
         </div>
 
     <script src="../JS/themeToggle.js"></script>
