@@ -36,15 +36,28 @@
             </div>
             <?php 
                 if( $vehicle->vehicleStatus == "Available" ) {
-                    ?>
-                        <div class="w-full flex justify-center items-center mt-6 sm:px-3">
-                            <a href="../client/reservation.php?id=<?php echo $_SESSION['client']->clientID; ?>&vehicle=<?php echo $vehicle->vehicleID; ?>" class="w-full">
-                                <button class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
-                                    Reserve Now
-                                </button>
-                            </a>
-                        </div>
-                    <?php
+                    if( isset($_SESSION['client']) ) {
+                        ?>
+                            <div class="w-full flex justify-center items-center mt-6 sm:px-3">
+                                <a href="../client/reservation.php?id=<?php echo $_SESSION['client']->clientID; ?>&vehicle=<?php echo $vehicle->vehicleID; ?>" class="w-full">
+                                    <button class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Reserve Now
+                                    </button>
+                                </a>
+                            </div>
+                        <?php
+                    }
+                    else {
+                        ?>
+                            <div class="w-full flex justify-center items-center mt-6 sm:px-3">
+                                <a href="../../../VehicleRentalAgency/views/client/login.php" class="w-full">
+                                    <button class="w-full text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
+                                        Reserve Now
+                                    </button>
+                                </a>
+                            </div>
+                        <?php
+                    }
                 }
             ?>
         </div>
