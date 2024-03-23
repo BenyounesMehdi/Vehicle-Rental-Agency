@@ -57,7 +57,7 @@
                                 <a href="#" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Profile</a>
                             </li>
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">My Reservations</a>
+                                <a href="../../../VehicleRentalAgency/views/client/myReservations.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">My Reservations</a>
                             </li>
                             </ul>
                             <div class="py-2">
