@@ -6,7 +6,7 @@
         $duration = $_POST['duration'] ;
         $totalCost = $_POST['totalCost'] ;
         $reservationDate = date('Y-m-d');
-        $isPayed = 'no';
+        $isPayed = 'No';
         $clientID = $_POST['clientID'] ;
         $vehicleID = $_POST['vehicleID'] ;
 
