@@ -5,7 +5,8 @@
     $clientId = $_SESSION['client']->clientID ;
 
     $query = "SELECT r.*, b.name as brandName, vt.name as vehicleTypeName,
-                     v.name as vehicleName, v.modelYear as modelYear, v.image as image
+                     v.name as vehicleName, v.modelYear as modelYear, v.image as image,
+                     v.vehicleID as vehicleID
                 FROM reservation r
                 JOIN client c ON r.clientID = c.clientID
                 JOIN vehicle v ON r.vehicleID = v.vehicleID
@@ -20,7 +21,7 @@
 
                 $numReservations = $stmt->rowCount();
                 // echo $numReservations;
-                
+
 ?>
 
 <!DOCTYPE html>
@@ -135,12 +136,12 @@
                                                 <button type="button" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 ">Edit</button>    
                                             </a>
                                             <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
-                                            <button onclick="storeID(<?php echo $reservation->reservationID; ?>)" type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600">Delete</button>
+                                            <button onclick="storeID(<?php echo $reservation->reservationID; ?>, <?php echo $reservation->vehicleID; ?>)" type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600">Delete</button>
                                             </a>
                                         </td>
                                     </tr>
                                     
-                                    <div id="popup-modal" tabindex="-1" class="hidden  overflow-y-auto overflow-x-hidden fixed z-50  h-[calc(100%-1rem)] max-h-full" >
+                                    <div id="popup-modal" tabindex="-1" class="hidden fixed inset-0 overflow-y-auto overflow-x-hidden z-50  h-[calc(100%-1rem)] max-h-full" >
                                         <div class="relative p-4 w-full max-w-md max-h-full">
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                 
@@ -178,5 +179,21 @@
 
     <script src="../JS/themeToggle.js"></script>
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
+
+    <script>
+
+            function storeID (reservationID, vehicleID) {
+    
+                var deleteUrl = "../../models/backend/client/deleteReservation.php?id=" + reservationID +"&vehicle=" + vehicleID;
+                
+                // Get the anchor tag by ID
+                var deleteLink = document.getElementById("deleteLink");
+                
+                // Set the href attribute of the anchor tag
+                deleteLink.href = deleteUrl;
+            }
+
+    </script>
+
 </body>
 </html>
