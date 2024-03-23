@@ -40,13 +40,6 @@
     
 ?>
 
-        <?php 
-        
-            if( isset($_POST['reserve']) ) {
-                $clientID = $POST['clientID'] ;
-                $vehicleID = $POST['vehicleID'] ;
-            }
-        ?>
 
 <!DOCTYPE html>
 <html lang="en">
