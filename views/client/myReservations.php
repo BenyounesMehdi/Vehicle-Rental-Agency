@@ -52,7 +52,7 @@
             ?>
 
 
-            <div id="myReservationsTable" class="relative overflow-x-auto overflow-y-auto shadow-lg mt-3" style="max-height : 350px;">
+            <div id="myReservationsTable" class="relative overflow-x-auto overflow-y-auto shadow-lg mt-3" style="max-height : 450px;">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-50 dark:text-gray-400 rounded">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
                         <tr>
@@ -73,6 +73,9 @@
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Total Cost
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Total Days
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Creation Date
@@ -120,7 +123,10 @@
                                             <?php echo $reservation->modelYear; ?>
                                         </td>
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                            <?php echo $reservation->totalCost; ?>
+                                            <?php echo $reservation->totalCost . " DA" ; ?>
+                                        </td>
+                                        <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
+                                            <?php echo $reservation->duration; ?>
                                         </td>
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                             <?php echo $reservation->reservationDate; ?>
@@ -132,7 +138,7 @@
                                             <?php echo $reservation->returnDate; ?>
                                         </td>
                                         <td class="px-6 py-2">
-                                            <a href="#">
+                                            <a href="editReservation.php?reservation=<?php echo $reservation->reservationID ?>&vehicle=<?php echo $reservation->vehicleID ?>">
                                                 <button type="button" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 ">Edit</button>    
                                             </a>
                                             <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
