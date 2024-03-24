@@ -10,6 +10,7 @@
     <!-- <link rel="stylesheet" href="./dist/style.css"> -->
     <link rel="stylesheet" href="./node_modules/flowbite/dist/flowbite.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <title>Vehicle Rental Agency</title>
     
     <style>
@@ -21,7 +22,7 @@
 </head>
 <body class="bg-white dark:bg-gray-900 ">
     
-    <div class="">
+    <div class="mb-10">
         <!-- NAVBAR -->
         <?php include 'components/navbar.php' ?>
         <!-- NAVBAR -->
@@ -30,6 +31,11 @@
         <!-- CAROUSEL -->
         <?php include 'components/vehiclesCarousel.php' ?>
         <!-- CAROUSEL -->
+    </div>
+    <div>
+        <!-- OPINIONS CAROUSEL -->
+        <?php include 'components/opinionsCarousel.php' ?>  
+        <!-- OPINIONS CAROUSEL -->
     </div>
     
 
