@@ -123,6 +123,7 @@
   ?>
 
   <div class="container mx-auto mb-5 px-6 ">
+  <p class="dark:text-white font-semibold text-4xl text-center mb-5">Our vehicles</p>
       <?php 
           $vehiclesTypeQuery = "SELECT * FROM vehiclesType" ;
           $stmt = $pdo->prepare($vehiclesTypeQuery) ;
