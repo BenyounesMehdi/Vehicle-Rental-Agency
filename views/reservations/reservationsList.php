@@ -48,6 +48,9 @@
                     <th scope="col" class="px-6 py-3">
                         Reservation Date
                     </th>
+                    <th scope="col" class="px-6 py-3">
+                        Status
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -96,6 +99,9 @@
                                 </td>
                                 <td class="px-6 py-2 font-bold text-blue-500">
                                     <?php echo $reservation->reservationDate; ?>
+                                </td>
+                                <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
+                                    <?php echo ($reservation->isExpired == "Yes") ?  "Expired" : "Not Expired" ; ?>
                                 </td>
                                 
                             </tr>
