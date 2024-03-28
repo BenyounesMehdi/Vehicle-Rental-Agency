@@ -47,7 +47,7 @@
                             </div>
                         <?php
                     }
-                    else {
+                    else if( !(isset($_SESSION['admin'])) ) {
                         ?>
                             <div class="w-full flex justify-center items-center mt-6 sm:px-3">
                                 <a href="../../../VehicleRentalAgency/views/client/login.php" class="w-full">
