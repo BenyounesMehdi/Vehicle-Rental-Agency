@@ -4,6 +4,32 @@
     session_start() ;
     $clientId = $_SESSION['client']->clientID ;
 
+    $query = "SELECT * FROM reservation" ;
+    $stmt = $pdo->prepare($query) ;
+    $stmt->execute(); // Execute the query
+    $reservations = $stmt->fetchAll() ;
+    // var_dump($reservations) ;
+    
+
+    // Update the expired reservations
+
+        $currentDate = new DateTime('now');
+        $currentDate->setTime(0, 0, 0); // Set time to midnight
+
+        foreach ($reservations as $reser) {
+            $returnDate = new DateTime($reser->returnDate);
+            $returnDate->setTime(0, 0, 0); // Set time to midnight
+
+            // Check if returnDate is strictly less than the current date
+            if ($currentDate > $returnDate) {
+                $query = "UPDATE reservation SET isExpired = 'Yes' WHERE reservationID = :reservationID";
+                $stmt = $pdo->prepare($query);
+                $stmt->execute([':reservationID' => $reser->reservationID]);
+                // echo "Reservation with ID $reser->reservationID updated.";
+            }
+        }
+
+
     $query = "SELECT r.*, b.name as brandName, vt.name as vehicleTypeName,
                      v.name as vehicleName, v.modelYear as modelYear, v.image as image,
                      v.vehicleID as vehicleID
@@ -12,15 +38,14 @@
                 JOIN vehicle v ON r.vehicleID = v.vehicleID
                 JOIN brand b ON b.brandID = v.brandID
                 JOIN vehiclesType vt ON v.vehicleTypeID = vt.vehiclesTypeID
-                WhERE r.clientID = $clientId" ;
+                WHERE r.clientID = $clientId" ;
                 
                 $stmt = $pdo->prepare($query);
                 $stmt->execute(); // Execute the query
                 $reservations = $stmt->fetchAll();
+                $numReservations = $stmt->rowCount();
                 // var_dump($reservations) ;
 
-                $numReservations = $stmt->rowCount();
-                // echo $numReservations;
 
 ?>
 
@@ -87,6 +112,9 @@
                                 Return Date
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Expired
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Action
                             </th>
                         </tr>
@@ -94,7 +122,10 @@
                     <tbody>
             
                         <?php
-                                foreach ($reservations as $reservation) { ?> 
+                                foreach ($reservations as $reservation) { 
+                                    
+                                    ?> 
+                                 
                                         
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         
@@ -137,13 +168,23 @@
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                             <?php echo $reservation->returnDate; ?>
                                         </td>
+                                        <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
+                                            <?php echo $reservation->isExpired; ?>
+                                        </td>
                                         <td class="px-6 py-2">
+                                            <?php if( $reservation->isExpired == 'No' ) { 
+                                                    $pickupDate = new DateTime($reservation->pickupDate);
+                                                    $pickupDate->setTime(0, 0, 0); // Set time to midnight
+
+                                                    if( $pickupDate > $currentDate ) {
+                                                ?>
                                             <a href="editReservation.php?reservation=<?php echo $reservation->reservationID ?>&vehicle=<?php echo $reservation->vehicleID ?>">
                                                 <button type="button" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 ">Edit</button>    
                                             </a>
                                             <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
                                             <button onclick="storeID(<?php echo $reservation->reservationID; ?>, <?php echo $reservation->vehicleID; ?>)" type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600">Delete</button>
                                             </a>
+                                            <?php } } ?>
                                         </td>
                                     </tr>
                                     
