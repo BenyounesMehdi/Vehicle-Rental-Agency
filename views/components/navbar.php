@@ -1,4 +1,7 @@
+<?php 
+    require './models/database.php' ;
 
+?>
 
 <nav class="bg-white dark:bg-gray-900 relative w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -39,6 +42,19 @@
                     <?php
                 }
                 else if( isset($_SESSION['client'])  ) { // if the Client is already Logged in
+                        // var_dump($_SESSION['client']) ;
+                        $clientID = $_SESSION['client']->clientID ;
+                        // echo $clientID;
+
+                        $query = "SELECT * FROM opinion
+                        WHERE clientID = ". $clientID;
+                        $stmt = $pdo->prepare($query) ;
+                        $stmt->execute();   
+                        $client = $stmt->fetch() ;
+                        // var_dump($client) ;
+
+                        $client ? $isExit = true : $isExit = false;
+                        // echo $isExit;
 
                     ?>
                         <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="relative top-1 md:top-0 flex text-sm rounded-full md:me-0 " type="button">
@@ -60,7 +76,15 @@
                                 <a href="../../../VehicleRentalAgency/views/client/myReservations.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">My Reservations</a>
                             </li>
                             <li>
-                                <a href="../../../VehicleRentalAgency/views/client/myOpinion.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">My Opinion</a>
+                                <?php 
+                                    if( !$isExit ) { ?>
+                                        <a href="../../../VehicleRentalAgency/views/client/myOpinion.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Add Opinion</a>
+                                    <?php }
+                                    else { ?>
+                                        <a href="../../../VehicleRentalAgency/views/client/editDeleteOpinoin.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Edit & Delete Opinion</a>
+                                        <?php
+                                    }
+                                ?>
                             </li>
                             </ul>
                             <div class="py-2">
