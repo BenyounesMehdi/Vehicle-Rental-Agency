@@ -3,6 +3,14 @@
     include './models/database.php' ;
     include './models/functions.php' ;
 
+      // Chanege the status of the vehicle when its reservation is expired
+    $query = "UPDATE vehicle v
+          JOIN reservation r ON v.vehicleID = r.vehicleID
+          SET vehicleStatus = ?
+          WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
+          $stmt = $pdo->prepare($query);
+          $updated = $stmt->execute(["Available", "Yes"]);
+
 ?>
 
   <style>
