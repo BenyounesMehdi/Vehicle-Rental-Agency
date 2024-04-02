@@ -42,6 +42,24 @@
                     <?php
                 }
                 else if( isset($_SESSION['client'])  ) { // if the Client is already Logged in
+
+                        $stmt = $pdo->prepare("
+                        SELECT * FROM reservation r 
+                        JOIN client c ON r.clientID = c.clientID
+                        WHERE isExpired = 'Yes' AND r.clientID = ?
+                        ");
+                        
+                        $stmt->execute([$_SESSION['client']->clientID]);
+                        
+                        $expiredReservations = $stmt->fetchAll();
+                        
+                        // var_dump($expiredReservations) ;
+                        $expiredReservationsCount = $stmt->rowCount();
+                        
+                        // echo $expiredReservationsCount;
+
+                        
+
                         // var_dump($_SESSION['client']) ;
                         $clientID = $_SESSION['client']->clientID ;
                         // echo $clientID;
@@ -77,6 +95,7 @@
                             </li>
                             <li>
                                 <?php 
+                                    if( $expiredReservationsCount > 0 ) {
                                     if( !$isExit ) { ?>
                                         <a href="../../../VehicleRentalAgency/views/client/myOpinion.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Add Opinion</a>
                                     <?php }
@@ -84,6 +103,7 @@
                                         <a href="../../../VehicleRentalAgency/views/client/editDeleteOpinoin.php" class="block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-white">Edit & Delete Opinion</a>
                                         <?php
                                     }
+                                }
                                 ?>
                             </li>
                             </ul>
