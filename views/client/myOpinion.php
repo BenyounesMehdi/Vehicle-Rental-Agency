@@ -1,3 +1,10 @@
+<?php
+    require '../../models/database.php' ;
+    session_start() ;
+    $clientId = $_SESSION['client']->clientID ;
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,15 +14,40 @@
 </head>
 <body class="bg-gray-200 dark:bg-gray-900 py-6 px-8">
 
+
+    <?php 
+        
+            if( isset($_POST['opinion']) ) {
+                $opinionContent = $_POST['opinionContent'] ;
+                $rating = $_POST['rating'];
+                $currentDay = date('Y-m-d');
+
+                $query = 'INSERT INTO opinion
+                (content, rating, creationDate, clientID)
+                VALUES (?,?,?,?)';
+                $stmt = $pdo->prepare($query);
+                $inserted = $stmt->execute([$opinionContent, $rating, $currentDay, $clientId]);
+
+                    if( $inserted ) {
+                        echo '<script>window.history.go(-2);</script>';
+                    }
+                    else {
+                        echo "Error Occurred" ;
+                    }
+            }
+
+    ?>
+
+
     <p class="text-3xl md:text-4xl font-meduim dark:text-white">What Do You Think About Our Service</p>
 
     <section class="container mx-auto">
         
-        <form action="">
+        <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="POST">
 
             <div class="sm:px-4 mt-10 sm:mt-7">
                 <label for="opinion" class="block mb-2 text-2xl font-medium text-gray-900 dark:text-white">Your Opinion</label>
-                <textarea id="opinion" rows="2" class="block p-2.5 w-full text-md font-semibold text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                <textarea name="opinionContent" id="opinion" rows="2" class="block p-2.5 w-full text-md font-semibold text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
                 <p id="error-message" class="text-red-500 font-semibold hidden"></p>
             </div>
 
@@ -29,7 +61,7 @@
                 </button>
                 
                 <label for="stars" class="sr-only">Rate us</label>
-                <select id="stars" class="bg-gray-50 border border-gray-300 text-yellow-300 text-xl rounded-e-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select name="rating" id="stars" class="bg-gray-50 border border-gray-300 text-yellow-300 text-xl rounded-e-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="1">
                         <div>
                             <div class="text-xl ">★</div>
