@@ -54,7 +54,7 @@
                 
                 <label for="stars" class="sr-only">Rate us</label>
                 <select name="rating" id="stars" class="bg-gray-50 border border-gray-300 text-yellow-300 text-xl rounded-e-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected value="<?php $clientOpinion->rating; ?>">
+                    <option selected value="<?php echo $clientOpinion->rating; ?>">
                         <div>
                             <?php
                                 for( $i = 0 ; $i < $clientOpinion->rating ; $i++ ) { ?>
@@ -83,7 +83,7 @@
                 </select>
             </div>
 
-            <input name="clientID" type="hidden" value="<?php echo $_SESSION['client']->clientID ?>">
+            <input name="opinionID" type="hidden" value="<?php echo $clientOpinion->opinionID; ?>">
 
             <div class="w-full flex items-end justify-end space-x-4 mt-5 px-4">
                 <button id="opinionBtn" type="submit" name="editOpinion" class="hidden text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
