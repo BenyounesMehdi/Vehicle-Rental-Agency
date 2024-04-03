@@ -76,9 +76,6 @@ if (!empty($searchQuery)) {
                     <th scope="col" class="px-6 py-3">
                         Email
                     </th>
-                    <th scope="col" class="px-6 py-3">
-                        Opinion
-                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -101,10 +98,6 @@ if (!empty($searchQuery)) {
                                 <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                     <?php echo $client->email; ?>
                                 </td>
-                                <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
-                                    <?php echo $client->opinion; ?>
-                                </td>
-                                
                             </tr>
                             
 
