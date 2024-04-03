@@ -3,8 +3,6 @@
     FROM opinion o 
     JOIN client c ON o.clientID = c.clientID" ;
 
-
-    // Calculate the stars average
     $stmt = $pdo->prepare($query) ;
     $stmt->execute() ;
     $opinions = $stmt->fetchAll() ;    
