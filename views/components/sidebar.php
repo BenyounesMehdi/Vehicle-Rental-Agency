@@ -90,6 +90,15 @@
                         <i id="brandsArrow" class="fa-solid fa-arrow-right hidden"></i>
                     </a>
                 </li>
+                <li class="flex">
+                    <a href="opinionsSide.php" class="w-full flex justify-between items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group" onclick="toggleArrow(this); ">
+                        <div class="flex justify-center items-center">
+                            <i class="fa-solid fa-comments text-gray-500 text-xl"></i>
+                            <span class="ms-3 whitespace-nowrap">Opinions</span>
+                        </div>
+                        
+                    </a>
+                </li>
                 <li>
                     <button id="theme-toggle" type="button" class="w-full flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 group">
                         <svg id="theme-toggle-dark-icon" class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
