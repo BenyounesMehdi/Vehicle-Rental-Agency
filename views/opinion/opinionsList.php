@@ -62,7 +62,7 @@
                             <div class="text-yellow-300 flex gap-1 text-2xl">
                                 <?php 
                                     $ratings = $opinion->rating ;
-                                    for( $i = 0 ; $i < $ratings ; $i++ ) {
+                                    for( $i = 0 ; $i < $ratings ; $i++ ) { 
                                         ?>
                                           <div>★</div>
                                         <?php
