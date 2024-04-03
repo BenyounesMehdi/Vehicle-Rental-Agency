@@ -24,6 +24,7 @@
             include '../../models/functions.php' ; 
             $tableName = "opinion" ;
 
+            // Calculate the stars average
             $stmt = $pdo->prepare("SELECT AVG(rating) AS starsAverage FROM opinion");
             $stmt->execute();
             $averageStars = $stmt->fetch();
