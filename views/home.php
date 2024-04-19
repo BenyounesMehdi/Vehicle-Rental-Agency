@@ -27,6 +27,9 @@
         <?php include 'components/navbar.php' ?>
         <!-- NAVBAR -->
     </div>
+    <div>
+        <?php include 'components/vehicleSearchSection.php' ?>
+    </div>
     <div class="mt-10">
         <!-- CAROUSEL -->
         <?php include 'components/vehiclesCarousel.php' ?>
@@ -42,6 +45,7 @@
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
     <script src="./JS/carousel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
     <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
     <script>
 
