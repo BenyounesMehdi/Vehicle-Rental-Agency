@@ -32,7 +32,7 @@ function logChosenDate() {
         }
         reserveButtonToggole();
         updateTotalDays() ;
-    }, 50); // Adjust the delay as needed (in milliseconds)
+    }, 50); 
 }
 
 // Function to log the chosen date to the console and validate return date
@@ -65,7 +65,7 @@ function logChosenReturnDate() {
         }
         reserveButtonToggole();
         updateTotalDays() ;
-    }, 50); // Adjust the delay as needed (in milliseconds)
+    }, 50); 
 }
 
 // Add event listeners to input fields
