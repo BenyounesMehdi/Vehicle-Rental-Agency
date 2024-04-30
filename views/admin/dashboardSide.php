@@ -19,12 +19,15 @@
         <?php include '../components/sidebar.php' ; ?>
         
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 " id="content-container">
-            <p class=" text-2xl font-semibold text-gray-900 dark:text-white">Dashboard</p>
+            <p class=" text-3xl mb-2 font-semibold text-gray-900 dark:text-white">Overview</p>
 
            <?php include '../components/dashboardCardsSection.php' ?>
 
         </div>
 
+        <div id="rating" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
+            <?php include '../components/rating.php' ; ?>
+        </div>
         <!-- CHARTS -->
         <div id="chartsContainer" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 flex flex-col h-screen">
 
@@ -33,6 +36,8 @@
             </div>
                     
         </div>
+
+        
 
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="../JS/themeToggle.js"></script>
