@@ -20,20 +20,25 @@
         
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 " id="content-container">
             <p class=" text-3xl mb-2 font-semibold text-gray-900 dark:text-white">Overview</p>
-
            <?php include '../components/dashboardCardsSection.php' ?>
-
         </div>
 
-        <div class="flex w-full justify-center items-center">
-            <div id="rating" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 w-1/2">
-                <?php include '../components/rating.php' ; ?>
+            
+        <div class="flex flex-col lg:flex-row bg-gray-300 dark:bg-gray-900 p-4 sm:ml-64 justify-center items-center gap-2 ">
+            <div id="rating" class="w-full lg:w-1/2 ">
+                <?php include '../components/rating.php'; ?>
             </div>
-            <div id="vehiclesStatus" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 w-1/2">
-                <?php include '../components/vehicleStatusStats.php' ; ?>
+
+            <div id="vehiclesStatus" class="w-full lg:w-1/2 ">
+                <?php include '../components/vehicleStatusStats.php'; ?>
             </div>
         </div>
-        
+
+        <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
+            
+            <?php include '../components/todayReservations.php'; ?>
+        </div>
+
         <!-- CHARTS -->
         <div id="chartsContainer" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 flex flex-col h-screen">
 
