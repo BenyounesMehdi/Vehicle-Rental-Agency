@@ -34,10 +34,9 @@ foreach ($vehicles as $vehicle) {
         // echo "Number of Maintenance vehicles: $maintenanceCount <br>";
         // echo "Number of Not Available vehicles: $reservedCount <br>";
 
-    
 ?>
 
-<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4">
+<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 px-3 py-2.5">
     <div class="flex justify-between mb-3">
         <div class="flex items-center">
             <div class="flex justify-start ">
