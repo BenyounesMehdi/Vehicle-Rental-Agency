@@ -29,7 +29,7 @@
     // var_dump($todaysReservations) ;
 ?>
 
-<div class="relative bg-white dark:bg-gray-800 overflow-x-auto shadow-md sm:rounded-lg px-2 py-3">
+<div class=" relative bg-white dark:bg-gray-800 overflow-x-auto shadow-md sm:rounded-lg px-2 py-3">
 
     <div class="flex justify-between items-center mb-2">
         <p class="text-black dark:text-white text-4xl font-semibold mb-3">Today's Reservations</p>
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
+    <table class="<?php echo $totalTodayReservations == 0 ? 'hidden' : ''; ?> w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
             <th scope="col" class="px-6 py-3">
