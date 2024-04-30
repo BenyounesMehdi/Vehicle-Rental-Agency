@@ -25,9 +25,15 @@
 
         </div>
 
-        <div id="rating" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
-            <?php include '../components/rating.php' ; ?>
+        <div class="flex w-full justify-center items-center">
+            <div id="rating" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 w-1/2">
+                <?php include '../components/rating.php' ; ?>
+            </div>
+            <div id="vehiclesStatus" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 w-1/2">
+                <?php include '../components/vehicleStatusStats.php' ; ?>
+            </div>
         </div>
+        
         <!-- CHARTS -->
         <div id="chartsContainer" class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 flex flex-col h-screen">
 
