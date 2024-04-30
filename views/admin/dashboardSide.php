@@ -35,6 +35,10 @@
         </div>
 
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
+             <?php include '../components/clientsStats.php'; ?>
+        </div>
+
+        <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
             
             <?php include '../components/todayReservations.php'; ?>
         </div>
