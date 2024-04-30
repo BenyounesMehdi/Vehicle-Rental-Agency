@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    
+        
 
         <?php include '../components/sidebar.php' ; ?>
         
@@ -39,6 +39,10 @@
         </div>
 
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
+             <?php include '../components/reservationsReport.php'; ?>
+        </div>
+
+        <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900">
             
             <?php include '../components/todayReservations.php'; ?>
         </div>
@@ -55,6 +59,7 @@
         
 
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="../JS/themeToggle.js"></script>
     <script src="../JS/arrowToggle.js"></script>
     <script>
