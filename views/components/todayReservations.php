@@ -32,7 +32,7 @@
 <div class="relative bg-white dark:bg-gray-800 overflow-x-auto shadow-md sm:rounded-lg px-2 py-3">
 
     <div class="flex justify-between items-center mb-2">
-        <p class="text-black dark:text-white text-4xl font-semibold mb-3">Today's todaysReservations</p>
+        <p class="text-black dark:text-white text-4xl font-semibold mb-3">Today's Reservations</p>
         <div class="flex flex-col">
             <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Today's Income: <span class="text-green-500 dark:text-green-400"><?php echo $totalIncome; ?> DA</span> </p>
             <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Total Reservations: <span class="mt-2 "><?php echo $totalTodayReservations; ?></span> </p>
