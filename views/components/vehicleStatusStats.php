@@ -40,7 +40,7 @@ foreach ($vehicles as $vehicle) {
     <div class="flex justify-between mb-3">
         <div class="flex items-center">
             <div class="flex justify-start ">
-                <p class="text-black dark:text-white text-4xl font-semibold">Vehicles Status</p>
+                <p class="text-black dark:text-white text-4xl font-semibold">Vehicles Report</p>
             </div>
         </div>
     </div>
