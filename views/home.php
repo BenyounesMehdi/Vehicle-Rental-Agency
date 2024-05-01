@@ -37,6 +37,10 @@
             <?php include 'components/vehicleSearchSection.php' ?>
         </div>
     </div>
+
+    <div class="">
+        <?php include 'components/brandsCarousel.php' ?>
+    </div>
         
     
     <div class="mt-10">
@@ -49,7 +53,8 @@
         <?php include 'components/opinionsCarousel.php' ?>  
         <!-- OPINIONS CAROUSEL -->
     </div>
-    
+
+   
 
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
