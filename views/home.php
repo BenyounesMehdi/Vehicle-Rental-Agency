@@ -22,14 +22,23 @@
 </head>
 <body class="bg-white dark:bg-gray-900 ">
     
-    <div class="mb-10">
+    <div class="mb-0">
         <!-- NAVBAR -->
         <?php include 'components/navbar.php' ?>
         <!-- NAVBAR -->
     </div>
-    <div>
-        <?php include 'components/vehicleSearchSection.php' ?>
+
+    
+    <div class="flex flex-col justify-center -gap-10">
+        <div>
+            <?php include 'components/heroSection.php' ?>
+        </div>
+        <div class="bottom-10">
+            <?php include 'components/vehicleSearchSection.php' ?>
+        </div>
     </div>
+        
+    
     <div class="mt-10">
         <!-- CAROUSEL -->
         <?php include 'components/vehiclesCarousel.php' ?>
