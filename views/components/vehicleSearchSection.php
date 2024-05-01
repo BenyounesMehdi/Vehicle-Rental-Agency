@@ -16,18 +16,14 @@
 ?>
 
 
-<div class="container mx-auto p-2">
-    <p class="dark:text-white font-semibold text-4xl  mb-5">Looking for a vehicle? You’re at the right place.</p>
+<div class="container mx-auto p-2 -mt-5">
     <div class="flex justify-center items-center flex-col lg:flex-row gap-2">
-        <div class="p-2 w-full lg:w-1/2 ">
-            <img src="./assets/others/home.jpg" class="shadow-xl w-full object-cover rounded-lg">
-        </div>
 
-        <form class="w-full lg:w-1/2" action="../../../VehicleRentalAgency/views/components/seachedVehicles.php" method="POST">
+        <form class="w-full -mt-5 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg" action="../../../VehicleRentalAgency/views/components/seachedVehicles.php" method="POST">
 
-                <div class=" flex flex-col gap-3 px-3 py-3 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-700 rounded-lg shadow-md">
+                <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center  gap-2 px-3 py-3 ">
                         <div class="w-full">
-                            <label for="pickupDate" class="text-xl text-black dark:text-white font-semibold italic">Pick up Date</label> <span class="text-red-500 text-xl">*</span>
+                            <label for="pickupDate" class="text-md text-black dark:text-white font-semibold italic">Pick up Date</label> <span class="text-red-500 text-xl">*</span>
                             <div class="relative w-full mt-2">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -40,7 +36,7 @@
                         </div>
 
                         <div class="w-full">
-                            <label for="returnDate" class="text-xl text-black dark:text-white font-semibold italic">Return Date</label> <span class="text-red-500 text-xl">*</span>
+                            <label for="returnDate" class="text-md text-black dark:text-white font-semibold italic">Return Date</label> <span class="text-red-500 text-xl">*</span>
                             <div class="relative w-full mt-2">
                                 <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -52,8 +48,8 @@
                             <p id="returnDateMessage" class="hidden text-red-500 font-semibold dark:text-red-600">Choose a day in the future</p>
                         </div>
 
-                        <div class="w-full">
-                            <p class="text-xl text-black dark:text-white font-semibold italic mb-1">Select The Vehicle Type</p>
+                        <div class="w-full mt-2">
+                            <p class="text-md text-black dark:text-white font-semibold italic mb-1">Select The Vehicle Type</p>
                             <select name="vehicleType" class="bg-gray-50 border dark:text-white border-gray-300  text-xl rounded-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value=""></option>
                                 <?php 
@@ -67,8 +63,8 @@
                             </select>
                         </div>
 
-                        <div class="w-full">
-                            <p class="text-xl text-black dark:text-white font-semibold italic mb-1">Select The Vehicle Brand</p>
+                        <div class="w-full mt-2">
+                            <p class="text-md  text-black dark:text-white font-semibold italic mb-1">Select The Vehicle Brand</p>
                             <select name="brand" class="bg-gray-50 border dark:text-white border-gray-300 text-xl rounded-lg border-s-gray-100 dark:border-s-gray-700 border-s-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value=""></option>
                                 <?php 
@@ -83,11 +79,11 @@
                         </div>
 
 
-                        <div class="w-full flex justify-end">
-                            <button id="searchBtn" class=" text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
-                        </div>
-
-                </div>
+                        
+                    </div>
+                    <div class="w-full flex justify-end ">
+                        <button id="searchBtn" class="mr-5 mb-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                    </div>
 
         </form>
 
