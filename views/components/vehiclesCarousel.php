@@ -3,13 +3,36 @@
     include './models/database.php' ;
     include './models/functions.php' ;
 
+    // echo currentD
+
       // Chanege the status of the vehicle when its reservation is expired
+    // $query = "UPDATE vehicle v
+    //       JOIN reservation r ON v.vehicleID = r.vehicleID
+    //       SET v.vehicleStatus = ?
+    //       WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
+          
+    //       $stmt = $pdo->prepare($query);
+    //       $updated = $stmt->execute(["Available", "Yes"]);
+
     $query = "UPDATE vehicle v
-          JOIN reservation r ON v.vehicleID = r.vehicleID
-          SET vehicleStatus = ?
-          WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
-          $stmt = $pdo->prepare($query);
-          $updated = $stmt->execute(["Available", "Yes"]);
+    JOIN (
+        SELECT vehicleID, MAX(reservationID) AS latestReservationID
+        FROM reservation
+        GROUP BY vehicleID
+    ) r ON v.vehicleID = r.vehicleID
+    SET v.vehicleStatus = 'Available'
+    WHERE r.latestReservationID IS NOT NULL
+    AND NOT EXISTS (
+        SELECT 1
+        FROM reservation
+        WHERE vehicleID = v.vehicleID
+        AND reservationID = r.latestReservationID
+        AND isExpired = 'No'
+    )" ;
+
+      $stmt = $pdo->prepare($query);
+      $updated = $stmt->execute();
+          
 
 ?>
 
@@ -159,6 +182,12 @@
                           $stmt = $pdo->prepare($query) ;
                           $stmt->execute([$vehicleType->vehiclesTypeID]) ;
                           $data = $stmt->fetchAll() ;
+                          // var_dump($data) ;
+
+                          $query = "SELECT * FROM reservation" ;
+                          $stmt = $pdo->prepare($query) ;
+                          $stmt->execute() ;
+                          $reservations = $stmt->fetchAll() ;
 
                           
 
@@ -170,6 +199,19 @@
                                       <p class="font-semibold text-green-500 text-center italic"> <?php echo $vehicle->costPerDay; ?> DA </p>
                                           <div class="img"><img src="./assets/vehiclesImages/<?php echo $vehicle->vehicleImage; ?>" draggable="false"></div>
                                           <p class="font-semibold text-xl <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
+                                          
+                                          <?php
+                                              foreach ($reservations as $reservation) {
+                                                if( $reservation->vehicleID == $vehicle->vehicleID && $reservation->isExpired == "No" && $vehicle->vehicleStatus == 'Not Available' ) {
+                                                  ?> 
+                                                     <p class="dark:text-white">Will be available after <span class="text-blue-500 font-semibold"> <?php echo $reservation->returnDate; ?> </span></p>
+                                                     
+                                                  <?php
+                                                  break ;
+                                                }
+                                              }
+                                          ?>
+                                          
                                           <?php 
                                               
                                             // The Reserve Now Button Should Not Appear When The User Is The Admin
