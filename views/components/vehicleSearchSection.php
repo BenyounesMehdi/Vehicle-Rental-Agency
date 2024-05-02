@@ -16,10 +16,21 @@
 ?>
 
 
+<?php
+    if(isset($_POST['searchButton'])) {
+        $_SESSION['dates'] = $_POST ;
+        // Redirect using JavaScript
+        echo '<script>window.location.href = "./views/components/seachedVehicles.php";</script>';
+    }
+?>
+
+
 <div class="container mx-auto p-2 -mt-5">
     <div class="flex justify-center items-center flex-col lg:flex-row gap-2">
 
-        <form class="w-full -mt-5 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg" action="../../../VehicleRentalAgency/views/components/seachedVehicles.php" method="POST">
+    <!-- Add a hidden input field to store the referring page URL -->
+
+        <form class="w-full -mt-5 bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg" action="<?php echo $_SERVER["PHP_SELF"]; ?>" method="POST">
 
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 items-center  gap-2 px-3 py-3 ">
                         <div class="w-full">
@@ -82,7 +93,7 @@
                         
                     </div>
                     <div class="w-full flex justify-end ">
-                        <button id="searchBtn" class="mr-5 mb-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                        <button id="searchBtn" name="searchButton" class="mr-5 mb-2 text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center  items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                     </div>
 
         </form>
