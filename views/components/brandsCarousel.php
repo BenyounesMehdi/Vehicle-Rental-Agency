@@ -77,12 +77,12 @@ $brandsLogos = $stmt->fetchAll();
     <p class="dark:text-white font-semibold text-4xl text-center mb-5 mt-10">Brands With Have</p>
 
     <div  class="flex justify-center items-center ">
-        <div class="scroller bg-white border border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg " data-direction="left" data-speed="fast">
+        <div class="scroller bg-white border  border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg " data-direction="left" data-speed="fast">
         <div class="scroller__inner">
             <?php 
                 foreach ($brandsLogos as $brand) {
                     ?> 
-                        <img class="w-32" src="./assets/brandsImages/<?php echo $brand->image  ?>" >
+                        <img class="w-32 px-2 " src="./assets/brandsImages/<?php echo $brand->image  ?>" >
                     <?php
                 }
             ?>
