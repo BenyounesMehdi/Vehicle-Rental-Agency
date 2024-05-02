@@ -2,13 +2,11 @@
        $query = "SELECT 
        YEAR(pickupDate) AS year,
        MONTH(pickupDate) AS month,
-       COUNT(*) AS totalReservations,
-       SUM(totalCost) AS totalIncome
-     FROM 
+       COUNT(CASE WHEN isExpired = 'Yes' THEN 1 ELSE NULL END) AS totalReservations,
+       SUM(CASE WHEN isExpired = 'Yes' THEN totalCost ELSE 0 END) AS totalIncome
+   FROM 
        reservation
-       WHERE 
-            isExpired = 'Yes'  
-     GROUP BY 
+   GROUP BY 
        YEAR(pickupDate), MONTH(pickupDate)";
        
 
