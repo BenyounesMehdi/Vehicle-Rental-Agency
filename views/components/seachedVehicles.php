@@ -2,8 +2,9 @@
     session_start() ;
     include '../../models/database.php' ;
 
-    $pickupDate = $_POST['pickupDate'];
-    $returnDate = $_POST['returnDate'];
+    // var_dump($_SESSION['dates']) ;
+    $pickupDate = $_SESSION['dates']['pickupDate'];
+    $returnDate = $_SESSION['dates']['returnDate'];
     
     // echo "pickupData : " . $pickupDate . "<br>";
     // echo "returnDate : " . $returnDate . "<br>";
@@ -14,8 +15,8 @@
     // echo "pickupData after format : " . $pickupDateAfterFormat . "<br>";
     // echo "returnDate after format : " . $returnDateAfterFormat . "<br>";
 
-    $vehicleType = $_POST['vehicleType'] ;
-    $brand = $_POST['brand'] ;
+    $vehicleType = $_SESSION['dates']['vehicleType'];
+    $brand = $_SESSION['dates']['brand'];
     // var_dump($_POST) ;
     
     if( empty($vehicleType) && empty($brand) ) {
@@ -142,6 +143,7 @@
                                                     }
                                                 ?>
                                                 <a href="../../../VehicleRentalAgency/views/components/showVehicleDetails.php?id=<?php echo $vehicle->vehicleID ?>" class="text-black dark:text-white hover:underline font-light text-sm mt-0">Show Details</a>
+                                                <!-- <a href="../../../VehicleRentalAgency/views/components/searchedVehicleDetails.php?id=<?php echo $vehicle->vehicleID ?>" class="text-black dark:text-white hover:underline font-light text-sm mt-0">Show Details</a> -->
                                 </div>
 
                         </div>
