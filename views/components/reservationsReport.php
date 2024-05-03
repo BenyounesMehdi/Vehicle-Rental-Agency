@@ -37,10 +37,9 @@ $reservations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 
-<div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+<div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 py-2 px-2">
     <p class="text-black dark:text-white text-4xl font-semibold mb-1">Reservations Report</p>
     <hr class="mt-3">
-  
 
     <div id="column-chart"></div>
         
