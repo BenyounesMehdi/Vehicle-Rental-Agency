@@ -75,7 +75,7 @@
 
 
  <p class="text-black dark:text-white text-4xl font-semibold mb-3">Filtired Reservations</p>
-<div class=" relative bg-white dark:bg-gray-800 overflow-x-auto shadow-md sm:rounded-lg px-2 py-3" style="max-height: 370px;">
+<div class=" relative bg-white dark:bg-gray-800 overflow-x-auto shadow-md sm:rounded-lg px-4 py-4" style="max-height: 370px;">
 
     <div class="flex justify-between items-center gap-1 mb-2">
         <!-- <p class="text-black dark:text-white text-4xl font-semibold mb-3">Today's Reservations</p> -->
