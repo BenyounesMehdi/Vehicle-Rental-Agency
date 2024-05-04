@@ -20,7 +20,7 @@
         <?php include '../components/sidebar.php' ; ?>
         
         <div class="p-4 sm:ml-64 bg-gray-300 dark:bg-gray-900 " id="content-container">
-            <p class=" text-3xl mb-2 font-semibold text-gray-900 dark:text-white">Overview</p>
+            <p class=" text-3xl mb-1 font-semibold text-gray-900 dark:text-white">Overview</p>
            <?php include '../components/dashboardCardsSection.php' ?>
         </div>
 
@@ -37,7 +37,6 @@
                 <div>
                     <?php include '../components/vehicleStatusStats.php'; ?>
                 </div>
-                
             </div>
         </div>
 
@@ -45,7 +44,6 @@
             <div class="">
                 <?php include '../components/clientsStats.php'; ?>
             </div>
-            
             <div class="">
                 <?php include '../components/countVehicles.php' ; ?>
             </div>
