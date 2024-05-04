@@ -10,9 +10,9 @@
     $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 px-3 py-4">
+<div class="w-full bg-white rounded-lg shadow dark:bg-gray-800 px-3 py-3.5">
     <p class="text-black dark:text-white text-4xl font-semibold mb-2">Vehicles Types Report</p>
-    <hr class="mb-3 mt-3">
+    <hr class="mb-4 mt-3">
   <div id="barChart"></div>
 
 
