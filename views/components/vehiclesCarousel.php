@@ -35,15 +35,7 @@
     // WHERE v.vehicleID = :vehicleID" ;
     
 
-      $stmt = $pdo->prepare($query);
-      $updated = $stmt->execute();
-        
-      if($updated) {
-        echo "updated" ;
-      }
-      else {
-        echo "not updated" ;
-      }
+      
 
 ?>
 
