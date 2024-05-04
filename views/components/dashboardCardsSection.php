@@ -13,7 +13,7 @@
             <div>
             <p class="text-lg font-semibold text-gray-500 dark:text-gray-400">Profit</p>
 
-            <p class="text-2xl font-medium text-gray-900 dark:text-white"> <?php echo $totalIncome; ?><span class="text-sm italic">DA</span> </p>
+            <p class="text-2xl font-medium text-gray-900 dark:text-white"> <?php echo $totalIncome; ?><span class="text-sm italic text-gray-400">DA</span> </p>
             </div>
 
             <span class="rounded-full bg-blue-100 p-3 text-blue-600 dark:bg-blue-500/20 ">
