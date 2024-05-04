@@ -14,6 +14,14 @@
     //       $stmt = $pdo->prepare($query);
     //       $updated = $stmt->execute(["Available", "Yes"]);
 
+    //   $query = "UPDATE vehicle v
+                                          //  JOIN reservation r ON v.vehicleID = r.vehicleID
+                                          //  SET v.vehicleStatus = ?
+                                          //  WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
+                                          
+                                          // $stmt = $pdo->prepare($query);
+                                          // $updated = $stmt->execute(["Available", "Yes"]);
+
     // $query = "UPDATE vehicle v
     // LEFT JOIN (
     //     SELECT vehicleID, MAX(reservationDate) AS latestReservationDate
@@ -211,42 +219,60 @@
                               ?>
                                   
                                     <li class="card bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                                    
                                     <?php 
-                                         if (isset($vehicleReservations)) {
-                                          echo "<br>";
-                                          print_r($vehicleReservations);
-                                          echo "<br>";
-                                  
-                                          $currentDate = date('Y-m-d'); // Get the current date
-                                          $reutunDatePassed = true;
-                                  
-                                          foreach ($vehicleReservations as $reservation) {
-                                              $returnDate = $reservation->returnDate; // Access returnDate using array notation
-                                              echo "return date: " . $returnDate ;
-                                              echo "current date: " . $currentDate ;
-                                              if ($returnDate >= $currentDate) {
-                                                  $reutunDatePassed = false;
-                                                  break; // No need to continue checking if one return date is not greater than the current date
-                                              }
-                                          }
-                                  
-                                          var_dump($reutunDatePassed);
-                                          
-                                          if( $reutunDatePassed ) {
-                                            echo "update" ;
-                                            $query = "UPDATE vehicle v
-                                           JOIN reservation r ON v.vehicleID = r.vehicleID
-                                           SET v.vehicleStatus = ?
-                                           WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
-                                          
-                                          $stmt = $pdo->prepare($query);
-                                          $updated = $stmt->execute(["Available", "Yes"]);
-                                          }
-                                          else {
-                                            echo "do not update" ;
-                                          }
-                                      }
+                                          if (isset($vehicleReservations)) {
+                                            // echo "<br>";
+                                            // print_r($vehicleReservations);
+                                            // echo "<br>";
+                                        
+                                            $currentDate = date('Y-m-d'); // Get the current date
+                                            $allReturnDatesPassed = true;
+                                            $allReturnDates = [];
+                                        
+                                            foreach ($vehicleReservations as $reservation) {
+                                                $returnDate = $reservation->returnDate; // Access returnDate using array notation
+                                                // echo "return date: " . $returnDate . "<br>";
+                                                // echo "current date: " . $currentDate . "<br>";
+                                                if ($returnDate >= $currentDate) {
+                                                    $allReturnDates[] = "No"; // Add "No" to the array if return date is not passed
+                                                } else {
+                                                    $allReturnDates[] = "Yes"; // Add "Yes" to the array if return date is passed
+                                                }
+                                            }
+                                        
+                                            // echo "<br>" . "table of decision : " . "</br>";
+                                            // var_dump($allReturnDates);
+                                        
+                                            // Check if all elements in $allReturnDates are "Yes"
+                                            foreach ($allReturnDates as $status) {
+                                                if ($status !== "Yes") {
+                                                    // echo $status;
+                                                    $allReturnDatesPassed = false; // If any status is not "Yes", set $allReturnDatesPassed to false
+                                                    break; // No need to continue checking once we find a status that is not "Yes"
+                                                }
+                                            }
+                                            if( count($allReturnDates) > 0 ) {
+                                                if ($allReturnDatesPassed) {
+                                                    // echo "update";
+                                                    // Update vehicleStatus in the vehicle table
+                                                    $queryVehicle = "UPDATE vehicle SET vehicleStatus = ? WHERE vehicleID = ?";
+                                                    $stmtVehicle = $pdo->prepare($queryVehicle);
+                                                    $updatedVehicle = $stmtVehicle->execute(["Available", $vehicle->vehicleID]);
+
+                                                    // Update isExpired in the reservation table
+                                                    $queryReservation = "UPDATE reservation SET isExpired = ? WHERE vehicleID = ?";
+                                                    $stmtReservation = $pdo->prepare($queryReservation);
+                                                    $updatedReservation = $stmtReservation->execute(["Yes", $vehicle->vehicleID]);
+
+                                                } else {
+                                                    // echo "do not update";
+                                                }
+                                            }
+                                            
+                                        }
                                     ?> 
+
                                     <h2 class="text-black dark:text-white text-center"> <?php echo $vehicle->vehicleName; ?> </h2>
                                       <p class="font-semibold text-green-500 text-center italic"> <?php echo $vehicle->costPerDay; ?> DA </p>
                                           <div class="img"><img src="./assets/vehiclesImages/<?php echo $vehicle->vehicleImage; ?>" draggable="false"></div>
