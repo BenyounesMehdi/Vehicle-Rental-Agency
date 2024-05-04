@@ -25,7 +25,7 @@
     // echo "Percentage of clients with no reservations: " . round($clientsWithNoReservationsPercentage, 2) . "%";
 ?>
 
-<div class=" w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 ">
+<div class=" w-full bg-white rounded-lg shadow dark:bg-gray-800 px-4 py-3.5 ">
 
    <div class="flex justify-between items-start w-full">
 
