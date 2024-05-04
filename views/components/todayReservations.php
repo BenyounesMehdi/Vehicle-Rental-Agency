@@ -95,7 +95,7 @@
         </form>
 
         <div class="flex flex-col">
-            <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Today's Income: <span class="text-green-500 dark:text-green-400"><?php echo $totalIncome; ?> DA</span> </p>
+            <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Total Income: <span class="text-green-500 dark:text-green-400"><?php echo $totalIncome; ?> DA</span> </p>
             <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Total Reservations: <span class="mt-2 "><?php echo $totalReservations; ?></span> </p>
         </div>
     </div>
