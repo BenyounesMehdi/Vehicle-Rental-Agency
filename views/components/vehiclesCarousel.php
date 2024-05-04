@@ -200,7 +200,7 @@
                                 FROM reservation r
                                 JOIN vehicle v 
                                 ON r.vehicleID = v.vehicleID
-                                WHERE r.vehicleID = ?" ;
+                                WHERE r.vehicleID = ? " ;
 
                                 $stmt = $pdo->prepare($query) ;
                                 $stmt->execute([$vehicle->vehicleID]) ;
@@ -248,9 +248,9 @@
                                                 if ($allReturnDatesPassed) {
                                                     // echo "update";
                                                     // Update vehicleStatus in the vehicle table
-                                                    $queryVehicle = "UPDATE vehicle SET vehicleStatus = ? WHERE vehicleID = ?";
+                                                    $queryVehicle = "UPDATE vehicle SET vehicleStatus = ? WHERE vehicleID = ? AND vehicleStatus <> ?";
                                                     $stmtVehicle = $pdo->prepare($queryVehicle);
-                                                    $updatedVehicle = $stmtVehicle->execute(["Available", $vehicle->vehicleID]);
+                                                    $updatedVehicle = $stmtVehicle->execute(["Available", $vehicle->vehicleID, "Maitenance"]);
 
                                                     // Update isExpired in the reservation table
                                                     $queryReservation = "UPDATE reservation SET isExpired = ? WHERE vehicleID = ?";
