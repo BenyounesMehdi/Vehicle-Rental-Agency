@@ -14,25 +14,28 @@
     //       $stmt = $pdo->prepare($query);
     //       $updated = $stmt->execute(["Available", "Yes"]);
 
-    $query = "UPDATE vehicle v
-    JOIN (
-        SELECT vehicleID, MAX(reservationID) AS latestReservationID
-        FROM reservation
-        GROUP BY vehicleID
-    ) r ON v.vehicleID = r.vehicleID
-    SET v.vehicleStatus = 'Available'
-    WHERE r.latestReservationID IS NOT NULL
-    AND NOT EXISTS (
-        SELECT 1
-        FROM reservation
-        WHERE vehicleID = v.vehicleID
-        AND reservationID = r.latestReservationID
-        AND isExpired = 'No'
-    )" ;
+    // $query = "UPDATE vehicle v
+    // LEFT JOIN (
+    //     SELECT vehicleID, MAX(reservationDate) AS latestReservationDate
+    //     FROM reservation
+    //     GROUP BY vehicleID
+    // ) r ON v.vehicleID = r.vehicleID
+    // SET v.vehicleStatus = CASE 
+    //     WHEN r.latestReservationDate IS NOT NULL AND r.latestReservationDate < CURRENT_DATE() THEN 'Available'
+    //     ELSE v.vehicleStatus
+    // END
+    // WHERE v.vehicleID = :vehicleID" ;
+    
 
       $stmt = $pdo->prepare($query);
       $updated = $stmt->execute();
-          
+        
+      if($updated) {
+        echo "updated" ;
+      }
+      else {
+        echo "not updated" ;
+      }
 
 ?>
 
@@ -192,10 +195,59 @@
                           
 
                             foreach($data as $vehicle) {
+
+                                $query = "SELECT r.returnDate
+                                FROM reservation r
+                                JOIN vehicle v 
+                                ON r.vehicleID = v.vehicleID
+                                WHERE r.vehicleID = ?" ;
+
+                                $stmt = $pdo->prepare($query) ;
+                                $stmt->execute([$vehicle->vehicleID]) ;
+                                $vehicleReservations = $stmt->fetchAll() ;
+                                
+
+
                               ?>
                                   
                                     <li class="card bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                                      <h2 class="text-black dark:text-white text-center"> <?php echo $vehicle->vehicleName; ?> </h2>
+                                    <?php 
+                                         if (isset($vehicleReservations)) {
+                                          echo "<br>";
+                                          print_r($vehicleReservations);
+                                          echo "<br>";
+                                  
+                                          $currentDate = date('Y-m-d'); // Get the current date
+                                          $reutunDatePassed = true;
+                                  
+                                          foreach ($vehicleReservations as $reservation) {
+                                              $returnDate = $reservation->returnDate; // Access returnDate using array notation
+                                              echo "return date: " . $returnDate ;
+                                              echo "current date: " . $currentDate ;
+                                              if ($returnDate >= $currentDate) {
+                                                  $reutunDatePassed = false;
+                                                  break; // No need to continue checking if one return date is not greater than the current date
+                                              }
+                                          }
+                                  
+                                          var_dump($reutunDatePassed);
+                                          
+                                          if( $reutunDatePassed ) {
+                                            echo "update" ;
+                                            $query = "UPDATE vehicle v
+                                           JOIN reservation r ON v.vehicleID = r.vehicleID
+                                           SET v.vehicleStatus = ?
+                                           WHERE v.vehicleID = r.vehicleID AND r.isExpired = ?";
+                                          
+                                          $stmt = $pdo->prepare($query);
+                                          $updated = $stmt->execute(["Available", "Yes"]);
+                                          }
+                                          else {
+                                            echo "do not update" ;
+                                          }
+                                      }
+                                    ?> 
+                                    <h2 class="text-black dark:text-white text-center"> <?php echo $vehicle->vehicleName; ?> </h2>
                                       <p class="font-semibold text-green-500 text-center italic"> <?php echo $vehicle->costPerDay; ?> DA </p>
                                           <div class="img"><img src="./assets/vehiclesImages/<?php echo $vehicle->vehicleImage; ?>" draggable="false"></div>
                                           <p class="font-semibold text-xl <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
@@ -222,6 +274,7 @@
                                                     ?>
                                                       <a href="../../../VehicleRentalAgency/views/client/reservation.php?id=<?php echo $_SESSION['client']->clientID; ?>&vehicle=<?php echo $vehicle->vehicleID; ?>" class="text-white  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-semibold rounded-lg text-sm px-5 py-2.5 me-2 mt-1 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"> Reserve Now </a>
                                                     <?php
+                                                    
                                                    }
                                                 }
                                                 else {
@@ -239,6 +292,7 @@
                                     </li>
                                 
                               <?php
+                              
                             }
                         ?>
 
