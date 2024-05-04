@@ -36,7 +36,7 @@ foreach ($vehicles as $vehicle) {
 
 ?>
 
-<div class="w-full flex flex-col bg-white rounded-lg shadow dark:bg-gray-800 px-3 py-2.5">
+<div class="w-full flex flex-col bg-white rounded-lg shadow dark:bg-gray-800 px-3 py-5">
     
     <div>
         <div class="flex items-center justify-between mb-3 ">
@@ -45,10 +45,10 @@ foreach ($vehicles as $vehicle) {
                     <p class="text-black dark:text-white text-4xl font-semibold">Vehicles Report</p>
                 </div>
             </div>
-            <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Total Vehicles <?php echo $totalVehicles; ?></p>
+            <!-- <p class="text-normal font-medium text-gray-500 dark:text-gray-400">Total Vehicles <?php echo $totalVehicles; ?></p> -->
         </div>
 
-    <div class="bg-gray-300 dark:bg-gray-700 p-3 rounded-lg mb-2">
+    <div class="bg-gray-300 dark:bg-gray-700 p-3 rounded-lg mb-1.5">
             <div class="grid grid-cols-3 gap-3 mb-2">
 
                 <dl class="bg-red-100 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
@@ -69,7 +69,5 @@ foreach ($vehicles as $vehicle) {
             </div>
         </div>
     </div>
-
-    
     
 </div>
