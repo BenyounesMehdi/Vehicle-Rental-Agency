@@ -74,7 +74,7 @@ $brandsLogos = $stmt->fetchAll();
 
 </style>
 <section id="brands">
-    <p class="dark:text-white font-semibold text-4xl text-center mb-5 mt-10">Brands With Have</p>
+    <p class="dark:text-white font-semibold text-4xl text-center mb-5 mt-10">Brands We Have</p>
 
     <div  class="flex justify-center items-center ">
         <div class="scroller bg-white border  border-gray-300 dark:bg-gray-800 dark:border-gray-600 rounded-lg shadow-lg " data-direction="left" data-speed="fast">
