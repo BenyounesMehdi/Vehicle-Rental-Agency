@@ -50,47 +50,49 @@
 
                             var_dump($_POST) ;
 
-                                    // if (empty($vehicleImage)) {
-                                    //     $fileName = "";
-                                    // } else {
-                                    //     $fileName = uniqid() . $vehicleImage;
-                                    //     // Move the file from [tmp_name] into assets/brandsImages
-                                    //     move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
+                                    if (empty($vehicleImage)) {
+                                        $fileName = "";
+                                    } else {
+                                        $fileName = uniqid() . $vehicleImage;
+                                        // Move the file from [tmp_name] into assets/brandsImages
+                                        move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
                                         
-                                    // }
+                                    }
 
-                                    // // Vehicle name does not exist, proceed with adding the brand
+                                    // Vehicle name does not exist, proceed with adding the brand
 
-                                    // if( !empty($vehicleImage) ) {
-                                    //  // A new image is uploaded, replace the existing image
-                                    //     $query = 'UPDATE vehicle SET 
-                                    //         name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
-                                    //         image=?, brandID=?, vehicleTypeID=? WHERE vehicleID=?';
-                                    //     $stmt = $pdo->prepare($query);
-                                    //     $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
-                                    //         $vehicleStatus, $fileName, $brandID, $vehiclesTypeID, $vehicleID]);
-                                    // }
-                                    // else {
-                                    //     // No new image uploaded, retain the existing image
-                                    //     $query = 'UPDATE vehicle SET 
-                                    //         name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
-                                    //          brandID=?, vehicleTypeID=? WHERE vehicleID=?';
-                                    //     $stmt = $pdo->prepare($query);
-                                    //     $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
-                                    //         $vehicleStatus, $brandID, $vehiclesTypeID, $vehicleID]);
-                                    // }
+                                    if( !empty($vehicleImage) ) {
+                                     // A new image is uploaded, replace the existing image
+                                        $query = 'UPDATE vehicle SET 
+                                            name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
+                                            fuelType=?, mileage=?, gearBox=?, seatsNumber=?,
+                                            image=?, brandID=?, vehicleTypeID=? WHERE vehicleID=?';
+                                        $stmt = $pdo->prepare($query);
+                                        $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
+                                            $vehicleStatus, $fuelType, $mileAge, $gearBox, $seatsNumber, $fileName, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    }
+                                    else {
+                                        // No new image uploaded, retain the existing image
+                                        $query = 'UPDATE vehicle SET 
+                                            name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
+                                            fuelType=?, mileage=?, gearBox=?, seatsNumber=?,
+                                             brandID=?, vehicleTypeID=? WHERE vehicleID=?';
+                                        $stmt = $pdo->prepare($query);
+                                        $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
+                                            $vehicleStatus, $fuelType, $mileAge, $gearBox, $seatsNumber, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    }
 
                                        
 
                         
-                                    // if ($updated) {
-                                    //     // Redirect the user to the previous page
-                                    //     header('location: ../admin/vehiclesSide.php');
-                                    //     exit; // Ensure that no further code is executed after the redirection
-                                    // } else {
-                                    //     $title = "Error Occurred";
-                                    //     include_once("../components/errorField.php");
-                                    // }
+                                    if ($updated) {
+                                        // Redirect the user to the previous page
+                                        header('location: ../admin/vehiclesSide.php');
+                                        exit; // Ensure that no further code is executed after the redirection
+                                    } else {
+                                        $title = "Error Occurred";
+                                        include_once("../components/errorField.php");
+                                    }
                                 
                             
 
