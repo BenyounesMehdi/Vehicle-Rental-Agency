@@ -9,6 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
 </head>
+
+<style>
+
+
+.black-top-border {
+  border-top: 1px solid black;
+}
+</style>
+
 <body class="bg-gray-200 dark:bg-gray-900 py-6 px-8">
     
 <section class="">
@@ -90,75 +99,115 @@
 
 
             <form class=" ml-2" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
-                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 ">
+                <div class="flex flex-col gap-3 ">
 
-                    
-                    <div class="sm:col-span-2">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Name</label>
-                            <input type="text" name="vehicleName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        </div>
-
-                        <?php 
-                            $query = 'SELECT * FROM brand';
-                            $stmt = $pdo->prepare($query);
-                            $stmt->execute();
-                            $brands = $stmt->fetchAll(); ?>
-
-                            <div class="w-full">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Brand</label>
-                                <select name="vehicleBrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <?php
-                                    foreach ($brands as $brand) { ?>
-                                        <option value=" <?php echo $brand->brandID; ?> "> <?php echo $brand->name ?> </option>
-                                        <?php
-                                    }
-                                ?>
-                                </select>
+                        <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
+                            <div class="sm:col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Name</label>
+                                <input type="text" name="vehicleName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             </div>
-                            
+
                             <?php 
-                            $query = 'SELECT * FROM vehiclesType';
-                            $stmt = $pdo->prepare($query);
-                            $stmt->execute();
-                            $vehiclesType = $stmt->fetchAll(); ?>
+                                $query = 'SELECT * FROM brand';
+                                $stmt = $pdo->prepare($query);
+                                $stmt->execute();
+                                $brands = $stmt->fetchAll(); ?>
 
+                                <div class="w-full">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Brand</label>
+                                    <select name="vehicleBrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <?php
+                                        foreach ($brands as $brand) { ?>
+                                            <option value=" <?php echo $brand->brandID; ?> "> <?php echo $brand->name ?> </option>
+                                            <?php
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                                <?php 
+                                $query = 'SELECT * FROM vehiclesType';
+                                $stmt = $pdo->prepare($query);
+                                $stmt->execute();
+                                $vehiclesType = $stmt->fetchAll(); ?>
+
+                                <div class="w-full">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type</label>
+                                    <select name="vehicleType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <?php
+                                        foreach ($vehiclesType as $vehicleType) { ?>
+                                            <option value=" <?php echo $vehicleType->vehiclesTypeID; ?>"> <?php echo $vehicleType->name ?> </option>
+                                            <?php
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                        </div>
+
+
+                        <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
                             <div class="w-full">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type</label>
-                                <select name="vehicleType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <?php
-                                    foreach ($vehiclesType as $vehicleType) { ?>
-                                        <option value=" <?php echo $vehicleType->vehiclesTypeID; ?>"> <?php echo $vehicleType->name ?> </option>
-                                        <?php
-                                    }
-                                ?>
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model Year</label>
+                                <input id="modelYear" name="modelYear" oninput="checkYear()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1900" step="1" pattern="[0-9]{4}" placeholder="YYYY">
+                                <div id="yearError" class="text-red-500 text-sm mt-1 hidden"></div>
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cost Per Day</label>
+                                <input name="costPerDay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" pattern="[0-9]{4}" placeholder="500 DA">
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Status</label>
+                                <select name="vehicleStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value="Available" selected>Available</option>
+                                    <option value="Not Available">Not Available</option>
+                                    <option value="Maitenance">Maitenance</option>
                                 </select>
                             </div>
+                        </div>
 
-
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model Year</label>
-                            <input id="modelYear" name="modelYear" oninput="checkYear()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1900" step="1" pattern="[0-9]{4}" placeholder="YYYY">
-                            <div id="yearError" class="text-red-500 text-sm mt-1 hidden"></div>
-                        </div>
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cost Per Day</label>
-                            <input name="costPerDay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" pattern="[0-9]{4}" placeholder="500 DA">
-                            
-                        </div>
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Status</label>
-                            <select name="vehicleStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option value="Available" selected>Available</option>
-                                <option value="Not Available">Not Available</option>
-                                <option value="Maitenance">Maitenance</option>
-                            </select>
-                        </div>
+                        <div class="black-top-border dark:border-white mt-3">
+                            <p class="dark:text-white mt-1 font-semibold text-xl">Additional Informations</p>
                         </div>
                         
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4   gap-2" >
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fuel Type</label>
+                                <select name="fuelType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value="gas" selected>Gas</option>
+                                    <option value="diesel">Diesel</option>
+                                    <option value="electric">Electric</option>
+                                    <option value="petrol">Petrol</option>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats Number</label>
+                                <input name="seatsNumber" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mileage</label>
+                                <input name="mileAge" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Transmission Type</label>
+                                <select name="gearBox" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value="manual" selected>Manual</option>
+                                    <option value="automatic">Automatic</option>
+                                    <option value="automated manual">Automated Manual</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        </div>
+                        
+                        <div class="black-top-border dark:border-white mt-5">
+                        </div>
+
                         <div class="w-full mb-3 mt-2">
                                 <label class="block mb-2 text-medium font-medium text-gray-900 dark:text-white" for="multiple_files">Upload an Image</label>
                                 <input type="file" name="vehicleImage" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="multiple_files"  multiple>
                         </div>
+
+                        
 
                             <div class="flex items-end justify-end space-x-4">
                                 <button id="submitButton" type="submit" name="addVehicle" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
