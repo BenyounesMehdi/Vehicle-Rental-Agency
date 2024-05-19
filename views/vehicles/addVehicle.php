@@ -36,6 +36,10 @@
                             $modelYear = $_POST['modelYear'];
                             $costPerDay = $_POST['costPerDay'];
                             $vehicleStatus = $_POST['vehicleStatus'];
+                            $fuelType = $_POST['fuelType'];
+                            $seatsNumber = $_POST['seatsNumber'];
+                            $mileAge = $_POST['mileAge'];
+                            $gearBox = $_POST['gearBox'];
                             $vehicleImage = $_FILES['vehicleImage']['name'];
 
                             $query = 'SELECT * FROM admin';
@@ -52,7 +56,7 @@
                             // echo "Date : " . $date ;
 
                         
-                            if (empty($vehicleName) || empty($brandID) || empty($vehiclesTypeID ) || empty($modelYear) || empty($costPerDay) || empty($vehicleStatus) || empty($_FILES['vehicleImage']['name']))  {
+                            if (empty($vehicleName) || empty($brandID) || empty($vehiclesTypeID ) || empty($modelYear) || empty($costPerDay) || empty($vehicleStatus) || empty($seatsNumber) || empty($mileAge) || empty($_FILES['vehicleImage']['name']))  {
                                 $title = "Please, Fill All The Inputs";
                                 include_once("../components/errorField.php");
                             } else {
@@ -75,12 +79,15 @@
 
                                         $fileName = uniqid() . $vehicleImage;
                                         // Move the file from [tmp_name] into assets/brandsImages
+
+                                        var_dump($_POST) ;
+
                                         move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
                                         $query = 'INSERT INTO vehicle
-                                                 (name, modelYear, costPerDay, vehicleStatus, image, creationDate, brandID, vehicleTypeID, adminID)
-                                                  VALUES (?,?,?,?,?,?,?,?,?)';
+                                                 (name, modelYear, costPerDay, vehicleStatus, fuelType, mileage, gearBox, seatsNumber, image, creationDate, brandID, vehicleTypeID, adminID)
+                                                  VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)';
                                         $stmt = $pdo->prepare($query);
-                                        $inserted = $stmt->execute([$vehicleName, $modelYear, $costPerDay, $vehicleStatus, $fileName, $date, $brandID, $vehiclesTypeID, $adminID]);
+                                        $inserted = $stmt->execute([$vehicleName, $modelYear, $costPerDay, $vehicleStatus,$fuelType, $mileAge, $gearBox, $seatsNumber, $fileName, $date, $brandID, $vehiclesTypeID, $adminID]);
                                   
                         
                                     if ($inserted) {
@@ -173,7 +180,8 @@
                             <div class="w-full">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fuel Type</label>
                                 <select name="fuelType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option value="gas" selected>Gas</option>
+                                    <option value="" selected></option>
+                                    <option value="gas">Gas</option>
                                     <option value="diesel">Diesel</option>
                                     <option value="electric">Electric</option>
                                     <option value="petrol">Petrol</option>
@@ -190,7 +198,8 @@
                             <div class="w-full">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Transmission Type</label>
                                 <select name="gearBox" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option value="manual" selected>Manual</option>
+                                    <option value="" selected></option>    
+                                    <option value="manual">Manual</option>
                                     <option value="automatic">Automatic</option>
                                     <option value="automated manual">Automated Manual</option>
                                 </select>
