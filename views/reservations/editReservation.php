@@ -68,7 +68,7 @@
        
         <form action="../../models/backend/admin/editReservation.php" method="POST" class="">
             
-            <div class="p-3 grid grid-cols-4 gap-1 ">
+            <div class="p-3 grid grid-cols-1 md:grid-cols-4 gap-1 ">
 
                 <div class="w-full ">
                     <label for="paied" class="text-xl text-black dark:text-white font-semibold italic">Paied</label>
