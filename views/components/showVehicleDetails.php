@@ -21,23 +21,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../node_modules/flowbite/dist/flowbite.min.css">
 </head>
+<style>
+
+
+.black-bottom-border {
+  border-bottom: 2px solid black;
+  border-radius: 4px;
+}
+</style>
 <body class="bg-gray-200 dark:bg-gray-900 py-6 px-8">
 
         <div class="container mx-auto p-2 mt-5">
-            <div class="flex justify-center items-center w-fit">
+            <div class="flex justify-center items-center w-fit ">
                 <img src="../../assets/vehiclesImages/<?php echo $vehicle->vehicleImage ?>" class="mb-2 w-72">
             </div>
-            <div class="p-2 mt-2">
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Name : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->vehicleName; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Brand : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->brandName; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Model Year : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->modelYear; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Cost Per Day : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->costPerDay; ?> DA</span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Status : <span class="text-xl font-medium italic <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>" <?php echo $vehicle->vehicleStatus ; ?> "><?php echo $vehicle->vehicleStatus; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Fuel Type : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->fuelType; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Mileage (Km) : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->mileage; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Gearbox : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->gearBox; ?></span> </p>
-                <p class="text-2xl text-black dark:text-white font-semibold mb-1">Seats Number : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->seatsNumber; ?></span> </p>
-            </div>
+            <div class="p-2 mt-0  flex justify-center items-center gap-8 flex-col md:flex-row ">
+                <div class="flex flex-col ">
+                    <div class="black-bottom-border dark:border-white" >
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Name : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->vehicleName; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Brand : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->brandName; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Model Year : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->modelYear; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Cost Per Day : <span class="text-xl text-blue-600 font-medium italic"><?php echo $vehicle->costPerDay; ?> DA</span> </p>
+                    </div>
+                </div>
+                <div class="flex flex-col "> 
+                <div class="black-bottom-border <?php echo $vehicle->fuelType == '' ? 'hidden' : 'visible'; ?> dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Fuel Type : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->fuelType; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Mileage (Km) : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->mileage; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white <?php echo $vehicle->gearBox == '' ? 'hidden' : 'visible'; ?>">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Gearbox : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->gearBox; ?></span> </p>
+                    </div>
+                    <div class="black-bottom-border dark:border-white">
+                        <p class="text-2xl text-black dark:text-white font-semibold mb-1">Seats Number : <span class="text-xl text-blue-600 font-medium italic "><?php echo $vehicle->seatsNumber; ?></span> </p></div>
+                    </div>
+                    <!-- <p class="text-2xl text-black dark:text-white font-semibold mb-1">Status : <span class="text-xl font-medium italic <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>" <?php echo $vehicle->vehicleStatus ; ?> "><?php echo $vehicle->vehicleStatus; ?></span> </p> -->
+                </div>  
             <?php 
                 if( $vehicle->vehicleStatus == "Available" ) {
                     if( isset($_SESSION['client']) ) {
