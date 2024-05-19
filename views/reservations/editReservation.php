@@ -66,10 +66,33 @@
          </div>
 
        
-        <form action="../../models/backend/admin/editReservation.php" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
-            <input type="hidden" name="reservationID" value="<?php echo $reservation->reservationID; ?>">
-            <div class="flex flex-col sm:flex-row w-full gap-3">
-                <div class="w-full">
+        <form action="../../models/backend/admin/editReservation.php" method="POST" class="">
+            
+            <div class="p-3 grid grid-cols-4 gap-1 ">
+
+                <div class="w-full ">
+                    <label for="paied" class="text-xl text-black dark:text-white font-semibold italic">Paied</label>
+                    <div class="relative w-full mt-2">
+                        <select id="paied" name="paied" onchange="checkPaied()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <?php 
+                                        if( $vehicle->isPayed === "Yes" ) { ?>
+                                                <option value="Yes" selected>Yes</option>
+                                                <option value="No">No</option>
+                                            <?php
+                                        }
+                                        else {
+                                            ?>
+                                                <option value="Yes" >Yes</option>
+                                                <option value="No" selected>No</option>
+                                            <?php
+                                        }
+                                    ?>
+                            
+                        </select>               
+                    </div>
+                </div>
+
+                <div class="w-full ">
                     <label for="pickupDate" class="text-xl text-black dark:text-white font-semibold italic">Pick up Date</label>
                     <div class="relative w-full mt-2">
                         <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
@@ -96,25 +119,28 @@
                 </div>
 
                 <div class="w-full flex flex-col gap-2 ">
-                    <p class="text-xl text-black dark:text-white font-semibold italic ">Total Days</p>
-                    <div id="totalDays" type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 "><?php echo $reservation->duration; ?></div>
+                        <p class="text-xl text-black dark:text-white font-semibold italic ">Total Days</p>
+                        <div id="totalDays" type="button" class="w-fit text-gray-900 bg-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 "><?php echo $reservation->duration; ?></div>
+                    </div>
+                    <input id="duration" type="hidden" value="<?php echo $reservation->duration ?>" name="duration" readonly >
                 </div>
-                <input id="duration" type="hidden" value="<?php echo $reservation->duration ?>" name="duration" readonly >
-            </div>
 
+            </div>
             
-            <div class="w-full flex flex-col justify-center items-center mt-1">
+            
+
+                <input type="hidden" name="reservationID" value="<?php echo $_GET['reservation'] ?>">
+                <input type="hidden" name="vehicleID" value="<?php echo $_GET['vehicle'] ?>">
+            
+        </div>
+
+        <div class="w-full flex flex-col justify-center items-center mt-1">
                 <label class="text-xl text-black dark:text-white font-semibold italic ">Total Cost</label>
                 <p id="totalCost" class="text-3xl text-green-600 font-semibold italic"><?php echo $reservation->totalCost ?> DA</p>
                 <input id="costPerDay" type="hidden" value="<?php echo $vehicle->costPerDay ?>">
                 <input id="cost" type="hidden" name="totalCost" readonly >
             </div>
 
-            <!-- HiDDEn INPUTS -->
-                <input type="hidden" name="reservationID" value="<?php echo $_GET['reservation'] ?>">
-                <input type="hidden" name="vehicleID" value="<?php echo $_GET['vehicle'] ?>">
-            
-        </div>
         <div class="w-full flex items-end justify-end space-x-4">
             <button id="editButton" type="submit" name="editReservation" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700">
                 Edit Reservation
@@ -136,6 +162,10 @@
     <!-- <script src="../JS/reservation.js"></script> -->
 
     <script>
+
+    function checkPaied () {
+        editButton.classList.remove("hidden");
+    }
 
 let pickupDateAuth = false;
 let returnDateAuth = false;
