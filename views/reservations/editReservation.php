@@ -36,8 +36,8 @@
         $stmt->execute() ;
         $vehicle = $stmt->fetch() ;
         // var_dump($vehicle) ;
+
         
-    
     
 ?>
 
@@ -66,7 +66,7 @@
          </div>
 
        
-        <form action="../../models/backend/client/editReservation.php?" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
+        <form action="../../models/backend/admin/editReservation.php" method="POST" class="p-5 flex flex-col sm:flex-col justify-center items-center gap-2">
             <input type="hidden" name="reservationID" value="<?php echo $reservation->reservationID; ?>">
             <div class="flex flex-col sm:flex-row w-full gap-3">
                 <div class="w-full">
