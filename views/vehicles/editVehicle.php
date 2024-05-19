@@ -41,6 +41,10 @@
                             $modelYear = $_POST['modelYear'];
                             $costPerDay = $_POST['costPerDay'];
                             $vehicleStatus = $_POST['vehicleStatus'];
+                            $fuelType = $_POST['fuelType'];
+                            $seatsNumber = $_POST['seatsNumber'];
+                            $mileAge = $_POST['mileAge'];
+                            $gearBox = $_POST['gearBox'];
                             $vehicleImage = $_FILES['vehicleImage']['name'];
                             $vehicleID = $_POST['id'] ;
 
@@ -262,11 +266,13 @@
                             </div>
                             <div class="w-full">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats Number</label>
-                                <input name="seatsNumber" value="<?php echo $vehicle->seatsNumber; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                                <input id="seatsNumber" name="seatsNumber" oninput="checkSeatsNumberInput()" value="<?php echo $vehicle->seatsNumber; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                                <p id="seatsNumberErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Seats Number Input</p>
                             </div>
                             <div class="w-full">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mileage</label>
-                                <input name="mileAge" value="<?php echo $vehicle->mileage; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                                <input id="mileAge" name="mileAge"  oninput="checkMileageInput()" value="<?php echo $vehicle->mileage; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                                <p id="mileAgeErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Mileage Input</p>
                             </div>
                             <div class="w-full">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Transmission Type</label>
@@ -330,6 +336,31 @@
     <script src="../JS/themeToggle.js"></script>
     <script>
         const submitButton = document.getElementById("submitButton") ;
+        const seatsNumber = document.getElementById("seatsNumber") ;
+        const mileAge = document.getElementById("mileAge") ;
+
+        function checkSeatsNumberInput () {
+            if( seatsNumber.value.length == 0 ) {
+                document.getElementById("seatsNumberErroMessage").classList.remove("hidden") ;
+                submitButton.classList.add("hidden") ;
+            }
+            else {
+                document.getElementById("seatsNumberErroMessage").classList.add("hidden") ;
+                submitButton.classList.remove("hidden") ;
+            }
+        }
+
+        function checkMileageInput () {
+            if( mileAge.value.length == 0 ) {
+                document.getElementById("mileAgeErroMessage").classList.remove("hidden") ;
+                submitButton.classList.add("hidden") ;
+            }
+            else {
+                document.getElementById("mileAgeErroMessage").classList.add("hidden") ;
+                submitButton.classList.remove("hidden") ;
+            }
+        }
+
         function checkYear () {
             
             const modelYear = document.getElementById("modelYear").value ;
