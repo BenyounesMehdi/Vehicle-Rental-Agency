@@ -48,7 +48,7 @@
                         Total Cost
                     </th>
                     <th scope="col" class="px-6 py-3">
-                        Payed
+                        Paied
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Reservation Date
@@ -113,20 +113,25 @@
                                 </td>
 
                                 <td class="px-6 py-2">
-                                            <?php if( $reservation->isExpired == 'No' ) { 
-                                                    $pickupDate = new DateTime($reservation->pickupDate);
-                                                    $pickupDate->setTime(0, 0, 0); // Set time to midnight
-
-                                                   
-                                                    if( $pickupDate > $currentDate ) {
-                                                ?>
+                                               
                                             <a href="../reservations/editReservation.php?reservation=<?php echo $reservation->reservationID ?>&vehicle=<?php echo $reservation->vehicleID ?>">
                                                 <button type="button" class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 ">Edit</button>    
                                             </a>
-                                            <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
-                                            <button onclick="storeID(<?php echo $reservation->reservationID; ?>, <?php echo $reservation->vehicleID; ?>)" type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600">Delete</button>
-                                            </a>
-                                            <?php } } ?>
+
+                                            <?php 
+                                                    // $returnDate = new DateTime($reservation->returnDate);
+                                                    // $returnDate->setTime(0, 0, 0); // Set time to midnight
+
+                                                    if( $reservation->isExpired == "No" ) { ?>
+                                                        <a data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
+                                                        <button onclick="storeID(<?php echo $reservation->reservationID; ?>, <?php echo $reservation->vehicleID; ?>)" type="button" class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600">Delete</button>
+                                                        </a>
+                                                    <?php }
+                                                    
+                                            ?>
+
+                                            
+                                         
                                 </td>
                                 
                             </tr>
