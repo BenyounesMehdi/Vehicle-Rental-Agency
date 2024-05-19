@@ -44,47 +44,49 @@
                             $vehicleImage = $_FILES['vehicleImage']['name'];
                             $vehicleID = $_POST['id'] ;
 
-                                    if (empty($vehicleImage)) {
-                                        $fileName = "";
-                                    } else {
-                                        $fileName = uniqid() . $vehicleImage;
-                                        // Move the file from [tmp_name] into assets/brandsImages
-                                        move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
+                            var_dump($_POST) ;
+
+                                    // if (empty($vehicleImage)) {
+                                    //     $fileName = "";
+                                    // } else {
+                                    //     $fileName = uniqid() . $vehicleImage;
+                                    //     // Move the file from [tmp_name] into assets/brandsImages
+                                    //     move_uploaded_file($_FILES['vehicleImage']['tmp_name'], '../../assets/vehiclesImages/' . $fileName);
                                         
-                                    }
+                                    // }
 
-                                    // Vehicle name does not exist, proceed with adding the brand
+                                    // // Vehicle name does not exist, proceed with adding the brand
 
-                                    if( !empty($vehicleImage) ) {
-                                     // A new image is uploaded, replace the existing image
-                                        $query = 'UPDATE vehicle SET 
-                                            name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
-                                            image=?, brandID=?, vehicleTypeID=? WHERE vehicleID=?';
-                                        $stmt = $pdo->prepare($query);
-                                        $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
-                                            $vehicleStatus, $fileName, $brandID, $vehiclesTypeID, $vehicleID]);
-                                    }
-                                    else {
-                                        // No new image uploaded, retain the existing image
-                                        $query = 'UPDATE vehicle SET 
-                                            name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
-                                             brandID=?, vehicleTypeID=? WHERE vehicleID=?';
-                                        $stmt = $pdo->prepare($query);
-                                        $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
-                                            $vehicleStatus, $brandID, $vehiclesTypeID, $vehicleID]);
-                                    }
+                                    // if( !empty($vehicleImage) ) {
+                                    //  // A new image is uploaded, replace the existing image
+                                    //     $query = 'UPDATE vehicle SET 
+                                    //         name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
+                                    //         image=?, brandID=?, vehicleTypeID=? WHERE vehicleID=?';
+                                    //     $stmt = $pdo->prepare($query);
+                                    //     $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
+                                    //         $vehicleStatus, $fileName, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    // }
+                                    // else {
+                                    //     // No new image uploaded, retain the existing image
+                                    //     $query = 'UPDATE vehicle SET 
+                                    //         name=?, modelYear=?, costPerDay=?, vehicleStatus=?,
+                                    //          brandID=?, vehicleTypeID=? WHERE vehicleID=?';
+                                    //     $stmt = $pdo->prepare($query);
+                                    //     $updated = $stmt->execute([$vehicleName, $modelYear, $costPerDay,
+                                    //         $vehicleStatus, $brandID, $vehiclesTypeID, $vehicleID]);
+                                    // }
 
                                        
 
                         
-                                    if ($updated) {
-                                        // Redirect the user to the previous page
-                                        header('location: ../admin/vehiclesSide.php');
-                                        exit; // Ensure that no further code is executed after the redirection
-                                    } else {
-                                        $title = "Error Occurred";
-                                        include_once("../components/errorField.php");
-                                    }
+                                    // if ($updated) {
+                                    //     // Redirect the user to the previous page
+                                    //     header('location: ../admin/vehiclesSide.php');
+                                    //     exit; // Ensure that no further code is executed after the redirection
+                                    // } else {
+                                    //     $title = "Error Occurred";
+                                    //     include_once("../components/errorField.php");
+                                    // }
                                 
                             
 
@@ -100,110 +102,212 @@
             <form class=" ml-2" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="id" value="<?php echo $vehicle->vehicleID ?>" class="">
                 <input type="hidden" name="image" value="<?php echo $vehicle->image ?>">
-                <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 ">
 
-                    
-                    <div class="sm:col-span-2">
-                            
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Name</label>
-                            <input type="text" id="vehicleName" oninput="checkName()" name="vehicleName" value="<?php echo $vehicle->name ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                            <p id="nameErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Vehicle Name Input</p>
-                        </div>
+                <div class="flex flex-col gap-3">
 
-                        <?php 
-                            $query = 'SELECT * FROM brand';
-                            $stmt = $pdo->prepare($query);
-                            $stmt->execute();
-                            $brands = $stmt->fetchAll(); ?>
-
-                            <div class="w-full">
-                                
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Brand</label>
-                                <select name="vehicleBrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    
-                                    <option value=" <?php echo $vehicle->brandID; ?>"> <?php echo $vehicle->brandName ?> </option>
-                                    <?php
-                                    foreach ($brands as $brand) {
-                                        if( $brand->name === $vehicle->brandName ) {
-                                            continue ;
-                                        }
-                                        else {
-                                            ?>
-                                            <option value=" <?php echo $brand->brandID; ?>"> <?php echo $brand->name ?> </option>
-                                            <?php
-                                        }
-                                        
-                                    }
-                                ?>
-                                </select>
+                        <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
+                            <div class="sm:col-span-2">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Name</label>
+                                <input type="text" id="vehicleName" oninput="checkName()" name="vehicleName" value="<?php echo $vehicle->name ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <p id="nameErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Vehicle Name Input</p>
                             </div>
-                            
+
                             <?php 
-                            $query = 'SELECT * FROM vehiclesType';
-                            $stmt = $pdo->prepare($query);
-                            $stmt->execute();
-                            $vehiclesType = $stmt->fetchAll(); ?>
+                                $query = 'SELECT * FROM brand';
+                                $stmt = $pdo->prepare($query);
+                                $stmt->execute();
+                                $brands = $stmt->fetchAll(); ?>
 
+                                <div class="w-full">
+                                    
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Brand</label>
+                                    <select name="vehicleBrand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                        
+                                        <option value=" <?php echo $vehicle->brandID; ?>"> <?php echo $vehicle->brandName ?> </option>
+                                        <?php
+                                        foreach ($brands as $brand) {
+                                            if( $brand->name === $vehicle->brandName ) {
+                                                continue ;
+                                            }
+                                            else {
+                                                ?>
+                                                <option value=" <?php echo $brand->brandID; ?>"> <?php echo $brand->name ?> </option>
+                                                <?php
+                                            }
+                                            
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                                
+                                <?php 
+                                $query = 'SELECT * FROM vehiclesType';
+                                $stmt = $pdo->prepare($query);
+                                $stmt->execute();
+                                $vehiclesType = $stmt->fetchAll(); ?>
+
+                                <div class="w-full">
+                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type</label>
+                                    <select name="vehicleType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <?php ?>
+                                        <option value=" <?php echo $vehicle->vehicleTypeID; ?>"> <?php echo $vehicle->vehicleTypeName ?> </option>
+                                        <?php
+                                        foreach ($vehiclesType as $vehicleType) {
+                                            if( $vehicleType->name === $vehicle->vehicleTypeName ) {
+                                                continue ;
+                                            }
+                                            else {
+                                                ?>
+                                                <option value=" <?php echo $vehicleType->vehiclesTypeID; ?>"> <?php echo $vehicleType->name ?> </option>
+                                                <?php
+                                            }
+                                            
+                                        }
+                                    ?>
+                                    </select>
+                                </div>
+                        </div>
+
+
+                        <div class="grid grid-cols-1  md:grid-cols-3 gap-2">
                             <div class="w-full">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Type</label>
-                                <select name="vehicleType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <?php ?>
-                                    <option value=" <?php echo $vehicle->vehicleTypeID; ?>"> <?php echo $vehicle->vehicleTypeName ?> </option>
-                                    <?php
-                                    foreach ($vehiclesType as $vehicleType) {
-                                        if( $vehicleType->name === $vehicle->vehicleTypeName ) {
-                                            continue ;
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model Year</label>
+                                <input id="modelYear" name="modelYear" value="<?php echo $vehicle->modelYear; ?>" oninput="checkYear()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1900" step="1" pattern="[0-9]{4}" placeholder="YYYY">
+                                <div id="yearError" class="text-red-500 text-sm mt-1 hidden"></div>
+                                <p id="modeYearErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Model Year Input</p>
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cost Per Day</label>
+                                <input name="costPerDay" id="costPerDay" oninput="checkCostPerDay()" value="<?php echo $vehicle->costPerDay; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" pattern="[0-9]{4}" placeholder="500 DA">
+                                <p id="costPerDayErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Cost Per Day Input</p>
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Status</label>
+                                <select name="vehicleStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <?php 
+                                        if( $vehicle->vehicleStatus === "Available" ) { ?>
+                                            <option value="Available" selected>Available</option>
+                                            <option value="Not Available">Not Available</option>
+                                            <option value="Maitenance">Maitenance</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->vehicleStatus === "Not Available" ) { ?>
+                                            <option value="Available" >Available</option>
+                                            <option value="Not Available" selected>Not Available</option>
+                                            <option value="Maitenance">Maitenance</option>
+                                            <?php
                                         }
                                         else {
                                             ?>
-                                            <option value=" <?php echo $vehicleType->vehiclesTypeID; ?>"> <?php echo $vehicleType->name ?> </option>
+                                            <option value="Available" >Available</option>
+                                            <option value="Not Available" >Not Available</option>
+                                            <option value="Maitenance" selected>Maitenance</option>
                                             <?php
                                         }
-                                        
-                                    }
-                                ?>
+                                    ?>
+                                    
                                 </select>
                             </div>
-
-
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Model Year</label>
-                            <input id="modelYear" name="modelYear" value="<?php echo $vehicle->modelYear; ?>" oninput="checkYear()" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1900" step="1" pattern="[0-9]{4}" placeholder="YYYY">
-                            <div id="yearError" class="text-red-500 text-sm mt-1 hidden"></div>
-                            <p id="modeYearErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Model Year Input</p>
                         </div>
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cost Per Day</label>
-                            <input name="costPerDay" id="costPerDay" oninput="checkCostPerDay()" value="<?php echo $vehicle->costPerDay; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" pattern="[0-9]{4}" placeholder="500 DA">
-                            <p id="costPerDayErroMessage" class="text-red-500 ml-2 hidden">Please, Fill The Cost Per Day Input</p>
-                        </div>
-                        <div class="w-full">
-                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Vehicle Status</label>
-                            <select name="vehicleStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4   gap-2" >
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fuel Type</label>
+                                <select name="fuelType" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <?php 
-                                    if( $vehicle->vehicleStatus === "Available" ) { ?>
-                                        <option value="Available" selected>Available</option>
-                                        <option value="Not Available">Not Available</option>
-                                        <option value="Maitenance">Maitenance</option>
-                                        <?php
-                                    }
-                                    else if( $vehicle->vehicleStatus === "Not Available" ) { ?>
-                                        <option value="Available" >Available</option>
-                                        <option value="Not Available" selected>Not Available</option>
-                                        <option value="Maitenance">Maitenance</option>
-                                        <?php
-                                    }
-                                    else {
-                                        ?>
-                                        <option value="Available" >Available</option>
-                                        <option value="Not Available" >Not Available</option>
-                                        <option value="Maitenance" selected>Maitenance</option>
-                                        <?php
-                                    }
-                                ?>
+                                        if( $vehicle->fuelType === "gas" ) { ?>
+                                            <option value=""></option>
+                                            <option value="gas" selected>Gas</option>
+                                            <option value="diesel">Diesel</option>
+                                            <option value="electric">Electric</option>
+                                            <option value="petrol">Petrol</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->fuelType === "diesel" ) { ?>
+                                            <option value=""></option>
+                                            <option value="gas" >Gas</option>
+                                            <option value="diesel" selected>Diesel</option>
+                                            <option value="electric">Electric</option>
+                                            <option value="petrol">Petrol</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->fuelType === "electric" ) { ?>
+                                            <option value=""></option>
+                                            <option value="gas" >Gas</option>
+                                            <option value="diesel" >Diesel</option>
+                                            <option value="electric" selected>Electric</option>
+                                            <option value="petrol">Petrol</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->fuelType === "petrol" ) { ?>
+                                            <option value=""></option>
+                                            <option value="gas" >Gas</option>
+                                            <option value="diesel" >Diesel</option>
+                                            <option value="electric" selected>Electric</option>
+                                            <option value="petrol">Petrol</option>
+                                            <?php
+                                        }
+                                        else {
+                                            ?>
+                                            <option value="" selected></option>
+                                            <option value="gas" >Gas</option>
+                                            <option value="diesel" >Diesel</option>
+                                            <option value="electric" >Electric</option>
+                                            <option value="petrol">Petrol</option>
+                                            <?php
+                                        }
+                                    ?>
                                 
-                            </select>
+                                </select>
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Seats Number</label>
+                                <input name="seatsNumber" value="<?php echo $vehicle->seatsNumber; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Mileage</label>
+                                <input name="mileAge" value="<?php echo $vehicle->mileage; ?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="number" name="modelYear" min="1"  step="1" >
+                            </div>
+                            <div class="w-full">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Transmission Type</label>
+                                <select name="gearBox" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <?php 
+                                        if( $vehicle->gearBox === "manual" ) { ?>
+                                            <option value=""></option>   
+                                            <option value="manual" selected>Manual</option>
+                                            <option value="automatic">Automatic</option>
+                                            <option value="automated manual">Automated Manual</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->gearBox === "automatic" ) { ?>
+                                            <option value=""></option>   
+                                            <option value="manual" >Manual</option>
+                                            <option value="automatic" selected>Automatic</option>
+                                            <option value="automated manual">Automated Manual</option>
+                                            <?php
+                                        }
+                                        else if( $vehicle->gearBox === "automated manual" ) { ?>
+                                            <option value=""></option>   
+                                            <option value="manual" >Manual</option>
+                                            <option value="automatic" >Automatic</option>
+                                            <option value="automated manual" selected>Automated Manual</option>
+                                            <?php
+                                        }
+                                        else {
+                                            ?>
+                                            <option value="" selected></option>    
+                                            <option value="manual">Manual</option>
+                                            <option value="automatic">Automatic</option>
+                                            <option value="automated manual">Automated Manual</option>
+                                            <?php
+                                        }
+                                    ?>
+
+                                    
+                                </select>
+                            </div>
                         </div>
+
                         </div>
                         
                         <div class="w-full mb-3 mt-2">
