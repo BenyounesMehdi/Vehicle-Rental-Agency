@@ -1,4 +1,5 @@
 <?php
+    // session_start() ;
 
     if( isset($_POST['reserve']) ) {
         $pickupDate = date('Y-m-d', strtotime($_POST['pickupDate']))  ;
@@ -10,14 +11,15 @@
         $isExpired = 'No';
         $clientID = $_POST['clientID'] ;
         $vehicleID = $_POST['vehicleID'] ;
+        $adminID = 1 ;
 
         require_once '../../database.php' ;
         
         $query = 'INSERT INTO reservation
-        (pickupDate, returnDate, duration, totalCost, reservationDate, isPayed, isExpired, clientID, vehicleID)
-         VALUES (?,?,?,?,?,?,?,?,?)';
+        (pickupDate, returnDate, duration, totalCost, reservationDate, isPayed, isExpired, clientID, vehicleID, adminID)
+         VALUES (?,?,?,?,?,?,?,?,?,?)';
         $stmt = $pdo->prepare($query);
-        $inserted = $stmt->execute([$pickupDate, $returnDate, $duration, $totalCost, $reservationDate, $isPayed, $isExpired, $clientID, $vehicleID]);
+        $inserted = $stmt->execute([$pickupDate, $returnDate, $duration, $totalCost, $reservationDate, $isPayed, $isExpired, $clientID, $vehicleID, $adminID]);
 
         if( $inserted ) {
             // Modify the status of the reserved vehicle
