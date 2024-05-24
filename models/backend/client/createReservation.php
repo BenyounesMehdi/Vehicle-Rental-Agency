@@ -1,5 +1,5 @@
 <?php
-    // session_start() ;
+    session_start() ;
 
     if( isset($_POST['reserve']) ) {
         $pickupDate = date('Y-m-d', strtotime($_POST['pickupDate']))  ;
@@ -26,10 +26,18 @@
             $query = "UPDATE vehicle SET vehicleStatus = 'Not Available' WHERE vehicleID = $vehicleID" ;
             $stmt = $pdo->prepare($query);
             $stmt->execute();
+
+            $_SESSION['showModal'] = true;
+
             header( 'location: ../../../index.php' ) ;
         }
         else {
             echo "Fail" ;
         }
     }
+
+?>
+
+
+
     
