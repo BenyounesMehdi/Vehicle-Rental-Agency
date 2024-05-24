@@ -89,6 +89,12 @@
                             </div>
                         <?php
                     }
+                    
+                }
+                else {
+                    ?>
+                        <p class="font-semibold text-4xl text-center mt-10 <?php echo ($vehicle->vehicleStatus == 'Available') ? 'text-green-500' : (($vehicle->vehicleStatus == 'Not Available') ? 'text-red-500' : 'text-blue-500'); ?>"> <?php echo $vehicle->vehicleStatus ; ?> </p>
+                    <?php
                 }
             ?>
         </div>
