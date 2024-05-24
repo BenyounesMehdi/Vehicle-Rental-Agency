@@ -82,6 +82,9 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
                         <tr>
                             <th scope="col" class="px-6 py-3">
+                                Rerservation ID
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Name
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -112,6 +115,9 @@
                                 Return Date
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Paied
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Expired
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -129,6 +135,9 @@
                                         
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         
+                                        <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
+                                            <?php echo $reservation->reservationID; ?>
+                                        </td>
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                             <?php echo $reservation->vehicleName; ?>
                                         </td>
@@ -167,6 +176,9 @@
                                         </td>
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                             <?php echo $reservation->returnDate; ?>
+                                        </td>
+                                        <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
+                                            <?php echo $reservation->isPayed; ?>
                                         </td>
                                         <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
                                             <?php echo $reservation->isExpired; ?>
