@@ -34,18 +34,29 @@
     <script src="../../node_modules/flowbite/dist/flowbite.min.js"></script>
     <script src="../JS/themeToggle.js"></script>
     <script src="../JS/arrowToggle.js"></script>
+    <script src="../JS/reservationSearch.js"></script>
     <script>
         
         function showSearchButtonToggole () {
             const searchInputValue = document.getElementById("default-search").value ;
             const searchButton = document.getElementById("searchButton") ;
+            const reservationsTable = document.getElementById("reservationsTable") ;
+            const reservationsList = document.getElementById("reservationsList") ;
+            
             if( searchInputValue.length > 0 ) {
-                searchButton.classList.remove("hidden") ;
+                // searchButton.classList.remove("hidden") ;
+
+                reservationsList.classList.remove("hidden") ;
+                reservationsTable.classList.add("hidden") ;
             }
             else {
-                searchButton.classList.add("hidden") ;
+                // searchButton.classList.add("hidden") ;
+
+                reservationsList.classList.add("hidden") ;
+                // brandsTable.classList.remove("hidden") ;
             }
         }
+        
 
     </script>
 </body>
