@@ -29,7 +29,19 @@
     <div class="mt-5 mb-5 container mx-auto">
         <div class="flex items-center gap-5">
             <div class="">
-                <img class="w-32 sm:w-36 rounded-full " src="../../assets/clientProfile/unknownPP.jpg" >
+            <?php 
+                if( $client->image !== "" ) { ?>
+                    <div class="w-32 sm:w-36 ">
+                            <img class="w-32 sm:w-36" src="../../assets/clientProfile/<?php echo $client->image ?>">
+                    </div>
+            <?php
+                }
+                else {
+                    ?>
+                    <img class="w-32 sm:w-36  " src="../../assets/clientProfile/unknownPP.jpg" >
+                    <?php
+                }
+            ?>
             </div>
             <p class="font-semibold text-3xl sm:text-4xl dark:text-white"> <?php echo $client->firstName . " " . $client->lastName ; ?> </p>
         </div>
@@ -54,7 +66,7 @@
     </div>
 
     <div class="flex justify-end container mx-auto mt-5 ">
-        <a href="#" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <a href="editProfile.php" class="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Edit Profile
             <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
