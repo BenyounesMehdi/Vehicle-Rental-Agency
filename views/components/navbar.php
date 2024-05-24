@@ -1,6 +1,18 @@
 <?php 
     require './models/database.php' ;
 
+    if( isset($_SESSION['client']) ) {
+
+        $query = "SELECT * FROM client
+        WHERE clientID = ?" ;
+        $stmt = $pdo->prepare($query) ;
+        $stmt->execute([$_SESSION['client']->clientID]) ;
+        $clientProfile = $stmt->fetch() ;
+
+        // var_dump($clientProfile) ;
+
+    }
+
 ?>
 
 <nav class="bg-white dark:bg-gray-900 relative w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
@@ -58,7 +70,6 @@
                         
                         // echo $expiredReservationsCount;
 
-                        
 
                         // var_dump($_SESSION['client']) ;
                         $clientID = $_SESSION['client']->clientID ;
@@ -77,7 +88,17 @@
                     ?>
                         <button id="dropdownUserAvatarButton" data-dropdown-toggle="dropdownAvatar" class="relative top-1 md:top-0 flex text-sm rounded-full md:me-0 " type="button">
                             <span class="sr-only">Open user menu</span>
-                            <img class="w-8 h-8 rounded-full" src="./assets/clientProfile/unknownPP.jpg" alt="ClientPhoto">
+                            <?php 
+                                if( $clientProfile->image !== "" ) { ?>
+                                    <img class="w-10 h-10" src="./assets/clientProfile/<?php echo $clientProfile->image ; ?>">
+                            <?php
+                                }
+                                else {
+                                    ?>
+                                    <img class="w-8 h-8  " src="./assets/clientProfile/unknownPP.jpg" >
+                                    <?php
+                                }
+                            ?>
                         </button>
 
                         <!-- Dropdown menu -->
