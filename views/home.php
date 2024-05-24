@@ -54,7 +54,103 @@
         <!-- OPINIONS CAROUSEL -->
     </div>
 
-   
+
+    <?php
+        // session_start();
+        $showModal = isset($_SESSION['showModal']) && $_SESSION['showModal'];
+        if ($showModal) {
+            unset($_SESSION['showModal']);
+        }
+
+        $query = "SELECT c.firstName as firstName, c.lastName as lastName, r.reservationID as ID, r.pickupDate as pickupDate, r.returnDate as returnDate,
+            r.duration as duration, r.totalCost as totalCost, b.name as brandName, vt.name as vehicleType, v.name as vehicleName
+          FROM client c 
+          JOIN reservation r ON c.clientID = r.clientID
+          JOIN vehicle v ON r.vehicleID = v.vehicleID
+          JOIN brand b ON b.brandID = v.brandID
+          JOIN vehiclesType vt ON vt.vehiclesTypeID = v.vehicleTypeID 
+          WHERE c.clientID = ?
+          ORDER BY r.reservationID DESC
+          LIMIT 1";
+
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$_SESSION['client']->clientID]);
+        $reservation = $stmt->fetch();
+        // var_dump($reservation) ;
+        
+?>
+    
+    <div>
+        <button id="modalToggle" data-modal-target="static-modal" data-modal-toggle="static-modal" class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+        Toggle modal
+        </button>
+        
+        <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden ">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg drop-shadow-md dark:bg-gray-700" >
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-xl font-semibold text-green-500 dark:text-green-400">
+                            The reservation has been added successfully
+                        </h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="static-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Reservation ID:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->ID; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">First Name:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->firstName; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Last Name:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->lastName; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Vehicle:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->brandName . " " . $reservation->vehicleName; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Pick Up Date:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->pickupDate; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Return Date:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->returnDate; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Duration:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->duration . " days"; ?></p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <p class="text-black dark:text-white font-semibold">Total Cost:</p>
+                            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400"> <?php echo $reservation->totalCost . " DA"; ?></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <?php if ($showModal): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Ensure the modal toggle functionality works with your library
+                const modal = document.getElementById('static-modal');
+                modal.classList.remove('hidden');
+                console.log("Modal should be displayed now");
+            });
+        </script>
+    <?php endif; ?> 
+
 
 
     <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
