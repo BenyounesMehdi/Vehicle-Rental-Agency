@@ -10,7 +10,7 @@
 <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen  transition-transform -translate-x-full sm:translate-x-0 " aria-label="Sidebar" >
         <div class="relative h-full px-3 py-4 overflow-y-auto bg-gray-50  dark:bg-gray-800 " >
             <div class="flex justify-evenly items-center  px-2 gap-2 ">
-                <img src="../../assets/clientProfile/unknownPP.jpg" class="w-8 h-8 rounded-full">
+                <!-- <img src="../../assets/clientProfile/unknownPP.jpg" class="w-8 h-8 rounded-full"> -->
                 <div class="flex flex-col dark:text-white">
                     <p class="font-semibold text-xl ">Admin</p>
                     <p class="font-medium"><?php echo $_SESSION['admin']->firstName. " " .$_SESSION['admin']->lastName  ?></p>
