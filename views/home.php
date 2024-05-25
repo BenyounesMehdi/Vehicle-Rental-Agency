@@ -56,27 +56,30 @@
 
 
     <?php
-        // session_start();
-        $showModal = isset($_SESSION['showModal']) && $_SESSION['showModal'];
-        if ($showModal) {
-            unset($_SESSION['showModal']);
+        if( isset($_SESSION['client']) ) {
+            // session_start();
+            $showModal = isset($_SESSION['showModal']) && $_SESSION['showModal'];
+            if ($showModal) {
+                unset($_SESSION['showModal']);
+            }
+
+            $query = "SELECT c.firstName as firstName, c.lastName as lastName, r.reservationID as ID, r.pickupDate as pickupDate, r.returnDate as returnDate,
+                r.duration as duration, r.totalCost as totalCost, b.name as brandName, vt.name as vehicleType, v.name as vehicleName
+            FROM client c 
+            JOIN reservation r ON c.clientID = r.clientID
+            JOIN vehicle v ON r.vehicleID = v.vehicleID
+            JOIN brand b ON b.brandID = v.brandID
+            JOIN vehiclesType vt ON vt.vehiclesTypeID = v.vehicleTypeID 
+            WHERE c.clientID = ?
+            ORDER BY r.reservationID DESC
+            LIMIT 1";
+
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$_SESSION['client']->clientID]);
+            $reservation = $stmt->fetch();
+            // var_dump($reservation) ;
         }
-
-        $query = "SELECT c.firstName as firstName, c.lastName as lastName, r.reservationID as ID, r.pickupDate as pickupDate, r.returnDate as returnDate,
-            r.duration as duration, r.totalCost as totalCost, b.name as brandName, vt.name as vehicleType, v.name as vehicleName
-          FROM client c 
-          JOIN reservation r ON c.clientID = r.clientID
-          JOIN vehicle v ON r.vehicleID = v.vehicleID
-          JOIN brand b ON b.brandID = v.brandID
-          JOIN vehiclesType vt ON vt.vehiclesTypeID = v.vehicleTypeID 
-          WHERE c.clientID = ?
-          ORDER BY r.reservationID DESC
-          LIMIT 1";
-
-        $stmt = $pdo->prepare($query);
-        $stmt->execute([$_SESSION['client']->clientID]);
-        $reservation = $stmt->fetch();
-        // var_dump($reservation) ;
+        
         
 ?>
     
@@ -140,16 +143,21 @@
             </div>
         </div>
 
-    <?php if ($showModal): ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Ensure the modal toggle functionality works with your library
-                const modal = document.getElementById('static-modal');
-                modal.classList.remove('hidden');
-                console.log("Modal should be displayed now");
-            });
-        </script>
-    <?php endif; ?> 
+    <?php 
+        if( isset($_SESSION['client']) ) {
+            if ($showModal): ?>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // Ensure the modal toggle functionality works with your library
+                        const modal = document.getElementById('static-modal');
+                        modal.classList.remove('hidden');
+                        console.log("Modal should be displayed now");
+                    });
+                </script>
+            <?php endif;
+        }
+        ?> 
+        
 
 
 
