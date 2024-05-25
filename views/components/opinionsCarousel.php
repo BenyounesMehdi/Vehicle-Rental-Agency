@@ -1,7 +1,7 @@
 <?php 
     include './models/database.php' ;
 
-    $query = "SELECT o.*, c.firstName as firstName, c.lastName as lastName
+    $query = "SELECT o.*, c.firstName as firstName, c.lastName as lastName, c.clientID as clientID
         FROM opinion o
         JOIN client c
         ON o.clientID = c.clientID" ;
@@ -32,7 +32,32 @@
                     <div class="hidden  overflow-y-auto duration-700 ease-in-out bg-white border border-gray-300 rounded-lg shadow hover:bg-gray-200 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700" data-carousel-item="active">
                     
                         <div class="flex justify-center items-center mt-10">
-                            <img src="./assets/clientProfile/unknownPP.jpg" class="md:w-20 w-14 rounded-full object-cover">
+
+                        <?php 
+                            if (isset($_SESSION['client']) && $_SESSION['client'] !== null) {
+                                if ($_SESSION['client']->clientID == $opinion->clientID) {
+                                    if ($clientProfile->image == "") {
+                                        ?>
+                                        <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <img class="w-10 h-10" src="./assets/clientProfile/<?php echo $clientProfile->image; ?>">
+                                        <?php
+                                    }
+                                } else {
+                                    ?>
+                                    <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
+                                    <?php
+                                }
+                            } else {
+                                // Handle the case where the client is not logged in or the session is not set
+                                ?>
+                                <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
+                                <?php
+                            }
+                            ?>
+
                         </div>
                         <p class="text-center mt-5 font-semibold md:text-xl dark:text-white"> <?php echo $opinion->firstName. " ". $opinion->lastName;  ?> </p>
                         <p class="text-center mt-5 px-3 font-semibold italic leading- dark:text-white"> <span class="text-gray-400 dark:text-gray-600 text-3xl">&ldquo;</span> <?php echo $opinion->content; ?> <span class="text-gray-400 dark:text-gray-600 text-3xl">&rdquo;</span></p>
