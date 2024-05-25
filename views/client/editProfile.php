@@ -1,17 +1,23 @@
 <?php
-    include '../../models/database.php' ;
-
     session_start() ;
-    // var_dump($_SESSION) ;
-    $clientID = $_SESSION['client']->clientID;
+    if( isset($_SESSION['client']) ) {
+        
+        include '../../models/database.php' ;
+        // var_dump($_SESSION) ;
+        $clientID = $_SESSION['client']->clientID;
 
-    // echo $clientID;
+        // echo $clientID;
 
-    $query = "SELECT * FROM client
-              WHERE clientID = ?" ;
-    $stmt = $pdo->prepare($query) ;
-    $stmt->execute([$clientID]) ;
-    $client = $stmt->fetch() ;
+        $query = "SELECT * FROM client
+                WHERE clientID = ?" ;
+        $stmt = $pdo->prepare($query) ;
+        $stmt->execute([$clientID]) ;
+        $client = $stmt->fetch() ;
+    }
+    else {
+        header('location: login.php') ;
+    }
+    
 ?>
 
 <!DOCTYPE html>
