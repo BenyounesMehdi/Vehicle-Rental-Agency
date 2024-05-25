@@ -1,7 +1,7 @@
 <?php 
     include './models/database.php' ;
 
-    $query = "SELECT o.*, c.firstName as firstName, c.lastName as lastName, c.clientID as clientID
+    $query = "SELECT o.*, c.firstName as firstName, c.lastName as lastName, c.image as image
         FROM opinion o
         JOIN client c
         ON o.clientID = c.clientID" ;
@@ -9,6 +9,8 @@
         $stmt = $pdo->prepare($query);
         $stmt->execute(); 
         $opinions = $stmt->fetchAll() ;
+
+        // var_dump($opinions) ;
 
     // var_dump($opinions) ;
 ?>
@@ -34,28 +36,16 @@
                         <div class="flex justify-center items-center mt-10">
 
                         <?php 
-                            if (isset($_SESSION['client']) && $_SESSION['client'] !== null) {
-                                if ($_SESSION['client']->clientID == $opinion->clientID) {
-                                    if ($clientProfile->image == "") {
+                                    if ($opinion->image == "") {
                                         ?>
                                         <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
                                         <?php
                                     } else {
                                         ?>
-                                        <img class="w-10 h-10" src="./assets/clientProfile/<?php echo $clientProfile->image; ?>">
+                                        <img class="w-10 h-10" src="./assets/clientProfile/<?php echo $opinion->image; ?>" >
                                         <?php
                                     }
-                                } else {
-                                    ?>
-                                    <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
-                                    <?php
-                                }
-                            } else {
-                                // Handle the case where the client is not logged in or the session is not set
-                                ?>
-                                <img class="w-8 h-8" src="./assets/clientProfile/unknownPP.jpg">
-                                <?php
-                            }
+                                 
                             ?>
 
                         </div>
