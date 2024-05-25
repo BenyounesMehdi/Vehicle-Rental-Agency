@@ -177,7 +177,7 @@
                                         <td class="px-6 py-2 font-bold text-gray-900 dark:text-white">
                                             <?php echo $reservation->returnDate; ?>
                                         </td>
-                                        <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
+                                        <td class="px-6 py-2 font-bold <?php echo ($reservation->isPayed == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
                                             <?php echo $reservation->isPayed; ?>
                                         </td>
                                         <td class="px-6 py-2 font-bold <?php echo ($reservation->isExpired == 'No') ? 'text-red-500' : 'text-green-500'  ?> ">
